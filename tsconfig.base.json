@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@hospe/types": ["libs/types/src/index.ts"],
       "@hospe/ui": ["libs/ui/src/index.ts"]
     }
   },
