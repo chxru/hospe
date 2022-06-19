@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "frontend-user": "apps/frontend/user",
-    "frontend-user-e2e": "apps/frontend/user-e2e"
+    "frontend-user-e2e": "apps/frontend/user-e2e",
+    "ui": "libs/ui"
   }
 }
