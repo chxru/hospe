@@ -26,6 +26,7 @@
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "^7.0.0",
+    "tabler-icons-react": "^1.51.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
