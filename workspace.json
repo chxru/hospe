@@ -5,6 +5,7 @@
     "api": "apps/api",
     "e2e-ui-e2e": "apps/e2e/ui-e2e",
     "e2e-user-e2e": "apps/e2e/user-e2e",
+    "firebase-web": "libs/firebase/web",
     "frontend-user": "apps/frontend/user",
     "types": "libs/types",
     "ui": "libs/ui"
