@@ -1,12 +1,10 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentStory, ComponentMeta} from '@storybook/react';
 import {
-  Gauge,
-  Notes,
-  CalendarStats,
-  PresentationAnalytics,
-  FileAnalytics,
-  Adjustments,
-  Lock,
+  LayoutDashboard,
+  User,
+  Search,
+  ReportMedical,
+  MedicalCross,
 } from 'tabler-icons-react';
 import { LinksGroupProps } from './linkGroup';
 import { Sidebar } from './sidebar';
@@ -17,39 +15,29 @@ export default {
 } as ComponentMeta<typeof Sidebar>;
 
 const mockData: LinksGroupProps[] = [
-  { label: 'Dashboard', icon: Gauge },
+  { label: 'Dashboard', icon: LayoutDashboard },
   {
-    label: 'Market news',
-    icon: Notes,
+    label: 'Search',
+    icon: Search,
     initiallyOpened: true,
     links: [
-      { label: 'Overview', link: '/' },
-      { label: 'Forecasts', link: '/' },
-      { label: 'Outlook', link: '/' },
-      { label: 'Real time', link: '/' },
+      { label: 'Doctor', link: '/' },
+      { label: 'Laboratory Test', link: '/' },
     ],
   },
   {
-    label: 'Releases',
-    icon: CalendarStats,
+    label: 'Profile',
+    icon: User,
     links: [
       { label: 'Upcoming releases', link: '/' },
       { label: 'Previous releases', link: '/' },
       { label: 'Releases schedule', link: '/' },
     ],
   },
-  { label: 'Analytics', icon: PresentationAnalytics },
-  { label: 'Contracts', icon: FileAnalytics },
-  { label: 'Settings', icon: Adjustments },
-  {
-    label: 'Security',
-    icon: Lock,
-    links: [
-      { label: 'Enable 2FA', link: '/' },
-      { label: 'Change password', link: '/' },
-      { label: 'Recovery codes', link: '/' },
-    ],
-  },
+  { label: 'Laboratory', icon: ReportMedical },
+  { label: 'Pharmacy', icon: MedicalCross },
+  { label: 'History', icon: ReportMedical },
+  { label: 'Add ones', icon: MedicalCross },
 ];
 
 const Template: ComponentStory<typeof Sidebar> = () => (

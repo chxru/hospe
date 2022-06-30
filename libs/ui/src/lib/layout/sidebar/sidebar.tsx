@@ -81,16 +81,18 @@ export const Sidebar: FC<SiderbarProps> = ({ data }) => {
   const links = data.map((item) => <LinksGroup {...item} key={item.label} />);
 
   return (
-    <Navbar height={800} width={{ sm: 300 }} p="md" className={classes.navbar}>
-      <Navbar.Section className={classes.header}>
+    <Navbar height={'800'} width={{ sm: 300 }} p="md" className={classes.navbar}  >
+      <Navbar.Section className={classes.header}  mt="xs">
         <Group position="apart">
           <Logo width={120} />
           <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
         </Group>
       </Navbar.Section>
 
-      <Navbar.Section grow className={classes.links} component={ScrollArea}>
-        <div className={classes.linksInner}>{links}</div>
+      <Navbar.Section className={classes.links}  mx="-xs" px="xs" >
+        <ScrollArea style={{ height: 420 }}>
+          <div className={classes.linksInner}>{links}</div>
+        </ScrollArea>
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
