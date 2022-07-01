@@ -6,11 +6,7 @@ export default {
   title: 'Searchbar',
 } as ComponentMeta<typeof Searchbar>;
 
-const Template: ComponentStory<typeof Searchbar> = (args) => (
-  <Searchbar {...args} />
-);
+const Template: ComponentStory<typeof Searchbar> = (args) => (<Searchbar {...args} />);
 
 export const Primary = Template.bind({});
-Template.args = {
-
-}
+Template.args = {}
