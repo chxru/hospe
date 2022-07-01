@@ -1,117 +1,84 @@
-import React, { useState } from 'react';
 import {
   TextInput,
   Button,
   Box,
   Grid,
   Container,
-  Collapse,
-  Divider,
-  ActionIcon,
-  useMantineTheme,
   NativeSelect,
+  Select,
   Center,
 } from '@mantine/core';
-import {
-  ArrowRight,
-  ArrowLeft,
-  ArrowDownCircle,
-  Search,
-} from 'tabler-icons-react';
 import { DatePicker } from '@mantine/dates';
 
 export const Searchbar = ({ ...props }) => {
-  const [opened, setOpen] = useState(false);
-  const theme = useMantineTheme();
-
   return (
     <Container>
       <Box>
         <Grid
           sx={(theme) => ({
-            backgroundColor: 'lightblue',
+            backgroundColor: '#e6f3fa',
             padding: theme.spacing.xl,
             borderRadius: theme.radius.md,
           })}
         >
-          <Grid.Col md={12}>
-            <TextInput
-              icon={<Search size={18} />}
-              radius="xl"
+          <Grid.Col md={4}>
+            <Select
+              data={[
+                'Endocrinologists',
+                'Gastroenterologists',
+                'Nephrologists',
+                'SUrologists',
+              ]}
+              placeholder="Select Specialization"
+              label="Specialization"
+              radius="md"
               size="md"
-              rightSection={
-                <ActionIcon
-                  size={32}
-                  radius="xl"
-                  color={theme.primaryColor}
-                  variant="filled"
-                >
-                  {theme.dir === 'ltr' ? (
-                    <ArrowRight size={18} />
-                  ) : (
-                    <ArrowLeft size={18} />
-                  )}
-                </ActionIcon>
-              }
-              placeholder="Search Doctors/Specialization"
+            />
+          </Grid.Col>
+          <Grid.Col md={8}>
+            <TextInput
+              radius="md"
+              size="md"
+              label="Doctor Name"
               rightSectionWidth={42}
               {...props}
             />
           </Grid.Col>
+          <Grid.Col md={4}>
+            <NativeSelect
+              data={['Any', 'Morning', 'Evening']}
+              label="Prefered Time"
+              placeholder="Any"
+              radius="md"
+              size="md"
+            />
+          </Grid.Col>
+          <Grid.Col md={4}>
+            <NativeSelect
+              data={['Any', 'Male', 'Female']}
+              label="Gender"
+              placeholder="Any"
+              radius="md"
+              size="md"
+            />
+          </Grid.Col>
+          <Grid.Col md={4}>
+            <DatePicker
+              placeholder="Any /Any /Any"
+              label="Date"
+              radius="md"
+              size="md"
+            />
+          </Grid.Col>
+
+          <Grid.Col md={12}>
+            <Center>
+              <Button variant="filled" radius="md" size="md">
+                Channel Search
+              </Button>
+            </Center>
+          </Grid.Col>
         </Grid>
-      </Box>
-
-      <Divider m="xs" label="Advance Search" labelPosition="center" />
-      <Center>
-        <ActionIcon
-          variant="transparent"
-          color="blue"
-          onClick={() => setOpen((o) => !o)}
-        >
-          <ArrowDownCircle />
-        </ActionIcon>
-      </Center>
-
-      <Box m="xs">
-        <Collapse in={opened}>
-          <Grid
-            sx={(theme) => ({
-              backgroundColor: 'lightblue',
-              padding: theme.spacing.xl,
-              borderRadius: theme.radius.md,
-            })}
-          >
-            <Grid.Col md={3}>
-              <NativeSelect
-                data={['React', 'Vue', 'Angular', 'Svelte']}
-                placeholder="Sepecialization"
-                radius="xl"
-              />
-            </Grid.Col>
-            <Grid.Col md={3}>
-              <NativeSelect
-                data={['React', 'Vue', 'Angular', 'Svelte']}
-                placeholder="Gender"
-                radius="xl"
-              />
-            </Grid.Col>
-            <Grid.Col md={3}>
-              <NativeSelect
-                data={['React', 'Vue', 'Angular', 'Svelte']}
-                placeholder="Session Time"
-                radius="xl"
-              />
-            </Grid.Col>
-            <Grid.Col md={3}>
-              <DatePicker placeholder="Pick date" radius="xl" />
-            </Grid.Col>
-            <Grid.Col md={12}>
-              <Center>
-                <Button> Search </Button>
-              </Center>
-            </Grid.Col>
-          </Grid>
-        </Collapse>
       </Box>
     </Container>
   );
