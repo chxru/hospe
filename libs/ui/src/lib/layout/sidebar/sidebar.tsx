@@ -1,15 +1,19 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import {
   Navbar,
   Group,
-  Code,
   ScrollArea,
   createStyles,
   Avatar,
   Text,
+  MediaQuery,
+  Burger,
+  AppShell,
+  Header,
 } from '@mantine/core';
 import { LinksGroup, LinksGroupProps } from './linkGroup';
 import { ChevronRight } from 'tabler-icons-react';
+import { heights } from '@mantine/core/lib/components/Badge/Badge.styles';
 
 const Logo = ({ width }: { width: number }) => (
   <svg width={width} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163">
@@ -59,7 +63,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   linksInner: {
-    paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl,
   },
 
@@ -80,41 +83,74 @@ export const Sidebar: FC<SiderbarProps> = ({ data }) => {
   const { classes } = useStyles();
   const links = data.map((item) => <LinksGroup {...item} key={item.label} />);
 
+  const [opened, setOpened] = useState(false);
+
   return (
-    <Navbar height={800} width={{ sm: 300 }} p="md" className={classes.navbar}>
-      <Navbar.Section className={classes.header}>
-        <Group position="apart">
-          <Logo width={120} />
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
-        </Group>
-      </Navbar.Section>
+    <div style={{ height: '100%' }}>
+      <AppShell
+        navbarOffsetBreakpoint="sm"
+        fixed={true}
+        navbar={
+          <Navbar
+            p="md"
+            hiddenBreakpoint="sm"
+            hidden={!opened}
+            width={{ xs: 300 }}
+            height={'100%'}
+            className={classes.navbar}
+          >
+            <Navbar.Section className={classes.links} mx="-xs" px="xs">
+              <ScrollArea style={{ height: 420 }}>
+                <div className={classes.linksInner}>{links}</div>
+              </ScrollArea>
+            </Navbar.Section>
 
-      <Navbar.Section grow className={classes.links} component={ScrollArea}>
-        <div className={classes.linksInner}>{links}</div>
-      </Navbar.Section>
+            <Navbar.Section className={classes.footer}>
+              <Group>
+                <Avatar
+                  src={
+                    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80'
+                  }
+                  radius="xl"
+                />
 
-      <Navbar.Section className={classes.footer}>
-        <Group>
-          <Avatar
-            src={
-              'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80'
-            }
-            radius="xl"
-          />
+                <div style={{ flex: 1 }}>
+                  <Text size="sm" weight={500}>
+                    Ann Nullpointer
+                  </Text>
 
-          <div style={{ flex: 1 }}>
-            <Text size="sm" weight={500}>
-              Ann Nullpointer
-            </Text>
+                  <Text color="dimmed" size="xs">
+                    anullpointer@yahoo.com
+                  </Text>
+                </div>
 
-            <Text color="dimmed" size="xs">
-              anullpointer@yahoo.com
-            </Text>
-          </div>
+                <ChevronRight size={14} />
+              </Group>
+            </Navbar.Section>
+          </Navbar>
+        }
+        header={
+          <Header height={50} p="md">
+            <div
+              style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+            >
+              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size="sm"
+                  mr="xl"
+                />
+              </MediaQuery>
 
-          <ChevronRight size={14} />
-        </Group>
-      </Navbar.Section>
-    </Navbar>
+              <Group position="apart">
+                <Logo width={120} />
+              </Group>
+            </div>
+          </Header>
+        }
+        children={undefined}
+      ></AppShell>
+    </div>
   );
 };
