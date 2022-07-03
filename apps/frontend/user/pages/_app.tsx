@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-
+import { SessionProvider } from 'next-auth/react';
 import { MantineProvider } from '@mantine/core';
 
 import { initFirebase } from 'firebase-web';
@@ -41,7 +41,9 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <Component {...pageProps} />
+        <SessionProvider>
+          <Component {...pageProps} />
+        </SessionProvider>
       </MantineProvider>
     </>
   );
