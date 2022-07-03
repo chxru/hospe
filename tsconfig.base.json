@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@hospe/next": ["libs/next/src/index.ts"],
       "@hospe/types": ["libs/types/src/index.ts"],
       "@hospe/ui": ["libs/ui/src/index.ts"],
       "firebase-web": ["libs/firebase/web/src/index.ts"]

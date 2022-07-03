@@ -5,7 +5,8 @@
     "ui",
     "types",
     "api",
-    "firebase-web"
+    "firebase-web",
+    "next-auth"
   ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
