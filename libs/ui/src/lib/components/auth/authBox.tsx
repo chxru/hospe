@@ -46,87 +46,100 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   });
 
   return (
-    <Paper radius="md" p="xl" withBorder>
-      <Text size="lg" weight={500}>
-        Welcome to Mantine, {isLogin ? 'login' : 'register'} with
-      </Text>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '130px',
+      }}
+    >
+      <Paper radius="md" p="xl" withBorder>
+        <Text size="lg" weight={500}>
+          Welcome to Mantine, {isLogin ? 'login' : 'register'} with
+        </Text>
 
-      <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
-        <FacebookButton radius="xl">Facebook</FacebookButton>
-      </Group>
+        <Group grow mb="md" mt="md">
+          <GoogleButton radius="xl">Google</GoogleButton>
+          <FacebookButton radius="xl">Facebook</FacebookButton>
+        </Group>
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+        <Divider
+          label="Or continue with email"
+          labelPosition="center"
+          my="lg"
+        />
 
-      <form onSubmit={form.onSubmit(onSubmit)}>
-        <Group direction="column" grow>
-          {!isLogin && (
+        <form onSubmit={form.onSubmit(onSubmit)}>
+          <Group direction="column" grow>
+            {!isLogin && (
+              <TextInput
+                label="Name"
+                placeholder="Your name"
+                value={form.values.name}
+                onChange={(event) =>
+                  form.setFieldValue('name', event.currentTarget.value)
+                }
+              />
+            )}
+
             <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
+              required
+              label="Email"
+              placeholder="hello@mantine.dev"
+              value={form.values.email}
               onChange={(event) =>
-                form.setFieldValue('name', event.currentTarget.value)
+                form.setFieldValue('email', event.currentTarget.value)
+              }
+              error={form.errors.email && 'Invalid email'}
+            />
+
+            <PasswordInput
+              required
+              label="Password"
+              placeholder="Your password"
+              value={form.values.password}
+              onChange={(event) =>
+                form.setFieldValue('password', event.currentTarget.value)
+              }
+              error={
+                form.errors.password &&
+                'Password should include at least 6 characters'
               }
             />
-          )}
 
-          <TextInput
-            required
-            label="Email"
-            placeholder="hello@mantine.dev"
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue('email', event.currentTarget.value)
-            }
-            error={form.errors.email && 'Invalid email'}
-          />
+            {!isLogin && (
+              <Checkbox
+                label="I accept terms and conditions"
+                checked={form.values.terms}
+                onChange={(event) =>
+                  form.setFieldValue('terms', event.currentTarget.checked)
+                }
+              />
+            )}
+          </Group>
 
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue('password', event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              'Password should include at least 6 characters'
-            }
-          />
-
-          {!isLogin && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue('terms', event.currentTarget.checked)
-              }
-            />
-          )}
-        </Group>
-
-        <Group position="apart" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            color="gray"
-            onClick={() => {
-              setIsLogin((value) => {
-                form.setFieldValue('isLogin', !value);
-                return !value;
-              });
-            }}
-            size="xs"
-          >
-            {!isLogin
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
-          </Anchor>
-          <Button type="submit">{isLogin ? 'Login' : 'Register'}</Button>
-        </Group>
-      </form>
-    </Paper>
+          <Group position="apart" mt="xl">
+            <Anchor
+              component="button"
+              type="button"
+              color="gray"
+              onClick={() => {
+                setIsLogin((value) => {
+                  form.setFieldValue('isLogin', !value);
+                  return !value;
+                });
+              }}
+              size="xs"
+            >
+              {!isLogin
+                ? 'Already have an account? Login'
+                : "Don't have an account? Register"}
+            </Anchor>
+            <Button type="submit">{isLogin ? 'Login' : 'Register'}</Button>
+          </Group>
+        </form>
+      </Paper>
+    </div>
   );
 };
