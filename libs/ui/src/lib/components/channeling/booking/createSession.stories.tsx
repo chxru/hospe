@@ -1,9 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { CreateSession } from './createsession';
+import { CreateSession } from './createSession';
 
 export default {
   component: CreateSession,
-  title: 'Create Session Form',
+  title: 'Channeling/Booking/Create Session',
 } as ComponentMeta<typeof CreateSession>;
 
 const Template: ComponentStory<typeof CreateSession> = (args) => (
