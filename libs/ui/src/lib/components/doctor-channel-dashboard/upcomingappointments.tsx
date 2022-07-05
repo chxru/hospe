@@ -11,7 +11,7 @@ const mockdata_patients = [{ label: '10', icon: Users }];
 const mockdata_location = [{ label: 'Room Number' }];
 const mockdata_room = [{ label: '06', icon: Location }];
 
-export const UpcommingAppointmentCard = ({ ...props }) => {
+export const UpcomingAppointmentCard = ({ ...props }) => {
   const useStyles = createStyles((theme) => ({
     card: {
       backgroundColor:

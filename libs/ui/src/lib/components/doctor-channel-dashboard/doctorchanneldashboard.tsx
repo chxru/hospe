@@ -8,7 +8,7 @@ import {
   ScrollArea,
 } from '@mantine/core';
 import { ChannelDetailCard } from '../channel-detail-card/channeldetailcard';
-import { UpcommingAppointmentCard } from './upcomingappointments';
+import { UpcomingAppointmentCard } from './upcomingappointments';
 import { Users } from 'tabler-icons-react';
 
 const mockdata = [{ label: '10 Active Patients', icon: Users }];
@@ -66,13 +66,13 @@ export const ChannelDashboard = ({ ...props }) => {
           </Title>
           <Divider my="sm" />
           <ScrollArea style={{ height: 300 }}>
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
-            <UpcommingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
+            <UpcomingAppointmentCard />
           </ScrollArea>
         </div>
       </SimpleGrid>

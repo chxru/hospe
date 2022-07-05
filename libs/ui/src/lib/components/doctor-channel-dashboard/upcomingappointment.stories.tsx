@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { UpcommingAppointmentCard } from './upcomingappointments';
+import { UpcomingAppointmentCard } from './upcomingappointments';
 
 export default {
-  component: UpcommingAppointmentCard,
-  title: 'UpcommingAppointmentCard',
-} as ComponentMeta<typeof UpcommingAppointmentCard>;
+  component: UpcomingAppointmentCard,
+  title: 'UpcomingAppointmentCard',
+} as ComponentMeta<typeof UpcomingAppointmentCard>;
 
-const Template: ComponentStory<typeof UpcommingAppointmentCard> = (args) => (
-  <UpcommingAppointmentCard {...args} />
+const Template: ComponentStory<typeof UpcomingAppointmentCard> = (args) => (
+  <UpcomingAppointmentCard {...args} />
 );
 
 export const Primary = Template.bind({});
