@@ -1,9 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ChannelDashboard } from './doctorchanneldashboard';
+import { ChannelDashboard } from './channelDashboard';
 
 export default {
   component: ChannelDashboard,
-  title: 'ChannelDashboard',
+  title: 'Channeling/Booking/Dashboard',
 } as ComponentMeta<typeof ChannelDashboard>;
 
 const Template: ComponentStory<typeof ChannelDashboard> = (args) => (

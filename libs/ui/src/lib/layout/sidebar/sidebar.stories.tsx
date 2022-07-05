@@ -13,7 +13,7 @@ import { Sidebar } from './sidebar';
 
 export default {
   component: Sidebar,
-  title: 'Sidebar',
+  title: 'Layout/Sidebar',
 } as ComponentMeta<typeof Sidebar>;
 
 const mockData: LinksGroupProps[] = [

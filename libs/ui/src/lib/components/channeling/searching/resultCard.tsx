@@ -10,12 +10,12 @@ import {
 } from '@mantine/core';
 import { Clock, Users, CurrentLocation } from 'tabler-icons-react';
 
-const mockdata = [
+const mockData = [
   { label: '4 Active Patients', icon: Users },
   { label: 'Time', icon: Clock },
 ];
 
-export const Resultcard = ({ ...props }) => {
+export const ResultCard = ({ ...props }) => {
   const useStyles = createStyles((theme) => ({
     card: {
       backgroundColor:
@@ -61,7 +61,7 @@ export const Resultcard = ({ ...props }) => {
     },
   }));
   const { classes } = useStyles();
-  const features = mockdata.map((feature) => (
+  const features = mockData.map((feature) => (
     <Center key={feature.label}>
       <feature.icon size={18} className={classes.icon} />
       <Text size="xs">{feature.label}</Text>

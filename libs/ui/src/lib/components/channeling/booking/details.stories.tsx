@@ -1,9 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ChannelDetailCard } from './channeldetailcard';
+import { ChannelDetailCard } from './details';
 
 export default {
   component: ChannelDetailCard,
-  title: 'ChannelDetailCard',
+  title: 'Channeling/Booking/Details Card',
 } as ComponentMeta<typeof ChannelDetailCard>;
 
 const Template: ComponentStory<typeof ChannelDetailCard> = (args) => (

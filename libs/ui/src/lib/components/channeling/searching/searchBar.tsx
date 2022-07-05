@@ -10,7 +10,7 @@ import {
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
-export const Searchbar = ({ ...props }) => {
+export const SearchBar = ({ ...props }) => {
   return (
     <Container>
       <Box>

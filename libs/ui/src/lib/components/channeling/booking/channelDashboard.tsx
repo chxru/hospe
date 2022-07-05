@@ -7,8 +7,8 @@ import {
   Center,
   ScrollArea,
 } from '@mantine/core';
-import { ChannelDetailCard } from '../channel-detail-card/channeldetailcard';
-import { UpcomingAppointmentCard } from './upcomingappointments';
+import { ChannelDetailCard } from './details';
+import { UpcomingAppointmentCard } from './upcomingAppointments';
 import { Users } from 'tabler-icons-react';
 
 const mockdata = [{ label: '10 Active Patients', icon: Users }];

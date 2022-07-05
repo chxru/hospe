@@ -1,7 +1,7 @@
 import { Grid, Text, Paper } from '@mantine/core';
-import { Resultcard } from '../result-card/resultcard';
+import { ResultCard } from './resultCard';
 
-export const Resultcontainer = ({ ...props }) => {
+export const ResultContainer = ({ ...props }) => {
   return (
     <Paper
       radius="md"
@@ -18,16 +18,16 @@ export const Resultcontainer = ({ ...props }) => {
       <hr />
       <Grid>
         <Grid.Col md={6}>
-          <Resultcard />
+          <ResultCard />
         </Grid.Col>
         <Grid.Col md={6}>
-          <Resultcard />
+          <ResultCard />
         </Grid.Col>
         <Grid.Col md={6}>
-          <Resultcard />
+          <ResultCard />
         </Grid.Col>
         <Grid.Col md={6}>
-          <Resultcard />
+          <ResultCard />
         </Grid.Col>
       </Grid>
     </Paper>
