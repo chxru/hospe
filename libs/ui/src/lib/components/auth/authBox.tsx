@@ -10,7 +10,10 @@ import {
   Divider,
   Checkbox,
   Anchor,
+  Center,
 } from '@mantine/core';
+
+import { createStyles } from '@mantine/core';
 import { GoogleButton, FacebookButton } from './icons/';
 
 interface AuthForm {
@@ -46,12 +49,11 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   });
 
   return (
-    <div
+    // Center style={width='100vw',height='100vh'};
+    <Center
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '130px',
+        width: '100vw',
+        height: '100vh',
       }}
     >
       <Paper radius="md" p="xl" withBorder>
@@ -140,6 +142,6 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           </Group>
         </form>
       </Paper>
-    </div>
+    </Center>
   );
 };
