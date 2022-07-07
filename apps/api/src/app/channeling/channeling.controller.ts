@@ -6,40 +6,38 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ChannelingService } from './channeling.service';
+import { Channeling } from './interfaces/channeling.interface';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
-import { UpdateChannelingDto } from './dto/update-channeling.dto';
 
 @Controller('channeling')
 export class ChannelingController {
-  constructor(private readonly channelingService: ChannelingService) {}
+  constructor(private readonly channelingService: ChannelingService) { }
 
   @Post()
-  create(@Body() createChannelingDto: CreateChannelingDto) {
+  create(@Body() createChannelingDto: CreateChannelingDto): Promise<Channeling> {
     return this.channelingService.create(createChannelingDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Channeling[]> {
     return this.channelingService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.channelingService.findOne(+id);
+  findOne(@Param('id') id): Promise<Channeling> {
+    return this.channelingService.findOne(id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateChannelingDto: UpdateChannelingDto
-  ) {
-    return this.channelingService.update(+id, updateChannelingDto);
+  @Put(':id')
+  update(@Param('id') id, @Body() updateChannelingDto: CreateChannelingDto): Promise<Channeling> {
+    return this.channelingService.update(id, updateChannelingDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.channelingService.remove(+id);
+  remove(@Param('id') id): Promise<Channeling> {
+    return this.channelingService.remove(id);
   }
 }

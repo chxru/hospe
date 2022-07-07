@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import { Channeling } from './interfaces/channeling.interface';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
 import { UpdateChannelingDto } from './dto/update-channeling.dto';
 
 @Injectable()
 export class ChannelingService {
-  create(createChannelingDto: CreateChannelingDto) {
-    return 'This action adds a new channeling';
+  constructor(@InjectModel('Channeling') private readonly channelingModel: Model<Channeling>) { }
+
+  async create(createChannelingDto: CreateChannelingDto): Promise<Channeling> {
+    return await this.channelingModel.create(createChannelingDto);
   }
 
-  findAll() {
-    return `This action returns all channeling`;
+  async findAll(): Promise<Channeling[]> {
+    return await this.channelingModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} channeling`;
+  async findOne(id): Promise<Channeling> {
+    return await this.channelingModel.findOne({ _id: id });
   }
 
-  update(id: number, updateChannelingDto: UpdateChannelingDto) {
-    return `This action updates a #${id} channeling`;
+  async update(id, channeling: Channeling) {
+    return await this.channelingModel.findByIdAndUpdate(id, channeling, { new: true });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} channeling`;
+  async remove(id) {
+    return await this.channelingModel.findByIdAndRemove(id);
   }
 }
