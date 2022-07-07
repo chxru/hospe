@@ -7,7 +7,7 @@ const AuthPage = () => {
   };
 
   return (
-    <Center>
+    <Center style={{ width: '100vw', height: '100vh' }}>
       <AuthenticationForm onSubmit={onSubmit} />
     </Center>
   );
