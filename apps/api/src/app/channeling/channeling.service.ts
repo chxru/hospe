@@ -3,7 +3,6 @@ import { Channeling } from './interfaces/channeling.interface';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
-import { UpdateChannelingDto } from './dto/update-channeling.dto';
 
 @Injectable()
 export class ChannelingService {
