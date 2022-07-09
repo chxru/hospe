@@ -6,7 +6,10 @@ import { CreateChannelingDto } from './dto/create-channeling.dto';
 
 @Injectable()
 export class ChannelingService {
-  constructor(@InjectModel('Channeling') private readonly channelingModel: Model<Channeling>) { }
+  constructor(
+    @InjectModel('Channeling')
+    private readonly channelingModel: Model<Channeling>
+  ) {}
 
   async create(createChannelingDto: CreateChannelingDto): Promise<Channeling> {
     return await this.channelingModel.create(createChannelingDto);
@@ -21,7 +24,9 @@ export class ChannelingService {
   }
 
   async update(id, channeling: Channeling) {
-    return await this.channelingModel.findByIdAndUpdate(id, channeling, { new: true });
+    return await this.channelingModel.findByIdAndUpdate(id, channeling, {
+      new: true,
+    });
   }
 
   async remove(id) {
