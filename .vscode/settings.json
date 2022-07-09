@@ -5,7 +5,6 @@
     "ui",
     "types",
     "api",
-    "firebase-web",
     "next-auth"
   ],
   "editor.formatOnSave": true,
