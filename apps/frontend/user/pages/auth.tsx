@@ -10,9 +10,13 @@ const AuthPage = () => {
     const res = await signIn<'credentials'>('credentials', {
       username: values.email,
       password: values.password,
+      redirect: false,
     });
+
     if (res.ok) {
       router.push('/');
+    } else {
+      console.error(res.error);
     }
   };
 
