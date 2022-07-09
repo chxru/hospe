@@ -1,6 +1,6 @@
-import { Text, Button, Avatar, Paper, Container, Grid } from '@mantine/core';
+import { Text, Button, Avatar, Paper } from '@mantine/core';
 
-export const Profilecard = ({ ...props }) => {
+export const ProfileCard = ({ ...props }) => {
   return (
     <Paper
       radius="md"

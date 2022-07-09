@@ -1,12 +1,12 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/frontend/user-e2e/src",
+  "sourceRoot": "apps/frontend/e2e/user-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/frontend/user-e2e/cypress.json",
+        "cypressConfig": "apps/e2e/user-e2e/cypress.json",
         "devServerTarget": "frontend-user:serve:development"
       },
       "configurations": {
@@ -19,7 +19,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/frontend/user-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/e2e/user-e2e/**/*.{js,ts}"]
       }
     }
   },

@@ -13,7 +13,6 @@ import {
 } from '@mantine/core';
 import { LinksGroup, LinksGroupProps } from './linkGroup';
 import { ChevronRight } from 'tabler-icons-react';
-import { heights } from '@mantine/core/lib/components/Badge/Badge.styles';
 
 const Logo = ({ width }: { width: number }) => (
   <svg width={width} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163">
