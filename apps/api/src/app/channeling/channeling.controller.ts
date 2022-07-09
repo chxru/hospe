@@ -13,10 +13,12 @@ import { CreateChannelingDto } from './dto/create-channeling.dto';
 
 @Controller('channeling')
 export class ChannelingController {
-  constructor(private readonly channelingService: ChannelingService) { }
+  constructor(private readonly channelingService: ChannelingService) {}
 
   @Post()
-  create(@Body() createChannelingDto: CreateChannelingDto): Promise<Channeling> {
+  create(
+    @Body() createChannelingDto: CreateChannelingDto
+  ): Promise<Channeling> {
     return this.channelingService.create(createChannelingDto);
   }
 
@@ -31,7 +33,10 @@ export class ChannelingController {
   }
 
   @Put(':id')
-  update(@Param('id') id, @Body() updateChannelingDto: CreateChannelingDto): Promise<Channeling> {
+  update(
+    @Param('id') id,
+    @Body() updateChannelingDto: CreateChannelingDto
+  ): Promise<Channeling> {
     return this.channelingService.update(id, updateChannelingDto);
   }
 

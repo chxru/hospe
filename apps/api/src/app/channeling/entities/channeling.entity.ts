@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const ChannelingEntity = new mongoose.Schema({
+export const ChannelingEntity = new Schema({
   channelingId: String,
   channelingPatientId: String,
   channelingDoctorId: String,
@@ -9,4 +9,4 @@ export const ChannelingEntity = new mongoose.Schema({
   channelingTime: String,
   channelingDescription: String,
   channelingStatus: String,
-})
+});

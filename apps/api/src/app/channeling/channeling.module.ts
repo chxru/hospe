@@ -5,8 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ChannelingEntity } from './entities/channeling.entity';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Channeling', schema: ChannelingEntity }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'Channeling', schema: ChannelingEntity },
+    ]),
+  ],
   controllers: [ChannelingController],
   providers: [ChannelingService],
 })
-export class ChannelingModule { }
+export class ChannelingModule {}
