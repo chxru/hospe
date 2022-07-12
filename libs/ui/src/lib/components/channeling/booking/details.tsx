@@ -1,11 +1,18 @@
+import { FC } from 'react';
 import { Card, Text, Group, createStyles, Center } from '@mantine/core';
 import { Clock } from 'tabler-icons-react';
 
-const mockdata_name = [{ label: 'Danial Smith' }];
-const mockdata_gend = [{ label: 'Male' }];
-const mockdata = [{ label: '16.30', icon: Clock }];
+export interface CardProps {
+  label_name?: string;
+  lable_gend?: string;
+  label_time?: string;
+}
 
-export const ChannelDetailCard = ({ ...props }) => {
+interface ChannelDetailCardProps {
+  data: CardProps[];
+}
+
+export const ChannelDetailCard: FC<ChannelDetailCardProps> = ({ data }) => {
   const useStyles = createStyles((theme) => ({
     card: {
       backgroundColor:
@@ -29,30 +36,33 @@ export const ChannelDetailCard = ({ ...props }) => {
     },
   }));
   const { classes } = useStyles();
-  const feature_name = mockdata_name.map((feature) => (
-    <Text size="lg">{feature.label}</Text>
+  const name = data.map((feature) => (
+    <Text size="lg">{feature.label_name}</Text>
   ));
-  const feature_gend = mockdata_gend.map((feature) => (
+  const gend = data.map((feature) => (
     <Text size="sm" color="dimmed">
-      {feature.label}
+      {feature.lable_gend}
     </Text>
   ));
-  const features = mockdata.map((feature) => (
-    <Center key={feature.label}>
-      <feature.icon size={20} />
-      <Text size="md" ml="sm">
-        {feature.label}
-      </Text>
-    </Center>
+
+  const time = data.map((feature) => (
+    <Text size="md" ml="sm">
+      {feature.label_time}
+    </Text>
   ));
   return (
     <Card withBorder radius="md" shadow="sm" mb={'xs'}>
       <Group position="apart">
         <div>
-          {feature_name}
-          <Group>{feature_gend}</Group>
+          {name}
+          <Group>{gend}</Group>
         </div>
-        <div>{features}</div>
+        <div>
+          <Center>
+            <Clock />
+            {time}
+          </Center>
+        </div>
         <Card.Section className={classes.section}> 01 </Card.Section>
       </Group>
     </Card>
