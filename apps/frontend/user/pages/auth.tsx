@@ -3,10 +3,12 @@ import { getCsrfToken, signIn } from 'next-auth/react';
 import { Center } from '@mantine/core';
 import { AuthenticationForm } from '@hospe/ui';
 
+import type { IAuthForm } from '@hospe/types';
+
 const AuthPage = () => {
   const router = useRouter();
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: IAuthForm) => {
     const res = await signIn<'credentials'>('credentials', {
       username: values.email,
       password: values.password,
