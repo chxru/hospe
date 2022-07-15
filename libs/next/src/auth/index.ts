@@ -1,5 +1,8 @@
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
+import fetch from 'node-fetch';
+
+import type { UserLoginRes } from '@hospe/types';
 
 export const NextAuthHandler = NextAuth({
   providers: [
@@ -9,19 +12,26 @@ export const NextAuthHandler = NextAuth({
         username: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      authorize: (credentials) => {
-        if (
-          credentials?.username === 'test@hospe.com' &&
-          credentials?.password === 'test123'
-        ) {
-          return {
-            id: 1,
-            name: 'Test User',
-            email: 'test@hospe.com',
-          };
-        }
+      authorize: async (credentials) => {
+        if (!credentials) return null;
 
-        return null;
+        const param = {
+          email: credentials.username,
+          password: credentials.password,
+        };
+
+        // TODO: replace with real API endpoint
+        const res = await fetch('http://localhost:5000/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(param),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!res.ok) return null;
+
+        const data: UserLoginRes = await res.json();
+
+        return data;
       },
     }),
   ],

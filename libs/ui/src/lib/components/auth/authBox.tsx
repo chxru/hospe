@@ -13,16 +13,9 @@ import {
 } from '@mantine/core';
 import { GoogleButton, FacebookButton } from './icons/';
 
-interface AuthForm {
-  email: string;
-  name: string;
-  password: string;
-  terms: boolean;
-  isLogin: boolean;
-}
-
+import type { IAuthForm } from '@hospe/types';
 interface AuthenticationFormProps {
-  onSubmit: (values: AuthForm) => void;
+  onSubmit: (values: IAuthForm) => void;
 }
 
 export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
@@ -30,7 +23,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  const form = useForm<AuthForm>({
+  const form = useForm<IAuthForm>({
     initialValues: {
       email: '',
       name: '',
