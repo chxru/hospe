@@ -5,7 +5,8 @@
     "ui",
     "types",
     "api",
-    "next-auth"
+    "next-auth",
+    "doctor"
   ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
