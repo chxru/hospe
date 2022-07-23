@@ -4,25 +4,31 @@ import {
   Paper,
   Divider,
   Title,
-  Center,
   ScrollArea,
+  Group,
 } from '@mantine/core';
-import { ChannelDetailCard } from './details';
+import { ChannelDetailCard, CardProps } from './details';
 import { UpcomingAppointmentCard } from './upcomingAppointments';
 import { Users } from 'tabler-icons-react';
+import { FC } from 'react';
 
-const mockdata = [{ label: '10 Active Patients', icon: Users }];
+export interface DashboardProps {
+  active_patients?: number;
+}
 
-const features = mockdata.map((feature) => (
-  <Center inline key={feature.label}>
-    <feature.icon size={18} />
-    <Text ml={'xs'} size="xs">
-      {feature.label}
-    </Text>
-  </Center>
-));
+interface ChannelDashboardProps {
+  detailCard_data: CardProps[];
+  data: DashboardProps[];
+}
 
-export const ChannelDashboard = ({ ...props }) => {
+export const ChannelDashboard: FC<ChannelDashboardProps> = ({
+  detailCard_data,
+  data,
+}) => {
+  const active_patient = data.map((feature) => (
+    <Text size="sm">{feature.active_patients}</Text>
+  ));
+
   return (
     <Paper
       radius="md"
@@ -48,18 +54,21 @@ export const ChannelDashboard = ({ ...props }) => {
           <Title color="dimmed" order={4}>
             Today Appointments
           </Title>
+
           <Divider my="sm" />
-          <Text mt={'sm'}>{features}</Text>
+
+          <Group mb={'xs'}>
+            <Users scale={18} />
+            <Group>
+              <Text size="sm">Active Patients :</Text>
+              <Text>{active_patient}</Text>
+            </Group>
+          </Group>
+
           <ScrollArea style={{ height: 300 }}>
-            <ChannelDetailCard />
-            <ChannelDetailCard />
-            <ChannelDetailCard />
-            <ChannelDetailCard />
-            <ChannelDetailCard />
-            <ChannelDetailCard />
+            <ChannelDetailCard patient_data={detailCard_data} />
           </ScrollArea>
         </div>
-
         <div>
           <Title color="dimmed" order={4}>
             Upcoming Appointments
