@@ -3,6 +3,7 @@ export interface ChannelingSession {
   channelingDoctorId: string;
   channelingDoctorName: string;
   channelingDate: Date;
-  channelingTime: string;
+  channelingStartTime: string;
+  channelingEndTime: string;
   maximiumPatient: number;
 }
