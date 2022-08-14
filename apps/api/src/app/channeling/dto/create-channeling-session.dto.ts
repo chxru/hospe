@@ -3,6 +3,7 @@ export class CreateChannelingSessionDto {
   readonly channelingDoctorId: string;
   readonly channelingDoctorName: string;
   readonly channelingDate: Date;
-  readonly channelingTime: string;
+  readonly channelingStartTime: string;
+  readonly channelingEndTime: string;
   readonly maximiumPatient: number;
 }
