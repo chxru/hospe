@@ -1,12 +1,9 @@
-import { useSession } from 'next-auth/react';
+import { useAuthStore } from '@hospe/next';
 
 const IndexPage = () => {
-  const { data: session, status } = useSession();
-  if (status === 'authenticated') {
-    return <p>Signed in as {session.user.email}</p>;
-  }
+  const { displayName } = useAuthStore();
 
-  return <a href="#">Sign in</a>;
+  return <a href="#">{displayName ? displayName : 'Sign in'}</a>;
 };
 
 export default IndexPage;

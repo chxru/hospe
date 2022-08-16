@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { SessionProvider } from 'next-auth/react';
 import { MantineProvider } from '@mantine/core';
 
 export default function App(props: AppProps) {
@@ -23,9 +22,7 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <SessionProvider>
-          <Component {...pageProps} />
-        </SessionProvider>
+        <Component {...pageProps} />
       </MantineProvider>
     </>
   );
