@@ -1,33 +1,24 @@
 import { useRouter } from 'next/router';
+import { getCsrfToken, signIn } from 'next-auth/react';
 import { Center } from '@mantine/core';
 import { AuthenticationForm } from '@hospe/ui';
 
 import type { IAuthForm } from '@hospe/types';
-import { Api, useAuthStore } from '@hospe/next';
 
 const AuthPage = () => {
   const router = useRouter();
-  const updateAuthState = useAuthStore((state) => state.onSignIn);
 
   const onSubmit = async (values: IAuthForm) => {
-    try {
-      const res = await Api.Auth.Login({
-        email: values.email,
-        password: values.password,
-      });
+    const res = await signIn<'credentials'>('credentials', {
+      username: values.email,
+      password: values.password,
+      redirect: false,
+    });
 
-      // update state
-      updateAuthState(
-        res.id,
-        res.displayName,
-        res.email,
-        res.tokens.access.value
-      );
-
-      // redirect to home page
+    if (res.ok) {
       router.push('/');
-    } catch (error) {
-      console.error(error);
+    } else {
+      console.error(res.error);
     }
   };
 
@@ -37,5 +28,13 @@ const AuthPage = () => {
     </Center>
   );
 };
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
+}
 
 export default AuthPage;
