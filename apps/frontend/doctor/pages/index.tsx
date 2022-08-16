@@ -1,4 +1,4 @@
-import { PatientDetails } from '@hospe/ui';
+import { PatientDetails, UpcomingDetails } from '@hospe/ui';
 import {
   Paper,
   SimpleGrid,
@@ -8,7 +8,8 @@ import {
   Text,
   Group,
 } from '@mantine/core';
-import { Users } from 'tabler-icons-react';
+
+import { Users, Report } from 'tabler-icons-react';
 
 export function Index() {
   return (
@@ -43,7 +44,7 @@ export function Index() {
             <Text size="xs">10 Active Patients</Text>
           </Group>
 
-          <ScrollArea style={{ height: '100vh', width: '100%' }}>
+          <ScrollArea style={{ height: 500, width: '100%' }}>
             <PatientDetails
               patientdata={[
                 {
@@ -88,6 +89,42 @@ export function Index() {
                   age: 22,
                   appointmentNumber: 7,
                 },
+                {
+                  name: 'John',
+                  gender: 'Female',
+                  age: 30,
+                  appointmentNumber: 5,
+                },
+                {
+                  name: 'John Paker',
+                  gender: 'Male',
+                  age: 95,
+                  appointmentNumber: 6,
+                },
+                {
+                  name: 'John Hamilton',
+                  gender: 'Female',
+                  age: 22,
+                  appointmentNumber: 7,
+                },
+                {
+                  name: 'John',
+                  gender: 'Female',
+                  age: 30,
+                  appointmentNumber: 5,
+                },
+                {
+                  name: 'John Paker',
+                  gender: 'Male',
+                  age: 95,
+                  appointmentNumber: 6,
+                },
+                {
+                  name: 'John Hamilton',
+                  gender: 'Female',
+                  age: 22,
+                  appointmentNumber: 7,
+                },
               ]}
             />
           </ScrollArea>
@@ -98,7 +135,59 @@ export function Index() {
             Upcoming Appointments
           </Title>
           <Divider my="sm" />
-          <ScrollArea style={{ height: 300 }}></ScrollArea>
+
+          <Group mb={'sm'}>
+            <Report size={22} />
+            <Text size="sm">Summary of Upcoming Events</Text>
+          </Group>
+
+          <ScrollArea style={{ height: 500, width: '100%' }}>
+            <UpcomingDetails
+              upcomingDetailsdata={[
+                {
+                  time: '8.30 PM',
+                  date: '2022-08-15',
+                  patientsNumber: 12,
+                  location: 'Room 06',
+                },
+
+                {
+                  time: '10.30 PM',
+                  date: '2022-08-16',
+                  patientsNumber: 25,
+                  location: 'Room 08',
+                },
+
+                {
+                  time: '8.30 PM',
+                  date: '2022-08-16',
+                  patientsNumber: 32,
+                  location: 'Room 10',
+                },
+
+                {
+                  time: '8.30 PM',
+                  date: '2022-08-15',
+                  patientsNumber: 12,
+                  location: 'Room 06',
+                },
+
+                {
+                  time: '8.30 PM',
+                  date: '2022-08-15',
+                  patientsNumber: 12,
+                  location: 'Room 06',
+                },
+
+                {
+                  time: '8.30 PM',
+                  date: '2022-08-15',
+                  patientsNumber: 12,
+                  location: 'Room 06',
+                },
+              ]}
+            />
+          </ScrollArea>
         </div>
       </SimpleGrid>
     </Paper>
