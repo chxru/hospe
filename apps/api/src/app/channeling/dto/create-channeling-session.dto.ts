@@ -5,5 +5,5 @@ export class CreateChannelingSessionDto {
   readonly channelingDate: Date;
   readonly channelingStartTime: string;
   readonly channelingEndTime: string;
-  readonly maximiumPatient: number;
+  readonly maximumPatients: number;
 }

@@ -7,5 +7,5 @@ export const ChannelingSessionEntity = new Schema({
   channelingDate: Date,
   channelingStartTime: String,
   channelingEndTime: String,
-  maximiumPatient: Number,
+  maximumPatients: Number,
 });

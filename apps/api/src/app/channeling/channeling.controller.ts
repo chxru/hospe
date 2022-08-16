@@ -7,15 +7,18 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
+
 import { ChannelingService } from './channeling.service';
+
 import { Channeling } from './interfaces/channeling.interface';
 import { ChannelingSession } from './interfaces/channelingSession.interface';
+
 import { CreateChannelingDto } from './dto/create-channeling.dto';
 import { CreateChannelingSessionDto } from './dto/create-channeling-session.dto';
 
 @Controller('channeling')
 export class ChannelingController {
-  constructor(private readonly channelingService: ChannelingService) { }
+  constructor(private readonly channelingService: ChannelingService) {}
 
   // book a channeling session
   @Post()
@@ -54,10 +57,10 @@ export class ChannelingController {
 
   // create channeling session
   @Post('/create-session')
-  createsession(
+  createSession(
     @Body() createChannelingSessionDto: CreateChannelingSessionDto
   ): Promise<ChannelingSession> {
-    return this.channelingService.createsession(createChannelingSessionDto);
+    return this.channelingService.createSession(createChannelingSessionDto);
   }
 
   // search channeling sessions under date range

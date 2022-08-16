@@ -14,7 +14,7 @@ export class ChannelingService {
 
     @InjectModel('ChannelingSession')
     private readonly ChannelingSessionModel: Model<ChannelingSession>
-  ) { }
+  ) {}
 
   // book a channeling session
   async create(createChannelingDto: CreateChannelingDto): Promise<Channeling> {
@@ -44,7 +44,7 @@ export class ChannelingService {
   }
 
   // create session
-  async createsession(createChannelingSessionDto: CreateChannelingSessionDto) {
+  async createSession(createChannelingSessionDto: CreateChannelingSessionDto) {
     return await this.ChannelingSessionModel.create(createChannelingSessionDto);
   }
 

@@ -5,5 +5,5 @@ export interface ChannelingSession {
   channelingDate: Date;
   channelingStartTime: string;
   channelingEndTime: string;
-  maximiumPatient: number;
+  maximumPatients: number;
 }
