@@ -1,5 +1,5 @@
+import { FC } from 'react';
 import {
-  ActionIcon,
   Card,
   Text,
   Group,
@@ -8,14 +8,21 @@ import {
   Button,
   Avatar,
 } from '@mantine/core';
-import { Clock, Users, CurrentLocation } from 'tabler-icons-react';
+import { Clock, Users } from 'tabler-icons-react';
 
-const mockData = [
-  { label: '4 Active Patients', icon: Users },
-  { label: 'Time', icon: Clock },
-];
+interface ResultCardProps {
+  name: string;
+  specialization: string;
+  patientCount: number;
+  time: number;
+  fee: number;
+}
 
-export const ResultCard = ({ ...props }) => {
+export interface ResultDetailsProps {
+  data: ResultCardProps[];
+}
+
+export const ResultCard: FC<ResultDetailsProps> = ({ data }) => {
   const useStyles = createStyles((theme) => ({
     card: {
       backgroundColor:
@@ -61,30 +68,18 @@ export const ResultCard = ({ ...props }) => {
     },
   }));
   const { classes } = useStyles();
-  const features = mockData.map((feature) => (
-    <Center key={feature.label}>
-      <feature.icon size={18} className={classes.icon} />
-      <Text size="xs">{feature.label}</Text>
-    </Center>
-  ));
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Group position="apart" mt="md">
         <div>
-          <Text weight={500}>Lanka Hospitals</Text>
+          <Text weight={500}>{data[0].name}</Text>
           <Group>
-            <ActionIcon size="xs" color="dimmed">
-              <CurrentLocation />
-            </ActionIcon>
             <Text size="sm" color="dimmed">
-              Colombo 10
+              {data[0].specialization}
             </Text>
           </Group>
         </div>
-        <Avatar
-          size="lg"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-        />
+        <Avatar size="lg" />
       </Group>
 
       <Card.Section className={classes.section} mt="md">
@@ -93,7 +88,12 @@ export const ResultCard = ({ ...props }) => {
         </Text>
 
         <Group spacing={8} mb={-8}>
-          {features}
+          <Center>
+            <Users size={18} className={classes.icon} />
+            <Text size="xs">{data[0].patientCount}</Text>
+            <Clock size={18} className={classes.icon} />
+            <Text size="xs">{data[0].time}</Text>
+          </Center>
         </Group>
       </Card.Section>
 
@@ -101,7 +101,7 @@ export const ResultCard = ({ ...props }) => {
         <Group spacing={30}>
           <div>
             <Text size="md" weight={700} sx={{ lineHeight: 1 }}>
-              $168.00
+              {data[0].fee}
             </Text>
             <Text
               size="sm"

@@ -1,7 +1,14 @@
+import { FC } from 'react';
 import { Grid, Text, Paper } from '@mantine/core';
-import { ResultCard } from './resultCard';
 
-export const ResultContainer = ({ ...props }) => {
+interface ResultContainerProps {
+  date: string;
+}
+export interface ContainerDetailsProps {
+  data: ResultContainerProps[];
+}
+
+export const ResultContainer: FC<ContainerDetailsProps> = ({ data }) => {
   return (
     <Paper
       radius="md"
@@ -14,21 +21,13 @@ export const ResultContainer = ({ ...props }) => {
           theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       })}
     >
-      <Text>20th May 2022</Text>
+      <Text>{data[0].date}</Text>
       <hr />
       <Grid>
-        <Grid.Col md={6}>
-          <ResultCard />
-        </Grid.Col>
-        <Grid.Col md={6}>
-          <ResultCard />
-        </Grid.Col>
-        <Grid.Col md={6}>
-          <ResultCard />
-        </Grid.Col>
-        <Grid.Col md={6}>
-          <ResultCard />
-        </Grid.Col>
+        <Grid.Col md={6}></Grid.Col>
+        <Grid.Col md={6}></Grid.Col>
+        <Grid.Col md={6}></Grid.Col>
+        <Grid.Col md={6}></Grid.Col>
       </Grid>
     </Paper>
   );
