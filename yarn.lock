@@ -1748,10 +1748,13 @@
   resolved "https://registry.npmjs.org/@mantine/dates/-/dates-4.2.11.tgz"
   integrity sha512-+mYFVoggL84xGd2i1daHjoKBWau5c1g+N7Ny28rduGiqDkBieSeBtx/jOnG5HfzXfICyz5OrDMhxDhF681WWDA==
 
-"@mantine/form@^4.2.10":
-  version "4.2.10"
-  resolved "https://registry.npmjs.org/@mantine/form/-/form-4.2.10.tgz"
-  integrity sha512-Baguw7ko0Q0arUQEv4mjbbsHVoagAERpvG13FdETfHhDougdzBcp3WuNxehvWMyW3H9Q836/eFaEYdyD5uzelQ==
+"@mantine/form@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@mantine/form/-/form-5.1.6.tgz#4a55ff5ee5113258d3f30cdf27fe161ca590f1ca"
+  integrity sha512-/KhzNONKYWBnMS6uCAe8VJq8PKnzsBFCMsfq+9WAEGOYItGwgGmseZg7rNhIipnXU6gAWAIdWJraocr5EuUtGA==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    klona "^2.0.5"
 
 "@mantine/hooks@^4.2.11":
   version "4.2.11"
