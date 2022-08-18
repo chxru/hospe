@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import {
   Navbar,
   Group,
@@ -74,6 +74,7 @@ interface SiderbarProps {
   username: string;
   email: string;
   data: LinksGroupProps[];
+  children: ReactNode;
 }
 
 export const Sidebar: FC<SiderbarProps> = ({
@@ -81,6 +82,7 @@ export const Sidebar: FC<SiderbarProps> = ({
   username,
   email,
   data,
+  children,
 }) => {
   const { classes } = useStyles();
   const links = data.map((item) => <LinksGroup {...item} key={item.label} />);
@@ -92,19 +94,23 @@ export const Sidebar: FC<SiderbarProps> = ({
       <AppShell
         navbarOffsetBreakpoint="sm"
         fixed={true}
+        padding="md"
         navbar={
           <Navbar
             p="md"
             hiddenBreakpoint="sm"
             hidden={!opened}
             width={{ xs: 300 }}
-            height={'100%'}
             className={classes.navbar}
           >
-            <Navbar.Section className={classes.links} mx="-xs" px="xs">
-              <ScrollArea style={{ height: 420 }}>
-                <div className={classes.linksInner}>{links}</div>
-              </ScrollArea>
+            <Navbar.Section
+              grow
+              component={ScrollArea}
+              className={classes.links}
+              mx="-xs"
+              px="xs"
+            >
+              <div className={classes.linksInner}>{links}</div>
             </Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
@@ -151,8 +157,9 @@ export const Sidebar: FC<SiderbarProps> = ({
             </div>
           </Header>
         }
-        children={undefined}
-      ></AppShell>
+      >
+        {children}
+      </AppShell>
     </div>
   );
 };
