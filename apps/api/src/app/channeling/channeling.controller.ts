@@ -1,13 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
+
 import { ChannelingService } from './channeling.service';
+
 import { Channeling } from './interfaces/channeling.interface';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
 
@@ -15,6 +9,7 @@ import { CreateChannelingDto } from './dto/create-channeling.dto';
 export class ChannelingController {
   constructor(private readonly channelingService: ChannelingService) {}
 
+  // create channeling session
   @Post()
   create(
     @Body() createChannelingDto: CreateChannelingDto
@@ -22,16 +17,13 @@ export class ChannelingController {
     return this.channelingService.create(createChannelingDto);
   }
 
-  @Get()
-  findAll(): Promise<Channeling[]> {
-    return this.channelingService.findAll();
-  }
-
+  // get channeling session by id
   @Get(':id')
   findOne(@Param('id') id): Promise<Channeling> {
     return this.channelingService.findOne(id);
   }
 
+  // update channeling session
   @Put(':id')
   update(
     @Param('id') id,
@@ -40,8 +32,37 @@ export class ChannelingController {
     return this.channelingService.update(id, updateChannelingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id): Promise<Channeling> {
-    return this.channelingService.remove(id);
+  // find specific session by doctor
+  @Post('/find')
+  findSession() {
+    return this.channelingService.findAll();
   }
+
+  // // edit booking
+
+  // // delete booking
+  // @Delete(':id')
+  // remove(@Param('id') id): Promise<Channeling> {
+  //   return this.channelingService.remove(id);
+  // }
+
+  // // create channeling session
+  // @Post('/create-session')
+  // createSession(
+  //   @Body() createChannelingSessionDto: CreateChannelingSessionDto
+  // ): Promise<ChannelingSession> {
+  //   return this.channelingService.createSession(createChannelingSessionDto);
+  // }
+
+  // // search channeling sessions under date range
+  // @Get('/session/:channelingDate_from/:channelingDate_to')
+  // findSessionByDate(
+  //   @Param('channelingDate_from') channelingDate_From,
+  //   @Param('channelingDate_to') channelingDate_To
+  // ): Promise<ChannelingSession[]> {
+  //   return this.channelingService.findSessionByDate(
+  //     channelingDate_From,
+  //     channelingDate_To
+  //   );
+  // }
 }
