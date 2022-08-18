@@ -18,7 +18,7 @@ const mockData: ResultDetailsProps = {
   ],
 };
 
-const Template: ComponentStory<typeof ResultCard> = (args) => (
+const Template: ComponentStory<typeof ResultCard> = () => (
   <ResultCard {...mockData} />
 );
 

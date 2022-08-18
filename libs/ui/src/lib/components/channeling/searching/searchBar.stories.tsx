@@ -17,7 +17,7 @@ const mockData: SearchDetailsProps = {
   ],
 };
 
-const Template: ComponentStory<typeof SearchBar> = (args) => (
+const Template: ComponentStory<typeof SearchBar> = () => (
   <SearchBar {...mockData} />
 );
 

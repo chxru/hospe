@@ -16,7 +16,7 @@ const mockdata: DoctorDetailsProps = {
   ],
 };
 
-const Template: ComponentStory<typeof ProfileCard> = (args) => (
+const Template: ComponentStory<typeof ProfileCard> = () => (
   <ProfileCard {...mockdata} />
 );
 
