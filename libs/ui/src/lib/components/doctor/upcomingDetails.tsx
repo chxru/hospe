@@ -22,12 +22,12 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       <td>
         <Text size="sm" weight={500}>
           <Group>
-            <Calendar size={20} /> {item.date}
+            <Calendar size={18} /> {item.date}
           </Group>
         </Text>
         <Text size="sm" weight={500} mt={'xs'}>
           <Group>
-            <Clock size={20} /> {item.time}
+            <Clock size={18} /> {item.time}
           </Group>
         </Text>
       </td>
@@ -35,14 +35,14 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       <td>
         {/* Number of active patients */}
         <Center>
-          <Text size="md" weight={500}>
+          <Text size="xs" weight={500}>
             Active Patients
           </Text>
         </Center>
         <Center>
           <Group>
-            <User size={20} />
-            <Text size="md" weight={500}>
+            <User size={18} />
+            <Text size="sm" weight={500}>
               {item.patientsNumber}
             </Text>
           </Group>
@@ -52,8 +52,8 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       <td>
         <Center>
           <Group>
-            <Location />
-            <Text size="md" weight={500}>
+            <Location size={18} />
+            <Text size="sm" weight={500}>
               {item.location}
             </Text>
           </Group>
@@ -64,7 +64,7 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 600 }} verticalSpacing="lg">
+      <Table sx={{ minWidth: 500 }} verticalSpacing="lg">
         <thead>
           <tr>
             <th> </th>

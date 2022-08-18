@@ -3,7 +3,7 @@ import { SplashScreen } from './splashScreen';
 
 export default {
   component: SplashScreen,
-  title: 'common/SplashScreen',
+  title: 'Common/SplashScreen',
 } as ComponentMeta<typeof SplashScreen>;
 
 const Template: ComponentStory<typeof SplashScreen> = () => <SplashScreen />;
