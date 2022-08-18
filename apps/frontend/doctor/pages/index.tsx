@@ -1,9 +1,4 @@
-import {
-  CreateSession,
-  PatientDetails,
-  Sidebar,
-  UpcomingDetails,
-} from '@hospe/ui';
+import { PatientDetails, UpcomingDetails } from '@hospe/ui';
 import {
   Paper,
   SimpleGrid,
@@ -13,19 +8,8 @@ import {
   Text,
   Group,
 } from '@mantine/core';
+import { Users, Report } from 'tabler-icons-react';
 
-import {
-  Users,
-  Report,
-  ReportMedical,
-  Gauge,
-  Notes,
-  CalendarStats,
-  Adjustments,
-  FileAnalytics,
-  PresentationAnalytics,
-  Sum,
-} from 'tabler-icons-react';
 
 export function Index() {
   return (
@@ -260,6 +244,7 @@ export function Index() {
               />
             </ScrollArea>
           </Paper>
+
         </div>
       </SimpleGrid>
     </>

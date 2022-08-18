@@ -8,24 +8,23 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { TokenService } from './token/token.service';
+import { Role } from './rbac/role.enum';
 import { User } from '../../schemas/user.schema';
 import { comparePassword, hashPassword } from '../../services/bcrypt.service';
-
-import type {
-  UserLoginReq,
-  UserLoginRes,
-  UserRegisterReq,
-  UserRegisterRes,
-} from '@hospe/types';
+import type { UserLoginReq, UserRegisterReq } from '@hospe/types';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private UserModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private UserModel: Model<User>,
+    private tokenService: TokenService
+  ) {}
 
   /**
    * Validate user credentials against data in database
    */
-  async login(param: UserLoginReq): Promise<UserLoginRes> {
+  async login(param: UserLoginReq) {
     const user = await this.UserModel.findOne({ email: param.email });
 
     if (!user) {
@@ -38,17 +37,24 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    const accessToken = await this.tokenService.createAccessToken([Role.User]);
+    const refreshToken = await this.tokenService.createRefreshToken([
+      Role.User,
+    ]);
+
     return {
       id: user._id.toString(),
       email: user.email,
       displayName: user.displayName,
+      accessToken,
+      refreshToken,
     };
   }
 
   /**
    * Add a new user to database
    */
-  async register(param: UserRegisterReq): Promise<UserRegisterRes> {
+  async register(param: UserRegisterReq) {
     const password = await hashPassword(param.password);
     const user = new this.UserModel({
       displayName: param.displayName,
@@ -67,10 +73,38 @@ export class AuthService {
       throw new InternalServerErrorException('Could not save user in database');
     }
 
+    const accessToken = await this.tokenService.createAccessToken([Role.User]);
+    const refreshToken = await this.tokenService.createRefreshToken([
+      Role.User,
+    ]);
+
     return {
       id: user._id.toString(),
       displayName: param.displayName,
       email: param.email,
+      accessToken,
+      refreshToken,
     };
+  }
+
+  /**
+   * Issue new access token for valid refresh tokens
+   * @param refreshToken
+   * @returns
+   */
+  async tokenRefresh(refreshToken: string) {
+    const roles = await this.tokenService.validateRefreshToken(refreshToken);
+
+    // reject if refresh token is invalid
+    if (!roles) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    // recreate access token
+    const accessToken = await this.tokenService.createAccessToken(
+      roles as Role[]
+    );
+
+    return accessToken;
   }
 }

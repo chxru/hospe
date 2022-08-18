@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { ChannelingModule } from './channeling/channeling.module';
-import { env } from 'process';
 import { AuthModule } from './auth/auth.module';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(env.MONGO_URL),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     AuthModule,
     ChannelingModule,
+    EmployeeModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

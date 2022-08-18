@@ -52,9 +52,14 @@ const mockData: LinksGroupProps[] = [
   },
 ];
 
-const Template: ComponentStory<typeof Sidebar> = () => (
-  <Sidebar data={mockData} />
+const Template: ComponentStory<typeof Sidebar> = (args) => (
+  <Sidebar {...args} />
 );
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  data: mockData,
+  title: 'Hospe',
+  username: 'John Doe',
+  email: 'storybook@hospe.com',
+};

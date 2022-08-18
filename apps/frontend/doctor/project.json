@@ -26,7 +26,8 @@
       "configurations": {
         "development": {
           "buildTarget": "frontend-doctor:build:development",
-          "dev": true
+          "dev": true,
+          "port": 4201
         },
         "production": {
           "buildTarget": "frontend-doctor:build:production",
