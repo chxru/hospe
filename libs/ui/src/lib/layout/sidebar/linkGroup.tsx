@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Group,
   Box,
@@ -66,6 +67,7 @@ const useStyles = createStyles((theme) => ({
 export interface LinksGroupProps {
   icon: TablerIcon;
   label: string;
+  link?: string;
   initiallyOpened?: boolean;
   links?: { label: string; link: string }[];
 }
@@ -75,7 +77,10 @@ export function LinksGroup({
   label,
   initiallyOpened,
   links,
+  link,
 }: LinksGroupProps) {
+  const router = useRouter();
+
   const { classes, theme } = useStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
@@ -86,7 +91,11 @@ export function LinksGroup({
       className={classes.link}
       href={link.link}
       key={link.label}
-      onClick={(event) => event.preventDefault()}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        evt.preventDefault();
+        router.push(link.link);
+      }}
     >
       {link.label}
     </Text>
@@ -98,7 +107,16 @@ export function LinksGroup({
         onClick={() => setOpened((o) => !o)}
         className={classes.control}
       >
-        <Group position="apart" spacing={0}>
+        <Group
+          position="apart"
+          spacing={0}
+          onClick={(evt) => {
+            evt.stopPropagation();
+            if (!hasLinks) {
+              link && router.push(link);
+            }
+          }}
+        >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <ThemeIcon variant="light" size={30}>
               <Icon size={18} />

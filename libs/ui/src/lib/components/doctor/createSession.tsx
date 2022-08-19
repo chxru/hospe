@@ -15,6 +15,7 @@ export const CreateSession = () => {
       date: '',
       time: '',
       maxPatients: '',
+      doctorFee: '',
     },
   });
   return (
@@ -54,6 +55,15 @@ export const CreateSession = () => {
             max={50}
             min={1}
             {...form.getInputProps('maxPatients')}
+          />
+
+          {/* Doctor Fee */}
+          <NumberInput
+            label="Doctor Fee (LKR)"
+            placeholder="Enter Doctor Fee"
+            defaultValue={1000}
+            step={100}
+            {...form.getInputProps('doctorFee')}
           />
         </SimpleGrid>
         <Center>
