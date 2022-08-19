@@ -103,7 +103,7 @@ export const Sidebar: FC<SiderbarProps> = ({
             p="md"
             hiddenBreakpoint="sm"
             hidden={!opened}
-            width={{ xs: 300 }}
+            width={{ xs: 250 }}
             className={classes.navbar}
           >
             <Navbar.Section

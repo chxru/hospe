@@ -13,7 +13,7 @@ export function Index() {
   return (
     <>
       <SimpleGrid
-        cols={2}
+        cols={1}
         spacing="xs"
         breakpoints={[
           { maxWidth: 'md', cols: 2, spacing: 'xs' },
@@ -131,39 +131,6 @@ export function Index() {
                   },
                 ]}
               />
-            </ScrollArea>
-          </Paper>
-        </div>
-
-        <div style={{ height: 450 }}>
-          <Paper
-            radius="md"
-            shadow="sm"
-            withBorder
-            p="lg"
-            m="md"
-            style={{ height: '100%' }}
-            sx={(theme) => ({
-              backgroundColor:
-                theme.colorScheme === 'dark'
-                  ? theme.colors.dark[8]
-                  : theme.white,
-            })}
-          >
-            <Text size="md" pb={12}>
-              New Session
-            </Text>
-            <Divider my="sm" />
-
-            <Group mb={'sm'}>
-              <ReportMedical size={18} />
-              <Text size="sm">Add new channeling session</Text>
-            </Group>
-
-            <ScrollArea
-              style={{ height: '80%', width: '100%', paddingBottom: 12 }}
-            >
-              <CreateSession />
             </ScrollArea>
           </Paper>
         </div>

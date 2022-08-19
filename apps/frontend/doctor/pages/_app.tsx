@@ -2,14 +2,11 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import {
   Gauge,
-  Notes,
   CalendarStats,
-  PresentationAnalytics,
-  FileAnalytics,
   Adjustments,
-  Lock,
+  PlaylistAdd,
 } from 'tabler-icons-react';
-import { MantineProvider, Title, Group } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { Sidebar } from '@hospe/ui';
 
 export default function App(props: AppProps) {
@@ -19,39 +16,21 @@ export default function App(props: AppProps) {
     username: 'John Doe',
     email: 'john@gmail.com',
     data: [
-      { label: 'Dashboard', icon: Gauge },
+      { label: 'Dashboard', icon: Gauge, link: '/' },
       {
         label: 'Create Session',
-        icon: Notes,
-        initiallyOpened: true,
-        links: [
-          { label: 'Overview', link: '/' },
-          { label: 'Forecasts', link: '/' },
-          { label: 'Outlook', link: '/' },
-          { label: 'Real time', link: '/' },
-        ],
+        icon: PlaylistAdd,
+        link: '/createSession',
       },
       {
         label: 'Appointments',
         icon: CalendarStats,
         links: [
-          { label: 'Upcoming releases', link: '/' },
-          { label: 'Previous releases', link: '/' },
-          { label: 'Releases schedule', link: '/' },
+          { label: 'Upcoming Appointments', link: '/' },
+          { label: 'Previous Appointments', link: '/' },
         ],
       },
-      { label: 'Analytics', icon: PresentationAnalytics },
-      { label: 'Contracts', icon: FileAnalytics },
       { label: 'Settings', icon: Adjustments },
-      {
-        label: 'Security',
-        icon: Lock,
-        links: [
-          { label: 'Enable 2FA', link: '/' },
-          { label: 'Change password', link: '/' },
-          { label: 'Recovery codes', link: '/' },
-        ],
-      },
     ],
     children: undefined,
   };
