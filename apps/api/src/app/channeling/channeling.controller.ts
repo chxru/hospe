@@ -1,58 +1,45 @@
-import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
-
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { ChannelingService } from './channeling.service';
-
-import { Channeling } from './interfaces/channeling.interface';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
 
 @Controller('channeling')
 export class ChannelingController {
   constructor(private readonly channelingService: ChannelingService) {}
 
-  // create channeling session
-  @Post()
-  create(
-    @Body() createChannelingDto: CreateChannelingDto
-  ): Promise<Channeling> {
-    return this.channelingService.create(createChannelingDto);
+  /**  create channeling session */
+  @Post('/create-channeling')
+  createSession(@Body() createChannelingSessionDto: CreateChannelingDto) {
+    return this.channelingService.createChanneling(createChannelingSessionDto);
   }
 
-  // get channeling session by id
+  /** Get channeling by id */
   @Get(':id')
-  findOne(@Param('id') id): Promise<Channeling> {
+  findOne(@Param('id') id) {
     return this.channelingService.findOne(id);
   }
 
-  // update channeling session
-  @Put(':id')
+  /** edit channeling */
+  @Put('/edit-channeling/:id')
   update(
     @Param('id') id,
-    @Body() updateChannelingDto: CreateChannelingDto
-  ): Promise<Channeling> {
-    return this.channelingService.update(id, updateChannelingDto);
+    @Body() updateChannelingSessionDto: CreateChannelingDto
+  ) {
+    return this.channelingService.update(id, updateChannelingSessionDto);
   }
 
-  // find specific session by doctor
-  @Post('/find')
-  findSession() {
-    return this.channelingService.findAll();
+  /** delete channeling */
+  @Delete(':id')
+  remove(@Param('id') id) {
+    return this.channelingService.remove(id);
   }
-
-  // // edit booking
-
-  // // delete booking
-  // @Delete(':id')
-  // remove(@Param('id') id): Promise<Channeling> {
-  //   return this.channelingService.remove(id);
-  // }
-
-  // // create channeling session
-  // @Post('/create-session')
-  // createSession(
-  //   @Body() createChannelingSessionDto: CreateChannelingSessionDto
-  // ): Promise<ChannelingSession> {
-  //   return this.channelingService.createSession(createChannelingSessionDto);
-  // }
 
   // // search channeling sessions under date range
   // @Get('/session/:channelingDate_from/:channelingDate_to')

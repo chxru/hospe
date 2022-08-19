@@ -2,14 +2,12 @@ import { Module } from '@nestjs/common';
 import { ChannelingService } from './channeling.service';
 import { ChannelingController } from './channeling.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ChannelingEntity } from './entities/channeling.entity';
-import { ChannelingSessionEntity } from './entities/channeling_session.entity';
 
+import { Channeling, ChannelingSchema } from './schema/channeling.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'Channeling', schema: ChannelingEntity },
-      { name: 'ChannelingSession', schema: ChannelingSessionEntity },
+      { name: Channeling.name, schema: ChannelingSchema },
     ]),
   ],
   controllers: [ChannelingController],
