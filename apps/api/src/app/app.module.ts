@@ -11,6 +11,7 @@ import {
 } from './auth/token/schema/token.schema';
 
 import { AuthModule } from './auth/auth.module';
+import { BookingModule } from './booking/booking.module';
 import { ChannelingModule } from './channeling/channeling.module';
 import { EmployeeModule } from './employee/employee.module';
 import { TokenService } from './auth/token/token.service';
@@ -30,6 +31,9 @@ import { ReqUserInterceptor } from '../interceptors/user.interceptor';
     ]),
     AuthModule,
     ChannelingModule,
+    channelingSessions
+    BookingModule,
+
     EmployeeModule,
   ],
   controllers: [],

@@ -4,44 +4,52 @@ import {
   Post,
   Body,
   Param,
-  Delete,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { ChannelingService } from './channeling.service';
-import { Channeling } from './interfaces/channeling.interface';
 import { CreateChannelingDto } from './dto/create-channeling.dto';
 
 @Controller('channeling')
 export class ChannelingController {
   constructor(private readonly channelingService: ChannelingService) {}
 
-  @Post()
-  create(
-    @Body() createChannelingDto: CreateChannelingDto
-  ): Promise<Channeling> {
-    return this.channelingService.create(createChannelingDto);
+  /**  create channeling session */
+  @Post('/create-channeling')
+  createSession(@Body() createChannelingSessionDto: CreateChannelingDto) {
+    return this.channelingService.createChanneling(createChannelingSessionDto);
   }
 
-  @Get()
-  findAll(): Promise<Channeling[]> {
-    return this.channelingService.findAll();
-  }
-
+  /** Get channeling by id */
   @Get(':id')
-  findOne(@Param('id') id): Promise<Channeling> {
+  findOne(@Param('id') id) {
     return this.channelingService.findOne(id);
   }
 
-  @Put(':id')
+  /** edit channeling */
+  @Put('/edit-channeling/:id')
   update(
     @Param('id') id,
-    @Body() updateChannelingDto: CreateChannelingDto
-  ): Promise<Channeling> {
-    return this.channelingService.update(id, updateChannelingDto);
+    @Body() updateChannelingSessionDto: CreateChannelingDto
+  ) {
+    return this.channelingService.update(id, updateChannelingSessionDto);
   }
 
+  /** delete channeling */
   @Delete(':id')
-  remove(@Param('id') id): Promise<Channeling> {
+  remove(@Param('id') id) {
     return this.channelingService.remove(id);
   }
+
+  // // search channeling sessions under date range
+  // @Get('/session/:channelingDate_from/:channelingDate_to')
+  // findSessionByDate(
+  //   @Param('channelingDate_from') channelingDate_From,
+  //   @Param('channelingDate_to') channelingDate_To
+  // ): Promise<ChannelingSession[]> {
+  //   return this.channelingService.findSessionByDate(
+  //     channelingDate_From,
+  //     channelingDate_To
+  //   );
+  // }
 }
