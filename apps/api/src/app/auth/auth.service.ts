@@ -9,7 +9,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { TokenService } from './token/token.service';
-import { Role } from './rbac/role.enum';
 import { User } from '../../schemas/user.schema';
 import { comparePassword, hashPassword } from '../../services/bcrypt.service';
 import type { UserLoginReq, UserRegisterReq } from '@hospe/types';
@@ -37,10 +36,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const accessToken = await this.tokenService.createAccessToken([Role.User]);
-    const refreshToken = await this.tokenService.createRefreshToken([
-      Role.User,
-    ]);
+    const accessToken = await this.tokenService.createAccessToken(
+      user._id.toString(),
+      'user'
+    );
+    const refreshToken = await this.tokenService.createRefreshToken(['user']);
 
     return {
       id: user._id.toString(),
@@ -73,10 +73,11 @@ export class AuthService {
       throw new InternalServerErrorException('Could not save user in database');
     }
 
-    const accessToken = await this.tokenService.createAccessToken([Role.User]);
-    const refreshToken = await this.tokenService.createRefreshToken([
-      Role.User,
-    ]);
+    const accessToken = await this.tokenService.createAccessToken(
+      user._id.toString(),
+      'user'
+    );
+    const refreshToken = await this.tokenService.createRefreshToken(['user']);
 
     return {
       id: user._id.toString(),
@@ -101,8 +102,10 @@ export class AuthService {
     }
 
     // recreate access token
+    // TODO:
     const accessToken = await this.tokenService.createAccessToken(
-      roles as Role[]
+      'TODO',
+      'user'
     );
 
     return accessToken;

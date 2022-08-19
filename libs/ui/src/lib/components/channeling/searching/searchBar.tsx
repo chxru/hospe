@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
   TextInput,
   Button,
@@ -10,7 +11,17 @@ import {
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
-export const SearchBar = ({ ...props }) => {
+interface SearchBarProps {
+  specializations: string[];
+  time: string[];
+  gender: string[];
+}
+
+export interface SearchDetailsProps {
+  searchData: SearchBarProps[];
+}
+
+export const SearchBar: FC<SearchDetailsProps> = ({ searchData }) => {
   return (
     <Container>
       <Box>
@@ -23,12 +34,7 @@ export const SearchBar = ({ ...props }) => {
         >
           <Grid.Col md={4}>
             <Select
-              data={[
-                'Endocrinologists',
-                'Gastroenterologists',
-                'Nephrologists',
-                'SUrologists',
-              ]}
+              data={searchData[0].specializations}
               placeholder="Select Specialization"
               label="Specialization"
               radius="md"
@@ -41,12 +47,11 @@ export const SearchBar = ({ ...props }) => {
               size="md"
               label="Doctor Name"
               rightSectionWidth={42}
-              {...props}
             />
           </Grid.Col>
           <Grid.Col md={4}>
             <NativeSelect
-              data={['Any', 'Morning', 'Evening']}
+              data={searchData[0].time}
               label="Prefered Time"
               placeholder="Any"
               radius="md"
@@ -55,7 +60,7 @@ export const SearchBar = ({ ...props }) => {
           </Grid.Col>
           <Grid.Col md={4}>
             <NativeSelect
-              data={['Any', 'Male', 'Female']}
+              data={searchData[0].gender}
               label="Gender"
               placeholder="Any"
               radius="md"

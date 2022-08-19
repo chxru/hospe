@@ -1,9 +1,40 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import {
+  Gauge,
+  CalendarStats,
+  Adjustments,
+  PlaylistAdd,
+} from 'tabler-icons-react';
 import { MantineProvider } from '@mantine/core';
+import { Sidebar } from '@hospe/ui';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+  const mockData = {
+    title: 'Mantine',
+    username: 'John Doe',
+    email: 'john@gmail.com',
+    data: [
+      { label: 'Dashboard', icon: Gauge, link: '/' },
+      {
+        label: 'Create Session',
+        icon: PlaylistAdd,
+        link: '/createSession',
+      },
+      {
+        label: 'Appointments',
+        icon: CalendarStats,
+        links: [
+          { label: 'Upcoming Appointments', link: '/' },
+          { label: 'Previous Appointments', link: '/' },
+        ],
+      },
+      { label: 'Settings', icon: Adjustments },
+    ],
+    children: undefined,
+  };
+
   return (
     <>
       <Head>
@@ -22,7 +53,9 @@ export default function App(props: AppProps) {
           colorScheme: 'light',
         }}
       >
-        <Component {...pageProps} />
+        <Sidebar {...mockData}>
+          <Component {...pageProps} />
+        </Sidebar>
       </MantineProvider>
     </>
   );

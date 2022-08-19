@@ -43,7 +43,7 @@ export const PatientDetails: FC<PatientDetailsProps> = ({ patientdata }) => {
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 600 }} verticalSpacing="sm">
+      <Table sx={{ minWidth: 500 }} verticalSpacing="sm">
         <thead>
           <tr>
             <th>Patient Name</th>
