@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { ChannelingModule } from './channeling/channeling.module';
 import { AuthModule } from './auth/auth.module';
 import { EmployeeModule } from './employee/employee.module';
+import { NotificationService } from './notification/notification.service';
 
 @Module({
   imports: [
@@ -13,6 +13,6 @@ import { EmployeeModule } from './employee/employee.module';
     EmployeeModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [NotificationService],
 })
-export class AppModule {}
+export class AppModule { }

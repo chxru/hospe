@@ -10,6 +10,7 @@ import { TokenService } from './token/token.service';
 
 import { User, UserSchema } from '../../schemas/user.schema';
 import { RefreshToken, RefreshTokenSchema } from './token/schema/token.schema';
+import { NotificationService } from '../notification/notification.service';
 
 @Module({
   imports: [
@@ -25,6 +26,6 @@ import { RefreshToken, RefreshTokenSchema } from './token/schema/token.schema';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService],
+  providers: [AuthService, TokenService, NotificationService],
 })
-export class AuthModule {}
+export class AuthModule { }
