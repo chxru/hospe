@@ -1,30 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee } from './interfaces/employee.interface';
+import { Model } from 'mongoose';
+import { nanoid } from 'nanoid/async';
+
+import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { hashPassword } from '../../services/bcrypt.service';
+import { Employee } from './schema/employee.schema';
 
 @Injectable()
 export class EmployeeService {
   constructor(
-    @InjectModel('Employee') private readonly employeeModel: Model<Employee>
+    @InjectModel(Employee.name) private readonly EmployeeModel: Model<Employee>
   ) {}
 
-  async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
-    return await this.employeeModel.create(createEmployeeDto);
+  async create(createEmployeeDto: CreateEmployeeDto) {
+    const password = await nanoid();
+    const hashed = await hashPassword(password);
+
+    const employee = await this.EmployeeModel.create({
+      ...createEmployeeDto,
+      name: `${createEmployeeDto.firstName} ${createEmployeeDto.lastName}`,
+      password: hashed,
+    });
+
+    return {
+      email: employee.email,
+      password,
+    };
   }
 
-  async findEmployeeByname(name): Promise<Employee[]> {
-    return await this.employeeModel.find({ name: name });
+  async findEmployeeByName(name): Promise<Employee[]> {
+    return await this.EmployeeModel.find({ name: name });
   }
 
-  async update(id, employee: Employee) {
-    return await this.employeeModel.findByIdAndUpdate(id, employee, {
-      new: true,
+  async update(id, employee: CreateEmployeeDto) {
+    return await this.EmployeeModel.findByIdAndUpdate(id, employee, {
+      upsert: true,
     });
   }
 
   async remove(id: number) {
-    return await this.employeeModel.findByIdAndRemove(id);
+    return await this.EmployeeModel.findByIdAndRemove(id);
   }
 }

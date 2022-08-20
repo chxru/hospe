@@ -1,16 +1,22 @@
+import { Api } from '@hospe/next';
+import { IDoctorCreate } from '@hospe/types';
 import { RegistrationForm } from '@hospe/ui';
 import { Center, Divider, Group, Paper, Text } from '@mantine/core';
 import { ReportMedical } from 'tabler-icons-react';
 
 const doctorRegistration = () => {
-  const mockdata = {
-    data: [
-      { value: 'VOG', label: 'VOG' },
-      { value: 'ENT', label: 'ENT' },
-      { value: 'VP', label: 'VP' },
-      { value: 'Surgon', label: 'Surgon' },
-    ],
+  const mockData = [
+    { value: 'VOG', label: 'VOG' },
+    { value: 'ENT', label: 'ENT' },
+    { value: 'VP', label: 'VP' },
+    { value: 'Surgeon', label: 'Surgeon' },
+  ];
+
+  const onSubmit = async (values: IDoctorCreate) => {
+    const res = await Api.Employee.CreateDoctor(values);
+    console.log(res);
   };
+
   return (
     <div>
       <Center>
@@ -36,7 +42,7 @@ const doctorRegistration = () => {
             <Text size="sm">Add new channeling doctor</Text>
           </Group>
 
-          <RegistrationForm {...mockdata}> </RegistrationForm>
+          <RegistrationForm specializedFields={mockData} onSubmit={onSubmit} />
         </Paper>
       </Center>
     </div>

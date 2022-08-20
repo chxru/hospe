@@ -5,6 +5,6 @@ export interface Employee {
   gender: 'male' | 'female' | 'other';
   age: number;
   birthday: Date;
-  specilaization: string;
-  qulification: string;
+  specialization: string;
+  qualification: string;
 }

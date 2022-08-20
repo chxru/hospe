@@ -3,14 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
 } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { Employee } from './interfaces/employee.interface';
 
 @Controller('employee')
 export class EmployeeController {
@@ -22,20 +20,17 @@ export class EmployeeController {
   }
 
   @Get('/doctor/:name')
-  findEmployeeByname(@Param('name') name): Promise<Employee[]> {
-    return this.employeeService.findEmployeeByname(name);
+  findEmployeeByName(@Param('name') name) {
+    return this.employeeService.findEmployeeByName(name);
   }
 
   @Put('/doctor/:id')
-  update(
-    @Param('id') id,
-    @Body() updateEmployeeDto: CreateEmployeeDto
-  ): Promise<Employee> {
+  update(@Param('id') id, @Body() updateEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.update(id, updateEmployeeDto);
   }
 
   @Delete('/doctor/:id')
-  remove(@Param('id') id): Promise<Employee> {
+  remove(@Param('id') id) {
     return this.employeeService.remove(id);
   }
 }

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { IDoctorCreate } from '@hospe/types';
 import { useForm, zodResolver } from '@mantine/form';
 import {
   TextInput,
@@ -11,14 +11,16 @@ import {
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { FC } from 'react';
+import { z } from 'zod';
 
-interface SpecialisedFieldProps {
+interface SpecializedFieldProps {
   value: string;
   label: string;
 }
 
-export interface SpecialisedFieldDetailsProps {
-  data: SpecialisedFieldProps[];
+export interface SpecializedFieldDetailsProps {
+  specializedFields: SpecializedFieldProps[];
+  onSubmit: (values: IDoctorCreate) => void;
 }
 
 const schema = z.object({
@@ -29,31 +31,32 @@ const schema = z.object({
     .string()
     .min(2, { message: 'Name should have at least 2 letters' }),
   email: z.string().email({ message: 'Invalid email' }),
-  mobileNumber: z.string().min(10, { message: 'Invalid mobile number' }),
-  age: z
-    .number()
-    .min(18, { message: 'You must be at least 18 to create an account' }),
-  birthDay: z.date().max(new Date(), { message: 'BirthDay is not valid date' }),
+  phone: z.string().min(10, { message: 'Invalid mobile number' }),
+  birthday: z.date().max(new Date(), { message: 'Birthday is not valid date' }),
 });
 
-export const RegistrationForm: FC<SpecialisedFieldDetailsProps> = (data) => {
-  const form = useForm({
+export const RegistrationForm: FC<SpecializedFieldDetailsProps> = (props) => {
+  const form = useForm<IDoctorCreate>({
     validate: zodResolver(schema),
     initialValues: {
       firstName: '',
       lastName: '',
       email: '',
       gender: '',
-      age: '',
-      moblieNumber: '',
-      birthDay: '',
-      specialisation: '',
+      phone: '',
+      birthday: new Date(),
+      specialization: '',
       qualification: '',
     },
   });
   return (
     <Box sx={{ maxWidth: '100vw' }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          props.onSubmit(form.values);
+        }}
+      >
         <SimpleGrid
           cols={2}
           spacing="lg"
@@ -90,9 +93,9 @@ export const RegistrationForm: FC<SpecialisedFieldDetailsProps> = (data) => {
               label="Gender"
               placeholder="Select your gender"
               data={[
-                { value: 'Male', label: 'Male' },
-                { value: 'Female', label: 'Female' },
-                { value: 'Other', label: 'Other' },
+                { value: 'male', label: 'Male' },
+                { value: 'female', label: 'Female' },
+                { value: 'other', label: 'Other' },
               ]}
               {...form.getInputProps('gender')}
             />
@@ -104,7 +107,7 @@ export const RegistrationForm: FC<SpecialisedFieldDetailsProps> = (data) => {
               placeholder="Select your Birthday"
               label="Birthday"
               required
-              {...form.getInputProps('birthDay')}
+              {...form.getInputProps('birthday')}
             />
           </div>
 
@@ -124,19 +127,19 @@ export const RegistrationForm: FC<SpecialisedFieldDetailsProps> = (data) => {
               required
               label="Mobile Number"
               placeholder="Enter your mobile number"
-              {...form.getInputProps('moblieNumber')}
+              {...form.getInputProps('phone')}
             />
           </div>
 
-          {/* Specialised Field */}
+          {/* Specialized Field */}
           <div>
             <Select
               clearable
               required
-              label="Specialised Field"
-              placeholder="Select your specialisation"
-              data={data.data}
-              {...form.getInputProps('specialisation')}
+              label="Specialized Field"
+              placeholder="Select your specialization"
+              data={props.specializedFields}
+              {...form.getInputProps('specialization')}
             />
           </div>
 

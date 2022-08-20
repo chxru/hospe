@@ -5,7 +5,8 @@
     "ui",
     "types",
     "api",
-    "doctor"
+    "doctor",
+    "mgmt"
   ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
