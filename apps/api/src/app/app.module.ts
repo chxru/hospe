@@ -31,9 +31,7 @@ import { ReqUserInterceptor } from '../interceptors/user.interceptor';
     ]),
     AuthModule,
     ChannelingModule,
-    channelingSessions
     BookingModule,
-
     EmployeeModule,
   ],
   controllers: [],
