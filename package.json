@@ -14,7 +14,7 @@
     "@emotion/styled": "11.9.3",
     "@mantine/core": "^4.2.11",
     "@mantine/dates": "^4.2.11",
-    "@mantine/form": "^4.2.10",
+    "@mantine/form": "^5.9.2",
     "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^4.2.10",
     "@nestjs/common": "^8.0.0",
