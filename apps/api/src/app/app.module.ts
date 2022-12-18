@@ -16,6 +16,7 @@ import { ChannelingModule } from './channeling/channeling.module';
 import { EmployeeModule } from './employee/employee.module';
 import { TokenService } from './auth/token/token.service';
 import { ReqUserInterceptor } from '../interceptors/user.interceptor';
+import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ReqUserInterceptor } from '../interceptors/user.interceptor';
     ChannelingModule,
     BookingModule,
     EmployeeModule,
+    PatientModule,
   ],
   controllers: [],
   providers: [
