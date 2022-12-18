@@ -10,8 +10,7 @@ import { Cache } from 'cache-manager';
 import { Model } from 'mongoose';
 import { nanoid } from 'nanoid/async';
 
-import { Role } from '../rbac/role.decorator';
-import { RedisPayload } from './interface/redis.interface';
+import { Role } from '../rbac/role.enum';
 import { RefreshToken } from './schema/token.schema';
 
 /**
@@ -37,15 +36,10 @@ export class TokenService {
    * @param roles
    * @returns
    */
-  async createAccessToken(id: string, role: Role) {
+  async createAccessToken(roles: Role[]) {
     const token = await nanoid();
 
-    const payload: RedisPayload = {
-      id,
-      role,
-    };
-
-    await this.authRedis.set(`access:${token}`, payload, {
+    await this.authRedis.set(`access:${token}`, roles, {
       ttl: 60 * ACCESS_TOKEN_EXPIRATION,
     });
 
@@ -84,25 +78,6 @@ export class TokenService {
     }
 
     return token;
-  }
-
-  /**
-   * Validate given access token, return roles if valid.
-   * @param token refresh token
-   * @returns
-   */
-  async validateAccessToken(token?: string) {
-    if (!token) {
-      return false;
-    }
-
-    const payload = await this.authRedis.get<RedisPayload>(`access:${token}`);
-
-    if (!payload) {
-      return false;
-    }
-
-    return payload;
   }
 
   /**
