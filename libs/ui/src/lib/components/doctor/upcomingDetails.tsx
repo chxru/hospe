@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Text, Table, ScrollArea, Group, Center } from '@mantine/core';
+import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User, Location } from 'tabler-icons-react';
 
 interface RowDetailsProps {
@@ -56,6 +56,15 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
             <Text size="sm" weight={500}>
               {item.location}
             </Text>
+          </Group>
+        </Center>
+      </td>
+      <td>
+        <Center>
+          <Group>
+            <Button variant="outline" color="dark">
+              View
+            </Button>
           </Group>
         </Center>
       </td>
