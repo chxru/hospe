@@ -17,7 +17,6 @@ import { RefreshToken, RefreshTokenSchema } from './token/schema/token.schema';
       store: redisStore,
       host: process.env.REDIS_URL,
       port: Number(process.env.REDIS_PORT),
-      auth_pass: process.env.REDIS_AUTH_PASS,
     }),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },

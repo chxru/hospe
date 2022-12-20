@@ -12,7 +12,9 @@
    `yarn`
 4. Install nx globally  
    `npm install -g nx`
-5. Start application using nx command  
+5. Initiate redis and mongodb instances  
+   `docker-compose up -d`
+6. Start application using nx command  
    `nx run <app-name>:serve`
 
 ## Applications and libraries
