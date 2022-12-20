@@ -23,9 +23,9 @@ import { ReqUserInterceptor } from '../interceptors/user.interceptor';
       store: redisStore,
       host: process.env.REDIS_URL,
       port: Number(process.env.REDIS_PORT),
-      auth_pass: process.env.REDIS_AUTH_PASS,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    // TODO: Replace this
+    MongooseModule.forRoot('mongodb://root:example@localhost:27017/'),
     MongooseModule.forFeature([
       { name: RefreshToken.name, schema: RefreshTokenSchema },
     ]),
