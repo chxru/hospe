@@ -2,21 +2,21 @@ import { FC } from 'react';
 import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User, Location } from 'tabler-icons-react';
 
-interface RowDetailsProps {
+interface RowAppoinmentsProps {
   time: string;
   date: string;
   patientsNumber: number;
   location: string;
 }
 
-export interface UpcomingDetailsProps {
-  upcomingDetailsdata: RowDetailsProps[];
+export interface UpcomingAppoinmentsProps {
+  upcomingAppoinmentsdata: RowAppoinmentsProps[];
 }
 
-export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
-  upcomingDetailsdata,
+export const UpcomingAppoinments: FC<UpcomingAppoinmentsProps> = ({
+  upcomingAppoinmentsdata,
 }) => {
-  const rows = upcomingDetailsdata.map((item) => (
+  const rows = upcomingAppoinmentsdata.map((item) => (
     <tr key={item.time}>
       {/* Appointment Date and time */}
       <td>
@@ -33,23 +33,24 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       </td>
 
       <td>
-        {/* Number of active patients */}
+        {/* Doctor's name */}
         <Center>
-          <Text size="xs" weight={500}>
-            Active Patients
+          <User size={18} />
+          <Text size="sm" weight={500}>
+            doctor name
           </Text>
         </Center>
         <Center>
           <Group>
-            <User size={18} />
-            <Text size="sm" weight={500}>
-              {item.patientsNumber}
+            <Text size="xs" weight={500}>
+              Specialization
             </Text>
           </Group>
         </Center>
       </td>
 
       <td>
+        {/* room number */}
         <Center>
           <Group>
             <Location size={18} />
@@ -59,7 +60,9 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
           </Group>
         </Center>
       </td>
+
       <td>
+        {/* View button */}
         <Center>
           <Group>
             <Button variant="outline" color="dark">
@@ -76,7 +79,7 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       <Table sx={{ minWidth: 500 }} verticalSpacing="lg">
         <thead>
           <tr>
-            <th> </th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
