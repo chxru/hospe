@@ -22,10 +22,10 @@ export class Patient {
   birthday: Date;
 
   @Prop({ required: false })
-  medicalhistory: string;
+  medical_history: string;
 
   @Prop({ required: true })
-  medicalnote: string;
+  medical_note: string;
 }
 
 export type PatientDocument = Patient & Document;
