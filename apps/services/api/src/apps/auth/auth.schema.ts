@@ -10,4 +10,5 @@ export const RefreshTokenSchema = new Schema({
   _id: { type: String, required: true },
   expiredAt: { type: Date, required: true },
   roles: { type: [String], required: true },
+  userId: { type: String, required: true },
 });
