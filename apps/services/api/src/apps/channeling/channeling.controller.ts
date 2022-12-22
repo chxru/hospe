@@ -5,10 +5,12 @@ import {
   DeleteChanneling,
   FindOneChanneling,
   UpdateChanneling,
+  FindAllChanneling,
 } from './channeling.service';
 
 export const router = Router();
 
+/* find channeling session by id */
 router.get(':id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -19,6 +21,16 @@ router.get(':id', async (req, res) => {
   }
 });
 
+/* view all channeling sessions */
+router.get('/', async (req, res) => {
+  try {
+    const data = await FindAllChanneling();
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+/* delete channeling session by id */
 router.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -29,6 +41,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+/* create channeling session */
 router.post('/create-channeling', async (req, res) => {
   try {
     const data = await CreateChanneling(req.body);
@@ -38,6 +51,7 @@ router.post('/create-channeling', async (req, res) => {
   }
 });
 
+/* update channeling session */
 router.put('/edit-channeling/:id', async (req, res) => {
   try {
     const id = req.params.id;
