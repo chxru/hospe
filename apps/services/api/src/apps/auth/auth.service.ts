@@ -1,9 +1,5 @@
 import { model } from 'mongoose';
-import type {
-  TokenRefreshRes,
-  UserLoginReq,
-  UserRegisterReq,
-} from '@hospe/types';
+import type { Roles, TokenRefreshRes, UserLoginReq } from '@hospe/types';
 
 import { AuthSchema } from './auth.schema';
 import { ComparePassword, HashPassword } from './helpers/bcrypt';
@@ -14,6 +10,7 @@ import {
   CreateRefreshToken,
   ValidateRefreshToken,
 } from './helpers/tokens';
+import { GetUser, GetUserByEmail } from '../user/user.service';
 
 const AuthModal = model('Auth', AuthSchema);
 
@@ -21,23 +18,33 @@ const AuthModal = model('Auth', AuthSchema);
  * Validate user credentials against data in database
  */
 export const Login = async (param: UserLoginReq) => {
-  const user = await AuthModal.findOne({ email: param.email });
-
-  if (!user) {
-    throw new NotFoundError('User');
+  let user;
+  if (param.role == 'user') {
+    user = await GetUserByEmail(param.email);
+  } else {
+    throw new Error('Invalid role');
   }
 
-  const isValid = await ComparePassword(param.password, user.password);
+  const auth = await AuthModal.findOne({
+    userId: user._id.toString(),
+    role: param.role,
+  });
+
+  if (!auth) {
+    throw new NotFoundError(param.role);
+  }
+
+  const isValid = await ComparePassword(param.password, auth.password);
 
   if (!isValid) {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(user._id.toString(), ['user']);
+  const accessToken = await CreateAccessToken(auth._id.toString(), 'user');
+  const refreshToken = await CreateRefreshToken(auth._id.toString(), 'user');
 
   return {
-    id: user._id.toString(),
+    id: auth._id.toString(),
     email: user.email,
     displayName: user.displayName,
     accessToken,
@@ -45,26 +52,33 @@ export const Login = async (param: UserLoginReq) => {
   };
 };
 
+interface RegisterProps {
+  userId: string;
+  role: Roles;
+  password: string;
+}
+
 /**
  * Add a new user to database
  */
-export const Register = async (param: UserRegisterReq) => {
+export const Register = async (param: RegisterProps) => {
   const password = await HashPassword(param.password);
-  const user = new AuthModal({
-    displayName: param.displayName,
-    email: param.email,
+  const auth = new AuthModal({
+    userId: param.userId,
+    role: param.role,
     password,
   });
 
-  await user.save();
+  await auth.save();
 
-  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(user._id.toString(), ['user']);
+  const accessToken = await CreateAccessToken(auth._id.toString(), param.role);
+  const refreshToken = await CreateRefreshToken(
+    auth._id.toString(),
+    param.role
+  );
 
   return {
-    id: user._id.toString(),
-    email: user.email,
-    displayName: user.displayName,
+    id: auth._id.toString(),
     accessToken,
     refreshToken,
   };
@@ -78,19 +92,26 @@ export const Register = async (param: UserRegisterReq) => {
 export const TokenRefresh = async (
   refreshToken: string
 ): Promise<TokenRefreshRes> => {
-  const userId = await ValidateRefreshToken(refreshToken);
+  const res = await ValidateRefreshToken(refreshToken);
 
-  if (!userId) {
+  if (!res) {
     throw new UnauthorizedException('Invalid refresh token');
   }
 
-  const user = await AuthModal.findById(userId);
+  const { role, userId } = res;
 
-  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
+  let data;
+  if (role == 'user') {
+    data = await GetUser(userId);
+  } else {
+    throw new Error('Invalid role');
+  }
+
+  const accessToken = await CreateAccessToken(data._id.toString(), role);
   return {
-    id: user._id.toString(),
-    email: user.email,
-    displayName: user.displayName,
+    id: data._id.toString(),
+    email: data.email,
+    displayName: data.displayName,
     accessToken,
   };
 };
