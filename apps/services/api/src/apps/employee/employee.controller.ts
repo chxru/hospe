@@ -4,10 +4,20 @@ import {
   CreateEmployee,
   DeleteEmployee,
   FindOneEmployeeByName,
+  GetAllEmployees,
   UpdateEmployee,
 } from './employee.service';
 
 export const router = Router();
+
+router.get('/', async (req, res) => {
+  try {
+    const data = await GetAllEmployees();
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
 
 router.get('/doctor/:name', async (req, res) => {
   try {
