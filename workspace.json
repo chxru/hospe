@@ -11,6 +11,7 @@
     "frontend-management": "apps/frontend/management",
     "frontend-user": "apps/frontend/user",
     "next": "libs/next",
+    "services-api": "apps/services/api",
     "types": "libs/types",
     "ui": "libs/ui"
   }
