@@ -34,6 +34,12 @@ export const FindOneEmployeeByName = async (name: string) => {
   });
 };
 
+export const GetAllEmployees = async () => {
+  const employees = await EmployeeModel.find().limit(100);
+  employees.forEach((e) => delete e.password);
+  return employees;
+};
+
 export const UpdateEmployee = async (id: string, params: UpdateEmployeeDto) => {
   return await EmployeeModel.findByIdAndUpdate(id, params, { upsert: true });
 };
