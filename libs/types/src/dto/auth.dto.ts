@@ -29,3 +29,10 @@ export type UserRegisterRes = UserLoginRes;
 export interface UserTokenRefreshReq {
   refreshToken: string;
 }
+
+export interface TokenRefreshRes {
+  id: string;
+  email: string;
+  displayName: string;
+  accessToken: string;
+}

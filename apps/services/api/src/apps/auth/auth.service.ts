@@ -1,5 +1,9 @@
 import { model } from 'mongoose';
-import type { UserLoginReq, UserRegisterReq } from '@hospe/types';
+import type {
+  TokenRefreshRes,
+  UserLoginReq,
+  UserRegisterReq,
+} from '@hospe/types';
 
 import { AuthSchema } from './auth.schema';
 import { ComparePassword, HashPassword } from './helpers/bcrypt';
@@ -30,7 +34,7 @@ export const Login = async (param: UserLoginReq) => {
   }
 
   const accessToken = await CreateAccessToken(user._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(['user']);
+  const refreshToken = await CreateRefreshToken(user._id.toString(), ['user']);
 
   return {
     id: user._id.toString(),
@@ -55,7 +59,7 @@ export const Register = async (param: UserRegisterReq) => {
   await user.save();
 
   const accessToken = await CreateAccessToken(user._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(['user']);
+  const refreshToken = await CreateRefreshToken(user._id.toString(), ['user']);
 
   return {
     id: user._id.toString(),
@@ -71,15 +75,22 @@ export const Register = async (param: UserRegisterReq) => {
  * @param refreshToken
  * @returns
  */
-export const TokenRefresh = async (refreshToken: string) => {
-  const roles = await ValidateRefreshToken(refreshToken);
+export const TokenRefresh = async (
+  refreshToken: string
+): Promise<TokenRefreshRes> => {
+  const userId = await ValidateRefreshToken(refreshToken);
 
-  // reject if refresh token is invalid
-  if (!roles) {
+  if (!userId) {
     throw new UnauthorizedException('Invalid refresh token');
   }
 
-  // TODO:
-  const accessToken = await CreateAccessToken('TODO', 'user');
-  return accessToken;
+  const user = await AuthModal.findById(userId);
+
+  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
+  return {
+    id: user._id.toString(),
+    email: user.email,
+    displayName: user.displayName,
+    accessToken,
+  };
 };
