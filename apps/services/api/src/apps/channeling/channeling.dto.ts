@@ -1,10 +1,8 @@
-import { PartialType } from '@nestjs/swagger';
-
-export class CreateChannelingDto {
+export interface CreateChannelingDto {
   readonly date: Date;
   readonly time: string;
   readonly maximumPatients: number;
   readonly doctorFee: number;
 }
 
-export class UpdateChannelingDto extends PartialType(CreateChannelingDto) {}
+export type UpdateChannelingDto = Partial<CreateChannelingDto>;
