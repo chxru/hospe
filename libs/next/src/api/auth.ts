@@ -1,4 +1,4 @@
-import { UserLoginReq, UserLoginRes } from '@hospe/types';
+import { TokenRefreshRes, UserLoginReq, UserLoginRes } from '@hospe/types';
 import axios from 'axios';
 
 interface LoginProps {
@@ -14,7 +14,7 @@ const Login = ({ email, password }: LoginProps) => {
     .then((res) => res.data);
 };
 
-const RefreshToken = () => {
+const RefreshToken = (): Promise<TokenRefreshRes> => {
   return axios.post('api/auth/refresh').then((res) => res.data);
 };
 

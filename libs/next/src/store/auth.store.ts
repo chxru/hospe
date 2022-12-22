@@ -1,6 +1,8 @@
+import { TokenRefreshRes } from '@hospe/types';
 import create from 'zustand';
 
 interface AuthState {
+  isLoading: boolean;
   isAuthenticated: boolean;
   id: string | null;
   displayName: string | null;
@@ -13,9 +15,14 @@ interface AuthState {
     accessToken: string
   ) => void;
   onSignOut: () => void;
+  toggleLoading: () => void;
+  updateToken: (data: TokenRefreshRes) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
+  /** Loading state */
+  isLoading: true,
+
   /** Auth State */
   isAuthenticated: false,
 
@@ -30,6 +37,13 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   /** User's access token */
   accessToken: '',
+
+  /** Toggle loading state */
+  toggleLoading: () =>
+    set((state) => ({
+      ...state,
+      isLoading: !state.isLoading,
+    })),
 
   /** Update store on user authenticate */
   onSignIn: (id: string, displayName: string, email: string, token: string) =>
@@ -50,5 +64,12 @@ export const useAuthStore = create<AuthState>((set) => ({
       displayName: null,
       email: null,
       accessToken: null,
+    })),
+
+  updateToken: (data: TokenRefreshRes) =>
+    set((state) => ({
+      ...state,
+      ...data,
+      isAuthenticated: !!data.accessToken,
     })),
 }));
