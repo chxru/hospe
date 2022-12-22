@@ -1,5 +1,5 @@
 import { Api, useAuthStore } from '@hospe/next';
-import { Sidebar, SplashScreen } from '@hospe/ui';
+import { AuthScreen, Sidebar, SplashScreen } from '@hospe/ui';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useCallback, useEffect } from 'react';
@@ -39,21 +39,21 @@ function CustomApp({ Component, pageProps }: AppProps) {
     ],
     children: undefined,
   };
+
+  if (isLoading) return <SplashScreen />;
+  if (!isAuthenticated) return <AuthScreen role="user" />;
+
   return (
     <>
       <Head>
         <title>Welcome to management!</title>
       </Head>
 
-      {isLoading ? (
-        <SplashScreen />
-      ) : (
-        <main className="app">
-          <Sidebar {...mockData}>
-            <Component {...pageProps} />
-          </Sidebar>
-        </main>
-      )}
+      <main className="app">
+        <Sidebar {...mockData}>
+          <Component {...pageProps} />
+        </Sidebar>
+      </main>
     </>
   );
 }
