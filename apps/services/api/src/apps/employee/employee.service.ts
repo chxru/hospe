@@ -1,10 +1,7 @@
-import { model } from 'mongoose';
 import { nanoid } from 'nanoid/async';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './employee.dto';
-import { EmployeeSchema } from './employee.schema';
+import { EmployeeModel } from './employee.schema';
 import { HashPassword } from '../auth/helpers/bcrypt';
-
-const EmployeeModel = model('Employee', EmployeeSchema);
 
 export const CreateEmployee = async (params: CreateEmployeeDto) => {
   const password = await nanoid();

@@ -1,6 +1,8 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
-export const UserSchema = new Schema({
+const UserSchema = new Schema({
   displayName: { type: String, required: true },
   email: { type: String, required: true },
 });
+
+export const UserModel = model('User', UserSchema);

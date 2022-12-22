@@ -1,7 +1,6 @@
-import { model } from 'mongoose';
 import type { Roles, TokenRefreshRes, UserLoginReq } from '@hospe/types';
 
-import { AuthSchema } from './auth.schema';
+import { AuthModel } from './auth.schema';
 import { ComparePassword, HashPassword } from './helpers/bcrypt';
 
 import { NotFoundError, UnauthorizedException } from '../../errors';
@@ -11,8 +10,6 @@ import {
   ValidateRefreshToken,
 } from './helpers/tokens';
 import { GetUser, GetUserByEmail } from '../user/user.service';
-
-const AuthModal = model('Auth', AuthSchema);
 
 /**
  * Validate user credentials against data in database
@@ -25,7 +22,7 @@ export const Login = async (param: UserLoginReq) => {
     throw new Error('Invalid role');
   }
 
-  const auth = await AuthModal.findOne({
+  const auth = await AuthModel.findOne({
     userId: user._id.toString(),
     role: param.role,
   });
@@ -63,7 +60,7 @@ interface RegisterProps {
  */
 export const Register = async (param: RegisterProps) => {
   const password = await HashPassword(param.password);
-  const auth = new AuthModal({
+  const auth = new AuthModel({
     userId: param.userId,
     role: param.role,
     password,

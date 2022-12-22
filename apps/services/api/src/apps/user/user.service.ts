@@ -1,13 +1,10 @@
 import { UserRegisterReq } from '@hospe/types';
-import { model } from 'mongoose';
 
 import { Register } from '../auth/auth.service';
-import { UserSchema } from './user.schema';
-
-const UserModal = model('User', UserSchema);
+import { UserModel } from './user.schema';
 
 export const CreateUser = async (param: UserRegisterReq) => {
-  const user = new UserModal({
+  const user = new UserModel({
     displayName: param.displayName,
     email: param.email,
   });
@@ -35,11 +32,11 @@ export const CreateUser = async (param: UserRegisterReq) => {
 };
 
 export const GetUser = async (id: string) => {
-  const user = await UserModal.findById(id);
+  const user = await UserModel.findById(id);
   return user;
 };
 
 export const GetUserByEmail = async (email: string) => {
-  const user = await UserModal.findOne({ email });
+  const user = await UserModel.findOne({ email });
   return user;
 };
