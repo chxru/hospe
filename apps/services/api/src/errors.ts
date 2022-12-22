@@ -25,6 +25,8 @@ export class UnauthorizedException extends Error {
 }
 
 export const ExpressErrorResponseHandler = (res: Response, error: unknown) => {
+  console.error(error);
+
   if (error instanceof NotFoundError) {
     res.status(404).json({
       message: error.message,
