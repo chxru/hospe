@@ -2,7 +2,6 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "api": "apps/api",
     "e2e-doctor-e2e": "apps/e2e/doctor-e2e",
     "e2e-management-e2e": "apps/e2e/management-e2e",
     "e2e-ui-e2e": "apps/e2e/ui-e2e",
