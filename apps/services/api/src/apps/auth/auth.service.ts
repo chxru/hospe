@@ -10,6 +10,7 @@ import {
   ValidateRefreshToken,
 } from './helpers/tokens';
 import { GetUser, GetUserByEmail } from '../user/user.service';
+import { FindOneEmployeeByEmail } from '../employee/employee.service';
 
 /**
  * Validate user credentials against data in database
@@ -18,6 +19,8 @@ export const Login = async (param: UserLoginReq) => {
   let user;
   if (param.role == 'user') {
     user = await GetUserByEmail(param.email);
+  } else if (param.role == 'doctor') {
+    user = await FindOneEmployeeByEmail(param.email);
   } else {
     throw new Error('Invalid role');
   }
@@ -100,6 +103,8 @@ export const TokenRefresh = async (
   let data;
   if (role == 'user') {
     data = await GetUser(userId);
+  } else if (role == 'doctor') {
+    data = await FindOneEmployeeByEmail(userId);
   } else {
     throw new Error('Invalid role');
   }

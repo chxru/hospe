@@ -1,19 +1,30 @@
 import { nanoid } from 'nanoid/async';
+import { Register } from '../auth/auth.service';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './employee.dto';
 import { EmployeeModel } from './employee.schema';
-import { HashPassword } from '../auth/helpers/bcrypt';
 
 export const CreateEmployee = async (params: CreateEmployeeDto) => {
   const password = await nanoid();
 
-  // TODO: centralized auth service
-  const hashed = await HashPassword(password);
-
   const employee = await EmployeeModel.create({
-    ...params,
-    name: `${params.firstName} ${params.lastName}`,
-    password: hashed,
+    birthday: params.birthday,
+    email: params.email,
+    gender: params.gender,
+    name: params.firstName + ' ' + params.lastName,
+    phone: params.phone,
+    qualification: params.qualification,
+    specialization: params.specialization,
   });
+
+  try {
+    await Register({
+      password,
+      role: 'doctor',
+      userId: employee._id.toString(),
+    });
+  } catch (error) {
+    await employee.delete();
+  }
 
   return {
     email: employee.email,
@@ -31,9 +42,12 @@ export const FindOneEmployeeByName = async (name: string) => {
   });
 };
 
+export const FindOneEmployeeByEmail = async (email: string) => {
+  return await EmployeeModel.findOne({ email });
+};
+
 export const GetAllEmployees = async () => {
   const employees = await EmployeeModel.find().limit(100);
-  employees.forEach((e) => delete e.password);
   return employees;
 };
 
