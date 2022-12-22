@@ -1,6 +1,7 @@
 export interface UserLoginReq {
   email: string;
   password: string;
+  role: string;
 }
 
 interface IToken {

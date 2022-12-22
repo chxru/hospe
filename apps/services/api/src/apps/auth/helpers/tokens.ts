@@ -70,7 +70,7 @@ export const CreateAccessToken = async (id: string, role: Roles) => {
  * @param roles
  * @returns
  */
-export const CreateRefreshToken = async (id: string, roles: Roles[]) => {
+export const CreateRefreshToken = async (id: string, role: Roles) => {
   const token = await nanoid();
   const today = new Date();
   const expiredAt = new Date(
@@ -80,7 +80,7 @@ export const CreateRefreshToken = async (id: string, roles: Roles[]) => {
   const refreshToken = new RefreshTokenModel({
     _id: token,
     expiredAt,
-    roles,
+    role,
     userId: id,
   });
 
@@ -124,5 +124,5 @@ export const ValidateRefreshToken = async (token: string) => {
     return false;
   }
 
-  return refreshToken.userId;
+  return { userId: refreshToken.userId, role: refreshToken.role };
 };

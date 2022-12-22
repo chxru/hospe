@@ -1,16 +1,17 @@
 import { Router } from 'express';
-import { Login, TokenRefresh } from './auth.service';
+
+import { ExpressErrorResponseHandler } from '../../errors';
 import {
   ACCESS_TOKEN_EXPIRATION,
   REFRESH_TOKEN_EXPIRATION,
-} from './helpers/tokens';
-import { ExpressErrorResponseHandler } from '../../errors';
+} from '../auth/helpers/tokens';
+import { CreateUser, GetUser } from './user.service';
 
 export const router = Router();
 
-router.post('/login', async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
-    const data = await Login(req.body);
+    const data = await CreateUser(req.body);
 
     res.json({
       displayName: data.displayName,
@@ -32,10 +33,11 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/token', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const data = await TokenRefresh(req.body.refreshToken);
-    res.json(data);
+    const id = req.params.id;
+    const data = await GetUser(id);
+    res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);
   }
