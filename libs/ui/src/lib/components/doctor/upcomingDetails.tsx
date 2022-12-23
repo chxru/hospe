@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Text, Table, ScrollArea, Group, Center } from '@mantine/core';
+import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User } from 'tabler-icons-react';
+import { useForm } from '@mantine/hooks';
 interface RowDetailsProps {
   __v: string;
   _id: string;
@@ -11,13 +12,25 @@ interface RowDetailsProps {
   doctorFee: number;
 }
 
+export interface Formdata {
+  _id: string;
+}
+
 export interface UpcomingDetailsProps {
   upcomingDetailsdata: RowDetailsProps[];
+  onSubmit: (values: Formdata) => void;
 }
 
 export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
   upcomingDetailsdata,
+  onSubmit,
 }) => {
+  const form = useForm<Formdata>({
+    initialValues: {
+      _id: '',
+    },
+  });
+
   const newRows = upcomingDetailsdata.map((item) => (
     <tr key={item.time}>
       {/* Appointment Date and time */}
@@ -48,6 +61,19 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
             </Text>
           </Group>
         </Center>
+      </td>
+
+      <td>
+        {/* Button */}
+        <form onSubmit={form.onSubmit(onSubmit)}>
+          <Button
+            type="submit"
+            color="red"
+            onClick={() => form.setFieldValue('_id', item._id)}
+          >
+            Delete
+          </Button>
+        </form>
       </td>
     </tr>
   ));
