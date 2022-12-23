@@ -6,6 +6,7 @@ import morgan from 'morgan';
 
 // routes
 import { router as authRouter } from './apps/auth/auth.controller';
+import { router as bookingRouter } from './apps/booking/booking.controller';
 import { router as channelingRouter } from './apps/channeling/channeling.controller';
 import { router as employeeRouter } from './apps/employee/employee.controller';
 import { router as userRouter } from './apps/user/user.controller';
@@ -20,9 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/auth', authRouter);
+app.use('/booking', bookingRouter);
 app.use('/channeling', channelingRouter);
 app.use('/employee', employeeRouter);
 app.use('/user', userRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
