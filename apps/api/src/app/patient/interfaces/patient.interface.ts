@@ -5,6 +5,6 @@ export interface Patient {
   gender: 'male' | 'female' | 'other';
   age: number;
   birthday: Date;
-  medicalhistory: string;
-  medicalnote: string;
+  medical_history: string;
+  medical_note: string;
 }
