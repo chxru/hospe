@@ -10,9 +10,16 @@ interface CreateSessionProps {
 }
 
 const CreateSession = (props: CreateSessionProps) => {
-  return instance.post('/channeling/create-channeling', props).then((res) => res.data);
+  return instance
+    .post('/channeling/create-channeling', props)
+    .then((res) => res.data);
+};
+
+const GetAll = () => {
+  return instance.get('/channeling/').then((res) => res.data);
 };
 
 export const Doctor = {
-  CreateSession
+  CreateSession,
+  GetAll,
 };

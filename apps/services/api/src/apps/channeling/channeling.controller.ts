@@ -6,6 +6,7 @@ import {
   FindOneChanneling,
   UpdateChanneling,
   FindAllChanneling,
+  FindAllChannelingByDocId,
 } from './channeling.service';
 
 export const router = Router();
@@ -30,6 +31,16 @@ router.get('/', async (req, res) => {
     ExpressErrorResponseHandler(res, error);
   }
 });
+
+router.get('/:docId', async (req, res) => {
+  try {
+    const data = await FindAllChannelingByDocId(req.params.docId);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+
 /* delete channeling session by id */
 router.delete('/:id', async (req, res) => {
   try {
