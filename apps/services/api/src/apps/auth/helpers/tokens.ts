@@ -5,12 +5,14 @@ import type { Roles } from '@hospe/types';
 
 import { RefreshTokenModel } from '../auth.schema';
 
+const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
+
 // redis
 const redis = createClient({
   socket: {
-    // TODO: Move to config
-    host: 'localhost',
-    port: 6379,
+    host: REDIS_HOST,
+    port: Number(REDIS_PORT),
   },
 });
 
