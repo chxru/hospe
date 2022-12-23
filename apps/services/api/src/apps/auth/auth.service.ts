@@ -10,7 +10,10 @@ import {
   ValidateRefreshToken,
 } from './helpers/tokens';
 import { GetUser, GetUserByEmail } from '../user/user.service';
-import { FindOneEmployeeByEmail } from '../employee/employee.service';
+import {
+  FindOneEmployee,
+  FindOneEmployeeByEmail,
+} from '../employee/employee.service';
 
 /**
  * Validate user credentials against data in database
@@ -40,8 +43,11 @@ export const Login = async (param: UserLoginReq) => {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(user._id.toString(), 'user');
+  const accessToken = await CreateAccessToken(user._id.toString(), param.role);
+  const refreshToken = await CreateRefreshToken(
+    user._id.toString(),
+    param.role
+  );
 
   return {
     id: auth._id.toString(),
@@ -101,7 +107,7 @@ export const TokenRefresh = async (
   if (role == 'user') {
     data = await GetUser(userId);
   } else if (role == 'doctor') {
-    data = await FindOneEmployeeByEmail(userId);
+    data = await FindOneEmployee(userId);
   } else {
     throw new Error('Invalid role');
   }

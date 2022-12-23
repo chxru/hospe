@@ -10,4 +10,8 @@ const EmployeeSchema = new Schema({
   qualification: { type: String, required: true },
 });
 
+EmployeeSchema.virtual('displayName').get(function () {
+  return this.name;
+});
+
 export const EmployeeModel = model('Employee', EmployeeSchema);
