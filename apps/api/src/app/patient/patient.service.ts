@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid/async';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { hashPassword } from '../../services/bcrypt.service';
 import { Patient } from './schema/patient.schema';
-
+import * as crypto from 'crypto';
 @Injectable()
 export class PatientService {
   constructor(
@@ -14,7 +14,7 @@ export class PatientService {
   ) {}
 
   async create(createPatientDto: CreatePatientDto) {
-    const password = await nanoid();
+    const password = await this.generatePassword();
     const hashed = await hashPassword(password);
 
     const patient = await this.PatientModel.create({
@@ -29,7 +29,7 @@ export class PatientService {
     };
   }
 
-  async findEmployeeByName(name): Promise<Patient[]> {
+  async findPatientByName(name): Promise<Patient[]> {
     return await this.PatientModel.find({ name: name });
   }
 
@@ -41,5 +41,17 @@ export class PatientService {
 
   async remove(id: number) {
     return await this.PatientModel.findByIdAndRemove(id);
+  }
+
+  generatePassword(): string {
+    const passwordLength = 8;
+    const charset =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let password = '';
+    for (let i = 0; i < passwordLength; i++) {
+      const randomNumber = crypto.randomBytes(1)[0] % charset.length;
+      password += charset[randomNumber];
+    }
+    return password;
   }
 }

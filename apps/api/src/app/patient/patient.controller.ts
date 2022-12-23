@@ -20,16 +20,16 @@ export class PatientController {
   }
 
   @Get('/:name')
-  findEmployeeByName(@Param('name') name) {
-    return this.patientService.findEmployeeByName(name);
+  findPatientByName(@Param('name') name) {
+    return this.patientService.findPatientByName(name);
   }
 
   @Put('/:id')
-  update(@Param('id') id, @Body() updateEmployeeDto: CreatePatientDto) {
-    return this.patientService.update(id, updateEmployeeDto);
+  update(@Param('id') id, @Body() updatePatientDto: CreatePatientDto) {
+    return this.patientService.update(id, updatePatientDto);
   }
 
-  @Delete('/doctor/:id')
+  @Delete('/patient/:id')
   remove(@Param('id') id) {
     return this.patientService.remove(id);
   }
