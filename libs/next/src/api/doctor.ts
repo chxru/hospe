@@ -19,7 +19,12 @@ const GetAll = () => {
   return instance.get('/channeling/').then((res) => res.data);
 };
 
+const Delete = (props: string) => {
+  return instance.delete(`/channeling/${props}`).then((res) => res.data);
+};
+
 export const Doctor = {
   CreateSession,
   GetAll,
+  Delete,
 };

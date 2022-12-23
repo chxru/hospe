@@ -13,8 +13,7 @@ const doctorRegistration = () => {
   ];
 
   const onSubmit = async (values: IDoctorCreate) => {
-    const res = await Api.Employee.CreateDoctor(values);
-    console.log(res);
+    await Api.Employee.CreateDoctor(values);
   };
 
   return (

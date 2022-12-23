@@ -21,6 +21,9 @@ interface Session {
   doctorFee: number;
 }
 
+export interface Formdata {
+  _id: string;
+}
 export function Index() {
   const [session, setSession] = useState<Session[]>([]);
 
@@ -29,6 +32,13 @@ export function Index() {
       setSession(res);
     });
   }, []);
+
+  const onSubmit = async (values: Formdata) => {
+    await Api.Doctor.Delete(values._id);
+    Api.Doctor.GetAll().then((res) => {
+      setSession(res);
+    });
+  };
 
   return (
     <>
@@ -67,7 +77,10 @@ export function Index() {
             </Group>
 
             <ScrollArea style={{ height: '80%', width: '100%' }}>
-              <UpcomingDetails upcomingDetailsdata={session} />
+              <UpcomingDetails
+                upcomingDetailsdata={session}
+                onSubmit={onSubmit}
+              />
             </ScrollArea>
           </Paper>
         </div>
