@@ -12,6 +12,10 @@ export const FindOneChanneling = async (id: string) => {
   return await ChannelingModel.findOne({ _id: id });
 };
 
+export const FindAllChannelingByDocId = async (docId: string) => {
+  return await ChannelingModel.find({ docId });
+};
+
 export const FindAllChanneling = async () => {
   return await ChannelingModel.find();
 };

@@ -1,14 +1,5 @@
 import { FC } from 'react';
-import {
-  Text,
-  Table,
-  ScrollArea,
-  Avatar,
-  Group,
-  createStyles,
-  Card,
-} from '@mantine/core';
-import { At, ReportMedical } from 'tabler-icons-react';
+import { Text, Table, ScrollArea } from '@mantine/core';
 
 interface RowDetailsProps {
   _id: string;
