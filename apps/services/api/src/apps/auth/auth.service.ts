@@ -40,8 +40,8 @@ export const Login = async (param: UserLoginReq) => {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  const accessToken = await CreateAccessToken(auth._id.toString(), 'user');
-  const refreshToken = await CreateRefreshToken(auth._id.toString(), 'user');
+  const accessToken = await CreateAccessToken(user._id.toString(), 'user');
+  const refreshToken = await CreateRefreshToken(user._id.toString(), 'user');
 
   return {
     id: auth._id.toString(),
