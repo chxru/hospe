@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { ProfileCard } from './profileCard';
-import { DoctorDetailsProps } from './profileCard';
+import { ProfileCardProps } from './profileCard';
 
 export default {
   component: ProfileCard,
   title: 'Channeling/Searching/Profile Card',
 } as ComponentMeta<typeof ProfileCard>;
 
-const mockdata: DoctorDetailsProps = {
+const mockdata: ProfileCardProps = {
   data: [
     {
       name: 'John Davis',

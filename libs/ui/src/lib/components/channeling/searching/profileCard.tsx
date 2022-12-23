@@ -1,16 +1,11 @@
 import { FC } from 'React';
 import { Text, Button, Avatar, Paper } from '@mantine/core';
 
-interface ProfileCardProps {
-  name: string;
-  specialization: string;
+export interface ProfileCardProps {
+  data: { name: string; specialization: string }[];
 }
 
-export interface DoctorDetailsProps {
-  data: ProfileCardProps[];
-}
-
-export const ProfileCard: FC<DoctorDetailsProps> = ({ data }) => {
+export const ProfileCard: FC<ProfileCardProps> = ({ data }) => {
   return (
     <Paper
       radius="md"
