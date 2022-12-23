@@ -1,5 +1,6 @@
 import { TokenRefreshRes } from '@hospe/types';
 import create from 'zustand';
+import { UpdateAxiosInstance } from '../api/axios';
 
 interface AuthState {
   isLoading: boolean;
@@ -46,17 +47,20 @@ export const useAuthStore = create<AuthState>((set) => ({
     })),
 
   /** Update store on user authenticate */
-  onSignIn: (id: string, displayName: string, email: string, token: string) =>
+  onSignIn: (id: string, displayName: string, email: string, token: string) => {
+    UpdateAxiosInstance(token);
     set((state) => ({
       ...state,
       displayName,
       email,
       accessToken: token,
       isAuthenticated: true,
-    })),
+    }));
+  },
 
   /** Update store on user logout */
-  onSignOut: () =>
+  onSignOut: () => {
+    UpdateAxiosInstance('');
     set((state) => ({
       ...state,
       isAuthenticated: false,
@@ -64,12 +68,15 @@ export const useAuthStore = create<AuthState>((set) => ({
       displayName: null,
       email: null,
       accessToken: null,
-    })),
+    }));
+  },
 
-  updateToken: (data: TokenRefreshRes) =>
+  updateToken: (data: TokenRefreshRes) => {
+    UpdateAxiosInstance(data.accessToken);
     set((state) => ({
       ...state,
       ...data,
       isAuthenticated: !!data.accessToken,
-    })),
+    }));
+  },
 }));
