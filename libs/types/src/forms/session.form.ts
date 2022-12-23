@@ -1,6 +1,8 @@
 export interface ISessionForm {
+  docId: string,
+  docName: string,
   date: string,
   time: string;
-  maxPatients: number;
+  maximumPatients: number;
   doctorFee: number;
 }
