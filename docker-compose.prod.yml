@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+
+  mongo:
+    image: mongo:6.0.3
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - db:/data/db
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api.Dockerfile
+    container_name: api
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'api.chxru.com'
+      VIRTUAL_PORT: 5000
+      MONGO_URL: 'mongodb://mongo/'
+      MONGO_DB: 'hospe'
+      MONGO_USER: 'root'
+      MONGO_PASS: 'example'
+      REDIS_HOST: 'redis'
+      REDIS_PORT: 6379
+    ports:
+      - "5000"
+
+volumes:
+  db:
+
+
+networks:
+  default:
+    external:
+      name: my-network
