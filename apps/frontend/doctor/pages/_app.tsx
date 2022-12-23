@@ -7,10 +7,30 @@ import {
   PlaylistAdd,
 } from 'tabler-icons-react';
 import { MantineProvider } from '@mantine/core';
-import { Sidebar } from '@hospe/ui';
+import { AuthScreen, Sidebar, SplashScreen } from '@hospe/ui';
+import { Api, useAuthStore } from '@hospe/next';
+import { useCallback, useEffect } from 'react';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
+
+  const { isLoading, isAuthenticated, toggleLoading, updateToken } =
+    useAuthStore();
+
+  const RefreshToken = useCallback(async () => {
+    const data = await Api.Auth.RefreshToken();
+    if (data) {
+      updateToken(data);
+    }
+    toggleLoading();
+  }, [updateToken, toggleLoading]);
+
+  useEffect(() => {
+    if (isLoading && !isAuthenticated) {
+      RefreshToken();
+    }
+  }, [isLoading, isAuthenticated, RefreshToken]);
+
   const mockData = {
     title: 'Mantine',
     username: 'John Doe',
@@ -34,6 +54,9 @@ export default function App(props: AppProps) {
     ],
     children: undefined,
   };
+
+  if (isLoading) return <SplashScreen />;
+  if (!isAuthenticated) return <AuthScreen role="doctor" />;
 
   return (
     <>

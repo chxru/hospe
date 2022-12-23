@@ -19,6 +19,8 @@ export const AuthMiddleware = (public_endpoints: string[]) => {
       return;
     }
 
+    req.user = payload;
+
     next();
   };
 };

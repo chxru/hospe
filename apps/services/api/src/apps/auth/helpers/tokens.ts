@@ -1,10 +1,9 @@
-import { model } from 'mongoose';
 import { nanoid } from 'nanoid/async';
 import { createClient } from 'redis';
 
 import type { Roles } from '@hospe/types';
 
-import { RefreshTokenSchema } from '../auth.schema';
+import { RefreshTokenModel } from '../auth.schema';
 
 // redis
 const redis = createClient({
@@ -30,9 +29,6 @@ interface RedisPayload {
 export const ConnectRedis = async () => {
   await redis.connect();
 };
-
-// mongodb
-const RefreshTokenModel = model('RefreshToken', RefreshTokenSchema);
 
 /**
  * Expiration time in minutes
@@ -70,7 +66,7 @@ export const CreateAccessToken = async (id: string, role: Roles) => {
  * @param roles
  * @returns
  */
-export const CreateRefreshToken = async (roles: Roles[]) => {
+export const CreateRefreshToken = async (id: string, role: Roles) => {
   const token = await nanoid();
   const today = new Date();
   const expiredAt = new Date(
@@ -80,7 +76,8 @@ export const CreateRefreshToken = async (roles: Roles[]) => {
   const refreshToken = new RefreshTokenModel({
     _id: token,
     expiredAt,
-    roles,
+    role,
+    userId: id,
   });
 
   await refreshToken.save();
@@ -123,5 +120,5 @@ export const ValidateRefreshToken = async (token: string) => {
     return false;
   }
 
-  return true;
+  return { userId: refreshToken.userId, role: refreshToken.role };
 };
