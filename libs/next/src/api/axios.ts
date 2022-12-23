@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from '../store';
 
-const API_URL = process.env['PRODUCTION']
-  ? process.env['API_URL']
-  : 'http://localhost:5000';
+const API_URL = process.env['API_URL'] || 'http://localhost:5000';
 
 export let instance = axios.create({
   baseURL: API_URL,
