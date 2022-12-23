@@ -1,4 +1,4 @@
-import { PatientDetails, UpcomingDetails, CreateSession } from '@hospe/ui';
+import { PatientDetails, UpcomingDetails } from '@hospe/ui';
 import {
   Paper,
   SimpleGrid,
@@ -7,7 +7,7 @@ import {
   Text,
   Group,
 } from '@mantine/core';
-import { Users, Report, ReportMedical } from 'tabler-icons-react';
+import { Users, Report } from 'tabler-icons-react';
 
 export function Index() {
   return (
