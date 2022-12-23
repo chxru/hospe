@@ -1,5 +1,7 @@
 import { Api, useAuthStore } from '@hospe/next';
 import { AuthScreen, Sidebar, SplashScreen } from '@hospe/ui';
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useCallback, useEffect } from 'react';
@@ -46,14 +48,22 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to management!</title>
+        <title>Hospe :: Management</title>
       </Head>
 
-      <main className="app">
-        <Sidebar {...mockData}>
-          <Component {...pageProps} />
-        </Sidebar>
-      </main>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme: 'light',
+        }}
+      >
+        <NotificationsProvider>
+          <Sidebar {...mockData}>
+            <Component {...pageProps} />
+          </Sidebar>
+        </NotificationsProvider>
+      </MantineProvider>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { AuthenticationForm } from '@hospe/ui';
 
 import type { IAuthForm, Roles } from '@hospe/types';
 import { Api, useAuthStore } from '@hospe/next';
+import { showNotification } from '@mantine/notifications';
 import { FunctionComponent } from 'react';
 
 interface AuthScreenProps {
@@ -27,8 +28,22 @@ export const AuthScreen: FunctionComponent<AuthScreenProps> = ({ role }) => {
         res.email,
         res.tokens.access.value
       );
+
+      showNotification({
+        title: 'Login Successful',
+        message: 'Welcome back!',
+        autoClose: true,
+        color: 'teal',
+      });
     } catch (error) {
       console.error(error);
+
+      showNotification({
+        title: 'Login Failed',
+        message: 'Please check your credentials and try again.',
+        autoClose: true,
+        color: 'red',
+      });
     }
   };
 

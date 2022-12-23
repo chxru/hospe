@@ -8,6 +8,7 @@ import {
   ReportMedical,
 } from 'tabler-icons-react';
 import { Sidebar } from '@hospe/ui';
+import { NotificationsProvider } from '@mantine/notifications';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -36,7 +37,7 @@ export default function App(props: AppProps) {
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>Hospe</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -47,13 +48,14 @@ export default function App(props: AppProps) {
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          /** Put your mantine theme override here */
           colorScheme: 'light',
         }}
       >
-        <Sidebar {...mockData}>
-          <Component {...pageProps} />
-        </Sidebar>
+        <NotificationsProvider>
+          <Sidebar {...mockData}>
+            <Component {...pageProps} />
+          </Sidebar>
+        </NotificationsProvider>
       </MantineProvider>
     </>
   );
