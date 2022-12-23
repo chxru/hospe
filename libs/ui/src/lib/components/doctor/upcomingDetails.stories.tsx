@@ -10,45 +10,13 @@ export default {
 const mockdata: UpcomingDetailsProps = {
   upcomingDetailsdata: [
     {
+      __v: '1',
+      docId: '1',
+      _id: '1',
       time: '8.30 PM',
       date: '2022-08-15',
-      patientsNumber: 12,
-      location: 'Room 06',
-    },
-
-    {
-      time: '10.30 PM',
-      date: '2022-08-16',
-      patientsNumber: 25,
-      location: 'Room 08',
-    },
-
-    {
-      time: '8.30 PM',
-      date: '2022-08-16',
-      patientsNumber: 32,
-      location: 'Room 10',
-    },
-
-    {
-      time: '8.30 PM',
-      date: '2022-08-15',
-      patientsNumber: 12,
-      location: 'Room 06',
-    },
-
-    {
-      time: '8.30 PM',
-      date: '2022-08-15',
-      patientsNumber: 12,
-      location: 'Room 06',
-    },
-
-    {
-      time: '8.30 PM',
-      date: '2022-08-15',
-      patientsNumber: 12,
-      location: 'Room 06',
+      maximumPatients: 12,
+      doctorFee: 1000,
     },
   ],
 };
