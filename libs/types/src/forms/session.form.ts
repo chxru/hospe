@@ -1,5 +1,5 @@
 export interface ISessionForm {
-  date: Date,
+  date: string,
   time: string;
   maxPatients: number;
   doctorFee: number;
