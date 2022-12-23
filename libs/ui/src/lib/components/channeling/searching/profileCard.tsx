@@ -1,4 +1,4 @@
-import { FC } from 'React';
+import { FC } from 'react';
 import { Text, Button, Avatar, Paper } from '@mantine/core';
 
 export interface ProfileCardProps {
