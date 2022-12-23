@@ -1,8 +1,15 @@
-import { CreateSession } from '@hospe/ui';
+import { Api } from '@hospe/next';
+import { CreateSessionForm } from '@hospe/ui';
 import { Center, Divider, Group, Paper, Text } from '@mantine/core';
 import { ReportMedical } from 'tabler-icons-react';
+import { ISessionForm } from '@hospe/types';
 
-const createSession = () => {
+const CreateSession = () => {
+  const onSubmit = async (values: ISessionForm) => {
+    const res = await Api.Doctor.CreateSession(values);
+    console.log(res);
+  };
+
   return (
     <div>
       <Center>
@@ -28,11 +35,11 @@ const createSession = () => {
             <Text size="sm">Add new channeling session</Text>
           </Group>
 
-          <CreateSession />
+          <CreateSessionForm onSubmit={onSubmit} />
         </Paper>
       </Center>
     </div>
   );
 };
 
-export default createSession;
+export default CreateSession;
