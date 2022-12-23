@@ -71,11 +71,8 @@ export const Register = async (param: RegisterProps) => {
 
   await auth.save();
 
-  const accessToken = await CreateAccessToken(auth._id.toString(), param.role);
-  const refreshToken = await CreateRefreshToken(
-    auth._id.toString(),
-    param.role
-  );
+  const accessToken = await CreateAccessToken(param.userId, param.role);
+  const refreshToken = await CreateRefreshToken(param.userId, param.role);
 
   return {
     id: auth._id.toString(),
