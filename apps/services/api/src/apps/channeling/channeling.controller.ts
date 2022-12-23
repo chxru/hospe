@@ -44,7 +44,7 @@ router.delete('/:id', async (req, res) => {
 /* create channeling session */
 router.post('/create-channeling', async (req, res) => {
   try {
-    const data = await CreateChanneling(req.body);
+    const data = await CreateChanneling(req.user.id, req.body);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);
