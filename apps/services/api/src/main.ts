@@ -12,20 +12,23 @@ import { router as employeeRouter } from './apps/employee/employee.controller';
 import { router as userRouter } from './apps/user/user.controller';
 
 import { ConnectRedis } from './apps/auth/helpers/tokens';
+import { AuthMiddleware } from './apps/auth/auth.middleware';
 
 const app = express();
+
+const PUBLIC_URLS = ['/auth/login', '/auth/register', '/auth/token'];
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(AuthMiddleware(PUBLIC_URLS));
 
 app.use('/auth', authRouter);
 app.use('/booking', bookingRouter);
 app.use('/channeling', channelingRouter);
 app.use('/employee', employeeRouter);
 app.use('/user', userRouter);
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
