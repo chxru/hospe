@@ -16,7 +16,7 @@ import { AuthMiddleware } from './apps/auth/auth.middleware';
 
 const app = express();
 
-const PUBLIC_URLS = ['/auth/login', '/auth/register', '/auth/token'];
+const PUBLIC_URLS = ['/auth/login', '/auth/token', '/user/create'];
 
 app.use(cors());
 app.use(morgan('dev'));
