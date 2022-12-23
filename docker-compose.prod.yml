@@ -45,6 +45,24 @@ services:
     ports:
       - "5000"
 
+  user:
+    build:
+      context: .
+      dockerfile: ./docker/user.Dockerfile
+    container_name: user
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+      - api
+    environment:
+      VIRTUAL_HOST: 'user.chxru.com'
+      VIRTUAL_PORT: 4200
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4200"
+
 volumes:
   db:
 
