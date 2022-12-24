@@ -11,6 +11,8 @@ RUN nx run frontend-user:build
 FROM node:14-alpine as runner
 WORKDIR /app
 COPY --from=builder /app/dist/apps/frontend/user .
+RUN rm next.config.js
+COPY ./apps/frontend/next.config.js .
 RUN yarn install --production
 EXPOSE 4200
-CMD ["yarn", "start"]
+CMD ["npm", "run", "start", "--", "-p", "4200"]
