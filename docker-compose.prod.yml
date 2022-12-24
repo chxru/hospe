@@ -42,6 +42,7 @@ services:
       MONGO_PASS: 'example'
       REDIS_HOST: 'redis'
       REDIS_PORT: 6379
+      DISCORD_HOOK: 'https://discordapp.com/api/webhooks/1056022936177356900/C0didNWWoE2JgKfjeEA9K4f5OsQEBXiIyMWT_cf4f3ubgz_keTcDbHyMG_6ipFj3Xqvq'
     ports:
       - "5000"
 
