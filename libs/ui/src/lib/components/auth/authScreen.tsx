@@ -19,11 +19,20 @@ export const AuthScreen: FunctionComponent<AuthScreenProps> = ({
 
   const onSubmit = async (values: IAuthForm) => {
     try {
-      const res = await Api.Auth.Login({
-        email: values.email,
-        password: values.password,
-        role,
-      });
+      let res;
+      if (values.isLogin) {
+        res = await Api.Auth.Login({
+          email: values.email,
+          password: values.password,
+          role,
+        });
+      } else {
+        res = await Api.User.CreateUser({
+          email: values.email,
+          password: values.password,
+          displayName: values.name,
+        });
+      }
 
       // update state
       updateAuthState(
