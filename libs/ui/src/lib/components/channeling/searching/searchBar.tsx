@@ -8,8 +8,11 @@ import {
   NativeSelect,
   Select,
   Center,
+  Paper,
+  Group,
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
+import { useForm } from '@mantine/hooks';
 
 interface SearchBarProps {
   specializations: string[];
@@ -17,73 +20,63 @@ interface SearchBarProps {
   gender: string[];
 }
 
-export interface SearchDetailsProps {
-  searchData: SearchBarProps[];
+export interface Formdata {
+  Doctype: string;
 }
 
-export const SearchBar: FC<SearchDetailsProps> = ({ searchData }) => {
+export interface SearchDetailsProps {
+  searchData: SearchBarProps[];
+  onSubmit: (values: Formdata) => void;
+}
+
+export const SearchBar: FC<SearchDetailsProps> = (props) => {
+  const form = useForm<Formdata>({
+    initialValues: {
+      Doctype: '',
+    },
+  });
   return (
     <Container>
       <Box>
-        <Grid
-          sx={(theme) => ({
-            backgroundColor: '#e6f3fa',
-            padding: theme.spacing.xl,
-            borderRadius: theme.radius.md,
-          })}
+        <form
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            props.onSubmit(form.values);
+          }}
         >
-          <Grid.Col md={4}>
-            <Select
-              data={searchData[0].specializations}
-              placeholder="Select Specialization"
-              label="Specialization"
-              radius="md"
-              size="md"
-            />
-          </Grid.Col>
-          <Grid.Col md={8}>
-            <TextInput
-              radius="md"
-              size="md"
-              label="Doctor Name"
-              rightSectionWidth={42}
-            />
-          </Grid.Col>
-          <Grid.Col md={4}>
-            <NativeSelect
-              data={searchData[0].time}
-              label="Prefered Time"
-              placeholder="Any"
-              radius="md"
-              size="md"
-            />
-          </Grid.Col>
-          <Grid.Col md={4}>
-            <NativeSelect
-              data={searchData[0].gender}
-              label="Gender"
-              placeholder="Any"
-              radius="md"
-              size="md"
-            />
-          </Grid.Col>
-          <Grid.Col md={4}>
-            <DatePicker
-              placeholder="Any /Any /Any"
-              label="Date"
-              radius="md"
-              size="md"
-            />
-          </Grid.Col>
-
-          <Grid.Col md={12}>
+          <Paper
+            radius="md"
+            shadow="sm"
+            withBorder
+            p="lg"
+            m="md"
+            style={{ height: '100%' }}
+            sx={(theme) => ({
+              backgroundColor:
+                theme.colorScheme === 'dark'
+                  ? theme.colors.dark[8]
+                  : theme.white,
+            })}
+          >
             <Center>
-              <Button variant="filled" radius="md" size="md">
-                Channel Search
-              </Button>
+              <Grid>
+                <Select
+                  data={props.searchData[0].specializations}
+                  placeholder="Select Specialization"
+                  label="Specialization"
+                  radius="md"
+                  size="md"
+                  {...form.getInputProps('Doctype')}
+                />
+              </Grid>
             </Center>
-          </Grid.Col>
-        </Grid>
+            <Center>
+              <Grid mt={'sm'}>
+                <Button type="submit">Search</Button>
+              </Grid>
+            </Center>
+          </Paper>
+        </form>
       </Box>
     </Container>
   );

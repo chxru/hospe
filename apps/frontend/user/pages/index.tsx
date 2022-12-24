@@ -1,56 +1,54 @@
-import { useAuthStore } from '@hospe/next';
-import { ResultCard, SearchBar } from '@hospe/ui';
+import { SearchBar, SearchRes } from '@hospe/ui';
 import { Center, SimpleGrid } from '@mantine/core';
+import { Api } from '@hospe/next';
+import { useEffect, useState } from 'react';
+
+export interface Formdata {
+  Doctype: string;
+}
+
+interface SearchData {
+  _id: string;
+  docType: string;
+  docFee: number;
+  time: string;
+  maximumPatients: number;
+  date: string;
+  docName: string;
+}
+
+interface docFee {
+  docFee: number;
+}
 
 const IndexPage = () => {
-  const { displayName } = useAuthStore();
+  const [session, setSession] = useState<SearchData[]>([]);
+  const [fee, setFee] = useState<docFee[]>([]);
+
+  useEffect(() => {
+    setSession([]);
+  }, []);
+
+  const onSubmit = async (values: Formdata) => {
+    const data = await Api.Doctor.GetTypes(values.Doctype);
+    setSession(data);
+    setFee(data.docFee);
+  };
 
   const mockDataSearch = {
     searchData: [
       {
-        specializations: ['General Physician', 'Dentist', 'Cardiologist'],
+        specializations: ['Surgeon', 'ENT', 'VOG'],
         time: ['Any', 'Morning', 'Afternoon', 'Evening'],
         gender: ['Any', 'Male', 'Female'],
       },
     ],
   };
 
-  const mockDataResult = {
-    data: [
-      {
-        name: 'John Doe',
-        specialization: 'General Physician',
-        patientCount: 10,
-        time: 10,
-        fee: 100,
-      },
-      {
-        name: 'John Doe',
-        specialization: 'General Physician',
-        patientCount: 10,
-        time: 10,
-        fee: 100,
-      },
-      {
-        name: 'John Doe',
-        specialization: 'General Physician',
-        patientCount: 10,
-        time: 10,
-        fee: 100,
-      },
-    ],
-  };
-
-  const items = mockDataResult.data.map((item) => (
-    <div key={item.name}>
-      <ResultCard {...mockDataResult}></ResultCard>
-    </div>
-  ));
-
   return (
     <>
       <div>
-        <SearchBar {...mockDataSearch}></SearchBar>
+        <SearchBar {...mockDataSearch} onSubmit={onSubmit}></SearchBar>
         <Center>
           <SimpleGrid
             cols={3}
@@ -61,9 +59,10 @@ const IndexPage = () => {
               { maxWidth: 755, cols: 1, spacing: 'sm' },
             ]}
           >
-            {items}
+            {/* {items} */}
           </SimpleGrid>
         </Center>
+        <SearchRes searchData={session}></SearchRes>
       </div>
     </>
   );

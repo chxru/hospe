@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { useForm } from '@mantine/form';
 import {
   Text,
   Modal,
@@ -10,7 +9,7 @@ import {
   TextInput,
   Image,
 } from '@mantine/core';
-import { BrandPaypal, Icons } from 'tabler-icons-react';
+import { BrandPaypal } from 'tabler-icons-react';
 
 interface RowDetailsProps {
   amount: number;
@@ -28,7 +27,7 @@ export const Payment: FC<PaymentProps> = ({ paymentData }) => {
       <Modal opened={opened} onClose={() => setOpened(false)}>
         <Center>
           <Group>
-            <BrandPaypal size={30} strokeWidth={2} color={'black'} />;
+            <BrandPaypal size={30} strokeWidth={2} color={'black'} />
             <Text size="xl" weight={500}>
               Checkout
             </Text>
@@ -77,7 +76,7 @@ export const Payment: FC<PaymentProps> = ({ paymentData }) => {
       </Modal>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={() => setOpened(true)}>Book</Button>
       </Group>
     </div>
   );
