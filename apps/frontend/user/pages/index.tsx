@@ -1,14 +1,25 @@
 import { useAuthStore } from '@hospe/next';
 import { ResultCard, SearchBar } from '@hospe/ui';
 import { Center, SimpleGrid } from '@mantine/core';
+import { Api } from '@hospe/next';
+
+export interface Formdata {
+  Doctype: string;
+}
 
 const IndexPage = () => {
   const { displayName } = useAuthStore();
 
+  const onSubmit = async (values: Formdata) => {
+    console.log(values.Doctype);
+    const data = await Api.Doctor.GetTypes(values.Doctype);
+    console.log(data);
+  };
+
   const mockDataSearch = {
     searchData: [
       {
-        specializations: ['General Physician', 'Dentist', 'Cardiologist'],
+        specializations: ['Surgeon', 'Dentist', 'Cardiologist'],
         time: ['Any', 'Morning', 'Afternoon', 'Evening'],
         gender: ['Any', 'Male', 'Female'],
       },
@@ -41,16 +52,16 @@ const IndexPage = () => {
     ],
   };
 
-  const items = mockDataResult.data.map((item) => (
-    <div key={item.name}>
-      <ResultCard {...mockDataResult}></ResultCard>
-    </div>
-  ));
+  // const items = mockDataResult.data.map((item) => (
+  //   <div key={item.name}>
+  //     <ResultCard {...mockDataResult}></ResultCard>
+  //   </div>
+  // ));
 
   return (
     <>
       <div>
-        <SearchBar {...mockDataSearch}></SearchBar>
+        <SearchBar {...mockDataSearch} onSubmit={onSubmit}></SearchBar>
         <Center>
           <SimpleGrid
             cols={3}
@@ -61,7 +72,7 @@ const IndexPage = () => {
               { maxWidth: 755, cols: 1, spacing: 'sm' },
             ]}
           >
-            {items}
+            {/* {items} */}
           </SimpleGrid>
         </Center>
       </div>

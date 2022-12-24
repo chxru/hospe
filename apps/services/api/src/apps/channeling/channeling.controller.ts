@@ -7,7 +7,10 @@ import {
   UpdateChanneling,
   FindAllChanneling,
   FindAllChannelingByDocId,
+  FindAllChannelingByDocType,
 } from './channeling.service';
+
+import { FindOneEmployee } from '../employee/employee.service';
 
 export const router = Router();
 
@@ -41,6 +44,15 @@ router.get('/:docId', async (req, res) => {
   }
 });
 
+router.get('/:docType', async (req, res) => {
+  try {
+    const data = await FindAllChannelingByDocType(req.params.docType);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+
 /* delete channeling session by id */
 router.delete('/:id', async (req, res) => {
   try {
@@ -55,7 +67,9 @@ router.delete('/:id', async (req, res) => {
 /* create channeling session */
 router.post('/create-channeling', async (req, res) => {
   try {
-    const data = await CreateChanneling(req.user.id, req.body);
+    const docData = await FindOneEmployee(req.user.id);
+    const docType = docData.specialization;
+    const data = await CreateChanneling(req.user.id, docType, req.body);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);
