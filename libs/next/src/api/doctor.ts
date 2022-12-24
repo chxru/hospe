@@ -24,8 +24,8 @@ const Delete = (props: string) => {
   return instance.delete(`/channeling/${props}`).then((res) => res.data);
 };
 
-const GetTypes = (props: string) => {
-  return instance.get(`/channeling/${props}`).then((res) => res.data);
+const GetTypes = (type: string) => {
+  return instance.get(`/channeling/type/${type}`).then((res) => res.data);
 };
 
 export const Doctor = {

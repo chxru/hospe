@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:docId', async (req, res) => {
+router.get('/doctor/:docId', async (req, res) => {
   try {
     const data = await FindAllChannelingByDocId(req.params.docId);
     res.status(200).json(data);
@@ -44,7 +44,7 @@ router.get('/:docId', async (req, res) => {
   }
 });
 
-router.get('/:docType', async (req, res) => {
+router.get('/type/:docType', async (req, res) => {
   try {
     const data = await FindAllChannelingByDocType(req.params.docType);
     res.status(200).json(data);
