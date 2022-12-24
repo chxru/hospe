@@ -15,6 +15,9 @@ const mockData: SearchDetailsProps = {
       gender: ['Any', 'Male', 'Female'],
     },
   ],
+  onSubmit: (values) => {
+    console.log(values);
+  },
 };
 
 const Template: ComponentStory<typeof SearchBar> = () => (
