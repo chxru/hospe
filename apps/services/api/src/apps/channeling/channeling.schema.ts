@@ -7,6 +7,7 @@ const ChannelingSchema = new Schema({
   time: { type: String, required: true, index: -1 },
   maximumPatients: { type: Number, required: true },
   doctorFee: { type: Number, required: true },
+  docName: { type: String, required: true },
 });
 
 export const ChannelingModel = model('Channeling', ChannelingSchema);

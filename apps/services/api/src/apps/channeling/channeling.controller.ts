@@ -69,7 +69,13 @@ router.post('/create-channeling', async (req, res) => {
   try {
     const docData = await FindOneEmployee(req.user.id);
     const docType = docData.specialization;
-    const data = await CreateChanneling(req.user.id, docType, req.body);
+    const docName = docData.name;
+    const data = await CreateChanneling(
+      req.user.id,
+      docType,
+      docName,
+      req.body
+    );
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);
