@@ -10,6 +10,7 @@ import {
   Image,
 } from '@mantine/core';
 import { BrandPaypal } from 'tabler-icons-react';
+import { Api } from '@hospe/next';
 
 interface RowDetailsProps {
   amount: number;
@@ -21,6 +22,12 @@ export interface PaymentProps {
 
 export const Payment: FC<PaymentProps> = ({ paymentData }) => {
   const [opened, setOpened] = useState(false);
+
+  const onClick = () => {
+    setOpened(false);
+
+    Api.Doctor.Confirm(1000);
+  };
 
   return (
     <div>
@@ -69,7 +76,7 @@ export const Payment: FC<PaymentProps> = ({ paymentData }) => {
 
           <Center>
             <Group position="right" mt="md">
-              <Button type="submit">Pay LKR {paymentData.amount} </Button>
+              <Button onClick={onClick}>Pay LKR 1000 </Button>
             </Group>
           </Center>
         </form>

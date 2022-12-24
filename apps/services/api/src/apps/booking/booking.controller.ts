@@ -1,10 +1,11 @@
-import { Router } from "express";
-import { ExpressErrorResponseHandler } from "../../errors";
+import { Router } from 'express';
+import { ExpressErrorResponseHandler } from '../../errors';
 import {
+  ConfirmBooking,
   CreateBooking,
   DeleteBooking,
   FindOneBooking,
-} from "./booking.service";
+} from './booking.service';
 
 export const router = Router();
 
@@ -34,6 +35,15 @@ router.delete('/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const data = await DeleteBooking(id);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+
+router.post('/confirm', async (req, res) => {
+  try {
+    const data = await ConfirmBooking(req.user.id, req.body);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);

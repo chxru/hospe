@@ -44,7 +44,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   return (
     <Paper radius="md" p="xl" withBorder>
       <Text size="lg" weight={500}>
-        Welcome to Mantine, {isLogin ? 'login' : 'register'} with
+        Welcome to Hospe, {isLogin ? 'login' : 'register'} with
       </Text>
 
       <Group grow mb="md" mt="md">
