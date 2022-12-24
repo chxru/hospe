@@ -5,6 +5,7 @@ export interface CreateChannelingDto {
   readonly time: string;
   readonly maximumPatients: number;
   readonly doctorFee: number;
+  readonly docName: string;
 }
 
 export type UpdateChannelingDto = Partial<CreateChannelingDto>;

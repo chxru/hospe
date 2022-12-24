@@ -1,20 +1,44 @@
-import { SearchBar } from '@hospe/ui';
+import { SearchBar, SearchRes } from '@hospe/ui';
 import { Center, SimpleGrid } from '@mantine/core';
 import { Api } from '@hospe/next';
+import { useEffect, useState } from 'react';
 
 export interface Formdata {
   Doctype: string;
 }
 
+interface SearchData {
+  _id: string;
+  docType: string;
+  docFee: number;
+  time: string;
+  maximumPatients: number;
+  date: string;
+  docName: string;
+}
+
+interface docFee {
+  docFee: number;
+}
+
 const IndexPage = () => {
+  const [session, setSession] = useState<SearchData[]>([]);
+  const [fee, setFee] = useState<docFee[]>([]);
+
+  useEffect(() => {
+    setSession([]);
+  }, []);
+
   const onSubmit = async (values: Formdata) => {
     const data = await Api.Doctor.GetTypes(values.Doctype);
+    setSession(data);
+    setFee(data.docFee);
   };
 
   const mockDataSearch = {
     searchData: [
       {
-        specializations: ['Surgeon', 'Dentist', 'Cardiologist'],
+        specializations: ['Surgeon', 'ENT', 'VOG'],
         time: ['Any', 'Morning', 'Afternoon', 'Evening'],
         gender: ['Any', 'Male', 'Female'],
       },
@@ -38,6 +62,7 @@ const IndexPage = () => {
             {/* {items} */}
           </SimpleGrid>
         </Center>
+        <SearchRes searchData={session}></SearchRes>
       </div>
     </>
   );
