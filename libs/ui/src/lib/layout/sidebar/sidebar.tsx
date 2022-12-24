@@ -13,7 +13,6 @@ import {
 } from '@mantine/core';
 import { LinksGroup, LinksGroupProps } from './linkGroup';
 import { ChevronRight } from 'tabler-icons-react';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useAuthStore } from '@hospe/next';
 
 const Logo = ({ width }: { width: number }) => (

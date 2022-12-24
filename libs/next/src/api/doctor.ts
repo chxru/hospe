@@ -1,3 +1,4 @@
+import { ISessionForm } from '@hospe/types';
 import { instance } from './axios';
 
 interface CreateSessionProps {
@@ -26,6 +27,12 @@ const Delete = (props: string) => {
 
 const GetTypes = (type: string) => {
   return instance.get(`/channeling/type/${type}`).then((res) => res.data);
+};
+
+const CreateSession = (props: ISessionForm) => {
+  return instance
+    .post('/channeling/create-channeling', props)
+    .then((res) => res.data);
 };
 
 export const Doctor = {

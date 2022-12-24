@@ -13,6 +13,7 @@ import { router as userRouter } from './apps/user/user.controller';
 
 import { ConnectRedis } from './apps/auth/helpers/tokens';
 import { AuthMiddleware } from './apps/auth/auth.middleware';
+import { InitiateEmailService } from './apps/email/email.service';
 
 const app = express();
 
@@ -36,18 +37,26 @@ app.get('/', (req, res) => {
 
 const PORT = 5000;
 const main = async () => {
-  await mongoose.connect('mongodb://localhost:27017/', {
+  const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/';
+  const MONGO_DB = process.env.MONGO_DB || 'hospe';
+  const MONGO_USER = process.env.MONGO_USER || 'root';
+  const MONGO_PASS = process.env.MONGO_PASS || 'example';
+
+  await mongoose.connect(MONGO_URL, {
     auth: {
-      username: 'root',
-      password: 'example',
+      username: MONGO_USER,
+      password: MONGO_PASS,
     },
     authSource: 'admin',
-    dbName: 'hospe',
+    dbName: MONGO_DB,
   });
   console.log('Connected to MongoDB');
 
   await ConnectRedis();
   console.log('Connected to Redis');
+
+  await InitiateEmailService();
+  console.log('Email service initiated');
 
   await app.listen(PORT);
   console.log(`App listening on port ${PORT}!!`);

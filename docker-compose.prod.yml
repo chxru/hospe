@@ -1,0 +1,122 @@
+version: '3.9'
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+
+  mongo:
+    image: mongo:6.0.3
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - db:/data/db
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongo
+      VIRTUAL_HOST: 'mongo.chxru.com'
+      VIRTUAL_PORT: 8081
+    ports:
+      - "8081"
+
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api.Dockerfile
+    container_name: api
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'api.chxru.com'
+      VIRTUAL_PORT: 5000
+      MONGO_URL: 'mongodb://mongo/'
+      MONGO_DB: 'hospe'
+      MONGO_USER: 'root'
+      MONGO_PASS: 'example'
+      REDIS_HOST: 'redis'
+      REDIS_PORT: 6379
+      DISCORD_HOOK: 'https://discordapp.com/api/webhooks/1056022936177356900/C0didNWWoE2JgKfjeEA9K4f5OsQEBXiIyMWT_cf4f3ubgz_keTcDbHyMG_6ipFj3Xqvq'
+    ports:
+      - "5000"
+
+  doctor:
+    build:
+      context: .
+      dockerfile: ./docker/doctor.Dockerfile
+    container_name: doctor
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'doctor.chxru.com'
+      VIRTUAL_PORT: 4201
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4201"
+
+  management:
+    build:
+      context: .
+      dockerfile: ./docker/management.Dockerfile
+    container_name: management
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'management.chxru.com'
+      VIRTUAL_PORT: 4202
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4202"
+  user:
+    build:
+      context: .
+      dockerfile: ./docker/user.Dockerfile
+    container_name: user
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+      - api
+    environment:
+      VIRTUAL_HOST: 'user.chxru.com'
+      VIRTUAL_PORT: 4200
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4200"
+
+volumes:
+  db:
+
+
+networks:
+  default:
+    external:
+      name: my-network

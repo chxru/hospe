@@ -6,8 +6,7 @@ import { ISessionForm } from '@hospe/types';
 
 const CreateSession = () => {
   const onSubmit = async (values: ISessionForm) => {
-    const res = await Api.Doctor.CreateSession(values);
-    console.log(res);
+    await Api.Doctor.CreateSession(values);
   };
 
   return (

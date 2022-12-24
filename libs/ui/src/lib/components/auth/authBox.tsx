@@ -10,15 +10,18 @@ import {
   Divider,
   Checkbox,
   Anchor,
+  Center,
 } from '@mantine/core';
 import { GoogleButton, FacebookButton } from './icons/';
 
 import type { IAuthForm } from '@hospe/types';
 interface AuthenticationFormProps {
+  enableRegister?: boolean;
   onSubmit: (values: IAuthForm) => void;
 }
 
 export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
+  enableRegister,
   onSubmit,
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -100,25 +103,34 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           )}
         </Group>
 
-        <Group position="apart" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            color="gray"
-            onClick={() => {
-              setIsLogin((value) => {
-                form.setFieldValue('isLogin', !value);
-                return !value;
-              });
-            }}
-            size="xs"
-          >
-            {!isLogin
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
-          </Anchor>
-          <Button type="submit">{isLogin ? 'Login' : 'Register'}</Button>
-        </Group>
+        <Center>
+          <Button type="submit" mt={8}>
+            {isLogin ? 'Login' : 'Register'}
+          </Button>
+        </Center>
+
+        {enableRegister && (
+          <Center>
+            <Group position="apart" mt="xl">
+              <Anchor
+                component="button"
+                type="button"
+                color="gray"
+                onClick={() => {
+                  setIsLogin((value) => {
+                    form.setFieldValue('isLogin', !value);
+                    return !value;
+                  });
+                }}
+                size="xs"
+              >
+                {!isLogin
+                  ? 'Already have an account? Login'
+                  : "Don't have an account? Register"}
+              </Anchor>
+            </Group>
+          </Center>
+        )}
       </form>
     </Paper>
   );

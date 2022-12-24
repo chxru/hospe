@@ -7,19 +7,32 @@ import { showNotification } from '@mantine/notifications';
 import { FunctionComponent } from 'react';
 
 interface AuthScreenProps {
+  enableRegister?: boolean;
   role: Roles;
 }
 
-export const AuthScreen: FunctionComponent<AuthScreenProps> = ({ role }) => {
+export const AuthScreen: FunctionComponent<AuthScreenProps> = ({
+  enableRegister,
+  role,
+}) => {
   const updateAuthState = useAuthStore((state) => state.onSignIn);
 
   const onSubmit = async (values: IAuthForm) => {
     try {
-      const res = await Api.Auth.Login({
-        email: values.email,
-        password: values.password,
-        role,
-      });
+      let res;
+      if (values.isLogin) {
+        res = await Api.Auth.Login({
+          email: values.email,
+          password: values.password,
+          role,
+        });
+      } else {
+        res = await Api.User.CreateUser({
+          email: values.email,
+          password: values.password,
+          displayName: values.name,
+        });
+      }
 
       // update state
       updateAuthState(
@@ -49,7 +62,7 @@ export const AuthScreen: FunctionComponent<AuthScreenProps> = ({ role }) => {
 
   return (
     <Center style={{ width: '100vw', height: '100vh', position: 'absolute' }}>
-      <AuthenticationForm onSubmit={onSubmit} />
+      <AuthenticationForm enableRegister={enableRegister} onSubmit={onSubmit} />
     </Center>
   );
 };
