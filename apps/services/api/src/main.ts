@@ -13,6 +13,7 @@ import { router as userRouter } from './apps/user/user.controller';
 
 import { ConnectRedis } from './apps/auth/helpers/tokens';
 import { AuthMiddleware } from './apps/auth/auth.middleware';
+import { InitiateEmailService } from './apps/email/email.service';
 
 const app = express();
 
@@ -53,6 +54,9 @@ const main = async () => {
 
   await ConnectRedis();
   console.log('Connected to Redis');
+
+  await InitiateEmailService();
+  console.log('Email service initiated');
 
   await app.listen(PORT);
   console.log(`App listening on port ${PORT}!!`);
