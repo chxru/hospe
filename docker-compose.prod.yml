@@ -45,6 +45,39 @@ services:
     ports:
       - "5000"
 
+  doctor:
+    build:
+      context: .
+      dockerfile: ./docker/doctor.Dockerfile
+    container_name: doctor
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'doctor.chxru.com'
+      VIRTUAL_PORT: 4201
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4201"
+
+  management:
+    build:
+      context: .
+      dockerfile: ./docker/management.Dockerfile
+    container_name: management
+    restart: always
+    depends_on:
+      - mongo
+      - redis
+      - nginx-proxy
+    environment:
+      VIRTUAL_HOST: 'management.chxru.com'
+      VIRTUAL_PORT: 4202
+      API_URL: 'https://api.chxru.com'
+    ports:
+      - "4202"
   user:
     build:
       context: .
