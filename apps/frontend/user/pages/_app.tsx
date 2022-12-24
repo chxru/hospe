@@ -56,7 +56,7 @@ export default function App(props: AppProps) {
   };
 
   if (isLoading) return <SplashScreen />;
-  if (!isAuthenticated) return <AuthScreen role="user" />;
+  if (!isAuthenticated) return <AuthScreen enableRegister={true} role="user" />;
 
   return (
     <>
