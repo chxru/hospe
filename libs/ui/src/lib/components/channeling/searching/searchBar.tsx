@@ -8,6 +8,8 @@ import {
   NativeSelect,
   Select,
   Center,
+  Paper,
+  Group,
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/hooks';
@@ -42,29 +44,38 @@ export const SearchBar: FC<SearchDetailsProps> = (props) => {
             props.onSubmit(form.values);
           }}
         >
-          <Center>
-            <Grid
-              sx={(theme) => ({
-                backgroundColor: '#e6f3fa',
-                padding: theme.spacing.xl,
-                borderRadius: theme.radius.md,
-              })}
-            >
-              <Select
-                data={props.searchData[0].specializations}
-                placeholder="Select Specialization"
-                label="Specialization"
-                radius="md"
-                size="md"
-                {...form.getInputProps('Doctype')}
-              />
-            </Grid>
-          </Center>
-          <Center>
-            <Grid>
-              <Button type="submit">Search</Button>
-            </Grid>
-          </Center>
+          <Paper
+            radius="md"
+            shadow="sm"
+            withBorder
+            p="lg"
+            m="md"
+            style={{ height: '100%' }}
+            sx={(theme) => ({
+              backgroundColor:
+                theme.colorScheme === 'dark'
+                  ? theme.colors.dark[8]
+                  : theme.white,
+            })}
+          >
+            <Center>
+              <Grid>
+                <Select
+                  data={props.searchData[0].specializations}
+                  placeholder="Select Specialization"
+                  label="Specialization"
+                  radius="md"
+                  size="md"
+                  {...form.getInputProps('Doctype')}
+                />
+              </Grid>
+            </Center>
+            <Center>
+              <Grid mt={'sm'}>
+                <Button type="submit">Search</Button>
+              </Grid>
+            </Center>
+          </Paper>
         </form>
       </Box>
     </Container>

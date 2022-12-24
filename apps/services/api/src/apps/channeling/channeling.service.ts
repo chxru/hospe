@@ -4,9 +4,10 @@ import { ChannelingModel } from './channeling.schema';
 export const CreateChanneling = async (
   docId: string,
   docType: string,
+  docName: string,
   params: CreateChannelingDto
 ) => {
-  return await ChannelingModel.create({ ...params, docId, docType });
+  return await ChannelingModel.create({ ...params, docId, docType, docName });
 };
 
 export const FindOneChanneling = async (id: string) => {
