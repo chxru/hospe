@@ -50,7 +50,7 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
         {/* Number of active patients */}
         <Center>
           <Text size="xs" weight={500}>
-            Active Patients
+            Maximum Patients
           </Text>
         </Center>
         <Center>

@@ -28,7 +28,7 @@ router.get(':id', async (req, res) => {
 /* view all channeling sessions */
 router.get('/', async (req, res) => {
   try {
-    const data = await FindAllChanneling();
+    const data = await FindAllChannelingByDocId(req.user.id);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);

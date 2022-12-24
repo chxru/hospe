@@ -29,9 +29,14 @@ const GetTypes = (type: string) => {
   return instance.get(`/channeling/type/${type}`).then((res) => res.data);
 };
 
+const Confirm = (cost: number) => {
+  return instance.post('/booking/confirm', { cost }).then((res) => res.data);
+};
+
 export const Doctor = {
   CreateSession,
   GetAll,
   Delete,
   GetTypes,
+  Confirm,
 };
