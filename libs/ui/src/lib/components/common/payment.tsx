@@ -22,6 +22,7 @@ export interface PaymentProps {
 
 export const Payment: FC<PaymentProps> = ({ paymentData }) => {
   const [opened, setOpened] = useState(false);
+  const [color, setColor] = useState('blue');
 
   const onClick = () => {
     setOpened(false);

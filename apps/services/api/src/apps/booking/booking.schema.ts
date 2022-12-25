@@ -1,10 +1,9 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-export const BookingSchema = new Schema({
-  bookingId: { type: String, required: true, index: true },
-  docID: { type: String, required: true, index: true },
-  docName: { type: String, required: true },
-  bookingDate: { type: String, required: true, index: -1 },
-  bookingTime: { type: String, required: true, index: -1 },
-  bookingFee: { type: Number, required: true },
+const BookingSchema = new Schema({
+  userID: { type: String, required: true, index: true },
+  userName: { type: String, required: true },
+  sessionId: { type: String, required: true, index: true },
 });
+
+export const BookingModel = model('Booking', BookingSchema);

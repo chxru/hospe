@@ -1,9 +1,19 @@
-import { Center, Group, ScrollArea, Text, Table } from '@mantine/core';
+import { Center, Group, ScrollArea, Text, Table, Button } from '@mantine/core';
 import { FC } from 'react';
 import { Calendar, Clock, User } from 'tabler-icons-react';
-import { Payment } from '../../common/payment';
+import { Api } from '@hospe/next';
 
 interface RowDetailsProps {
+  _id: string;
+  docType: string;
+  docFee: number;
+  time: string;
+  maximumPatients: number;
+  date: string;
+  docName: string;
+}
+
+interface sesionData {
   _id: string;
   docType: string;
   docFee: number;
@@ -17,7 +27,19 @@ export interface searchDataProps {
   searchData: RowDetailsProps[];
 }
 
-export const SearchRes: FC<searchDataProps> = ({ searchData }, doctorfee) => {
+export const SearchRes: FC<searchDataProps> = ({ searchData }) => {
+  const getData = async (value: sesionData) => {
+    const session = {
+      sessionId: value._id,
+    };
+    const updateSession = {
+      id: value._id,
+      activePatients: value.maximumPatients - 1,
+    };
+
+    await Api.Booking.CreateBooking(session);
+  };
+
   const rows = searchData.map((item) => (
     <tr key={item._id}>
       {/* Appointment Date and time */}
@@ -50,10 +72,16 @@ export const SearchRes: FC<searchDataProps> = ({ searchData }, doctorfee) => {
       </td>
 
       <td>
-        {/* View button */}
+        {/* Booking button */}
         <Center>
           <Group>
-            <Payment paymentData={doctorfee} />
+            <Button
+              onClick={() => {
+                getData(item);
+              }}
+            >
+              Booking Session
+            </Button>
           </Group>
         </Center>
       </td>

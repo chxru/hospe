@@ -1,13 +1,16 @@
-import { model } from 'mongoose';
 import { SendEmail } from '../email/email.service';
 import { UserModel } from '../user/user.schema';
-import { CreateBookingDto } from './booking.dto';
-import { BookingSchema } from './booking.schema';
+import { CreateBookingDto, UpdateBookingDto } from './booking.dto';
+import { BookingModel } from './booking.schema';
 
-const BookingModel = model('Booking', BookingSchema);
+//const BookingModel = model('Booking', BookingSchema);
 
-export const CreateBooking = async (params: CreateBookingDto) => {
-  return await BookingModel.create(params);
+export const CreateBooking = async (
+  userID,
+  userName,
+  params: CreateBookingDto
+) => {
+  return await BookingModel.create({ ...params, userID, userName });
 };
 
 export const FindOneBooking = async (id: string) => {

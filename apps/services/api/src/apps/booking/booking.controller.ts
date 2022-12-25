@@ -7,12 +7,19 @@ import {
   FindOneBooking,
 } from './booking.service';
 
+import { GetUser } from '../user/user.service';
+
 export const router = Router();
 
 /* create booking session */
 router.post('/create-booking', async (req, res) => {
   try {
-    const data = await CreateBooking(req.body);
+    const userData = await GetUser(req.user.id);
+    const data = await CreateBooking(
+      req.user.id,
+      userData.displayName,
+      req.body
+    );
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);
