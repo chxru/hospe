@@ -1,3 +1,9 @@
+import {
+  zCreateBooking,
+  zDeleteBooking,
+  zFindOneBooking,
+  ZValidate,
+} from '@hospe/types';
 import { Router } from 'express';
 import { ExpressErrorResponseHandler } from '../../errors';
 import {
@@ -10,7 +16,7 @@ import {
 export const router = Router();
 
 /* create booking session */
-router.post('/create-booking', async (req, res) => {
+router.post('/create-booking', ZValidate(zCreateBooking), async (req, res) => {
   try {
     const data = await CreateBooking(req.body);
     res.status(200).json(data);
@@ -20,7 +26,7 @@ router.post('/create-booking', async (req, res) => {
 });
 
 /* find booking by id */
-router.get(':id', async (req, res) => {
+router.get(':id', ZValidate(zFindOneBooking), async (req, res) => {
   try {
     const id = req.params.id;
     const data = await FindOneBooking(id);
@@ -31,7 +37,7 @@ router.get(':id', async (req, res) => {
 });
 
 /* delete booking session by id */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', ZValidate(zDeleteBooking), async (req, res) => {
   try {
     const id = req.params.id;
     const data = await DeleteBooking(id);
@@ -41,6 +47,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// TODO: this endpoint made at the last moment to showcase the emailing feature, remove later
 router.post('/confirm', async (req, res) => {
   try {
     const data = await ConfirmBooking(req.user.id, req.body);

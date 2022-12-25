@@ -1,4 +1,4 @@
-import { CreateChannelingDto, UpdateChannelingDto } from './channeling.dto';
+import { CreateChannelingDto, UpdateChannelingDto } from '@hospe/types';
 import { ChannelingModel } from './channeling.schema';
 
 export const CreateChanneling = async (

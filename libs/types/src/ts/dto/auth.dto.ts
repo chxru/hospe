@@ -1,8 +1,7 @@
-export interface UserLoginReq {
-  email: string;
-  password: string;
-  role: string;
-}
+import { z } from 'zod';
+import { zLogin } from '../../zod';
+
+export type UserLoginReq = z.infer<typeof zLogin>['body'];
 
 interface IToken {
   value: string;

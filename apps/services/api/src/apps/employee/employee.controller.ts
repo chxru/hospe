@@ -1,3 +1,4 @@
+import { zCreateEmployee, ZValidate } from '@hospe/types';
 import { Router } from 'express';
 import { ExpressErrorResponseHandler } from '../../errors';
 import {
@@ -29,7 +30,7 @@ router.get('/doctor/:name', async (req, res) => {
   }
 });
 
-router.post('/doctor', async (req, res) => {
+router.post('/doctor', ZValidate(zCreateEmployee), async (req, res) => {
   try {
     const data = await CreateEmployee(req.body);
     res.status(200).json(data);

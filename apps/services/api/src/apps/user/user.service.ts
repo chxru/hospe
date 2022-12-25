@@ -1,10 +1,10 @@
-import { UserRegisterReq } from '@hospe/types';
+import { CreateUserDto } from '@hospe/types';
 
 import { Register } from '../auth/auth.service';
 import { SendEmail } from '../email/email.service';
 import { UserModel } from './user.schema';
 
-export const CreateUser = async (param: UserRegisterReq) => {
+export const CreateUser = async (param: CreateUserDto) => {
   const user = new UserModel({
     displayName: param.displayName,
     email: param.email,

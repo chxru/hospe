@@ -1,3 +1,4 @@
+import { zCreateUser, ZValidate } from '@hospe/types';
 import { Router } from 'express';
 
 import { ExpressErrorResponseHandler } from '../../errors';
@@ -9,7 +10,7 @@ import { CreateUser, GetUser } from './user.service';
 
 export const router = Router();
 
-router.post('/create', async (req, res) => {
+router.post('/create', ZValidate(zCreateUser), async (req, res) => {
   try {
     const data = await CreateUser(req.body);
 
