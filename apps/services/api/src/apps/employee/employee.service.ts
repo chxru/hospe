@@ -1,7 +1,7 @@
+import { CreateEmployeeDto, UpdateEmployeeDto } from '@hospe/types';
 import { nanoid } from 'nanoid/async';
 import { Register } from '../auth/auth.service';
 import { SendEmail } from '../email/email.service';
-import { CreateEmployeeDto, UpdateEmployeeDto } from './employee.dto';
 import { EmployeeModel } from './employee.schema';
 
 export const CreateEmployee = async (params: CreateEmployeeDto) => {

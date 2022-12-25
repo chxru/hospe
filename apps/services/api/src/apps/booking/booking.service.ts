@@ -1,7 +1,8 @@
+import { CreateBookingDto } from '@hospe/types';
 import { model } from 'mongoose';
+
 import { SendEmail } from '../email/email.service';
 import { UserModel } from '../user/user.schema';
-import { CreateBookingDto } from './booking.dto';
 import { BookingSchema } from './booking.schema';
 
 const BookingModel = model('Booking', BookingSchema);

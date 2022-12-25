@@ -38,6 +38,7 @@
     "rxjs": "^7.0.0",
     "tabler-icons-react": "^1.51.0",
     "zod": "^3.18.0",
+    "zod-validation-error": "^0.3.0",
     "zustand": "^4.0.0"
   },
   "devDependencies": {

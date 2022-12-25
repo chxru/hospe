@@ -10,11 +10,19 @@ import {
 } from './channeling.service';
 
 import { FindOneEmployee } from '../employee/employee.service';
+import {
+  zCreateChanneling,
+  zDeleteChanneling,
+  zFinalAllChannelingByDocId,
+  zFindAllChannelingByDocType,
+  zFindOneChanneling,
+  ZValidate,
+} from '@hospe/types';
 
 export const router = Router();
 
 /* find channeling session by id */
-router.get(':id', async (req, res) => {
+router.get(':id', ZValidate(zFindOneChanneling), async (req, res) => {
   try {
     const id = req.params.id;
     const data = await FindOneChanneling(id);
@@ -27,6 +35,7 @@ router.get(':id', async (req, res) => {
 /* view all channeling sessions */
 router.get('/', async (req, res) => {
   try {
+    // TODO: changed last moment, should be replaced with FindAllChanneling
     const data = await FindAllChannelingByDocId(req.user.id);
     res.status(200).json(data);
   } catch (error) {
@@ -34,26 +43,34 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/doctor/:docId', async (req, res) => {
-  try {
-    const data = await FindAllChannelingByDocId(req.params.docId);
-    res.status(200).json(data);
-  } catch (error) {
-    ExpressErrorResponseHandler(res, error);
+router.get(
+  '/doctor/:docId',
+  ZValidate(zFinalAllChannelingByDocId),
+  async (req, res) => {
+    try {
+      const data = await FindAllChannelingByDocId(req.params.docId);
+      res.status(200).json(data);
+    } catch (error) {
+      ExpressErrorResponseHandler(res, error);
+    }
   }
-});
+);
 
-router.get('/type/:docType', async (req, res) => {
-  try {
-    const data = await FindAllChannelingByDocType(req.params.docType);
-    res.status(200).json(data);
-  } catch (error) {
-    ExpressErrorResponseHandler(res, error);
+router.get(
+  '/type/:docType',
+  ZValidate(zFindAllChannelingByDocType),
+  async (req, res) => {
+    try {
+      const data = await FindAllChannelingByDocType(req.params.docType);
+      res.status(200).json(data);
+    } catch (error) {
+      ExpressErrorResponseHandler(res, error);
+    }
   }
-});
+);
 
 /* delete channeling session by id */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', ZValidate(zDeleteChanneling), async (req, res) => {
   try {
     const id = req.params.id;
     const data = await DeleteChanneling(id);
@@ -64,33 +81,41 @@ router.delete('/:id', async (req, res) => {
 });
 
 /* create channeling session */
-router.post('/create-channeling', async (req, res) => {
-  try {
-    const docData = await FindOneEmployee(req.user.id);
+router.post(
+  '/create-channeling',
+  ZValidate(zCreateChanneling),
+  async (req, res) => {
+    try {
+      const docData = await FindOneEmployee(req.user.id);
 
-    if (!docData) throw new Error('Doctor not found');
+      if (!docData) throw new Error('Doctor not found');
 
-    const docType = docData.specialization;
-    const docName = docData.displayName;
-    const data = await CreateChanneling(
-      req.user.id,
-      docType,
-      docName,
-      req.body
-    );
-    res.status(200).json(data);
-  } catch (error) {
-    ExpressErrorResponseHandler(res, error);
+      const docType = docData.specialization;
+      const docName = docData.displayName;
+      const data = await CreateChanneling(
+        req.user.id,
+        docType,
+        docName,
+        req.body
+      );
+      res.status(200).json(data);
+    } catch (error) {
+      ExpressErrorResponseHandler(res, error);
+    }
   }
-});
+);
 
 /* update channeling session */
-router.put('/edit-channeling/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    const data = await UpdateChanneling(id, req.body);
-    res.status(200).json(data);
-  } catch (error) {
-    ExpressErrorResponseHandler(res, error);
+router.put(
+  '/edit-channeling/:id',
+  ZValidate(zCreateChanneling.partial()),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const data = await UpdateChanneling(id, req.body);
+      res.status(200).json(data);
+    } catch (error) {
+      ExpressErrorResponseHandler(res, error);
+    }
   }
-});
+);
