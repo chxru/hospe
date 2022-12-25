@@ -34,7 +34,7 @@ export const InitiateEmailService = async () => {
         '\r',
     });
   } catch (error) {
-    console.error('discord webhook error', error.message || '');
+    console.error('discord webhook error', error);
   }
 };
 

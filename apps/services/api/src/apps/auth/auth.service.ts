@@ -28,6 +28,10 @@ export const Login = async (param: UserLoginReq) => {
     throw new Error('Invalid role');
   }
 
+  if (!user) {
+    throw new NotFoundError('User');
+  }
+
   const auth = await AuthModel.findOne({
     userId: user._id.toString(),
     role: param.role,
@@ -112,11 +116,15 @@ export const TokenRefresh = async (
     throw new Error('Invalid role');
   }
 
+  if (!data) {
+    throw new NotFoundError('No valid user for token');
+  }
+
   const accessToken = await CreateAccessToken(data._id.toString(), role);
   return {
     id: data._id.toString(),
     email: data.email,
-    displayName: data.displayName,
+    displayName: data.displayName || '',
     accessToken,
   };
 };

@@ -11,7 +11,7 @@ export const CreateEmployee = async (params: CreateEmployeeDto) => {
     birthday: params.birthday,
     email: params.email,
     gender: params.gender,
-    name: params.firstName + ' ' + params.lastName,
+    displayName: params.firstName + ' ' + params.lastName,
     phone: params.phone,
     qualification: params.qualification,
     specialization: params.specialization,

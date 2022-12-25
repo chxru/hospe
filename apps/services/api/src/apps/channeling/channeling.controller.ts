@@ -5,7 +5,6 @@ import {
   DeleteChanneling,
   FindOneChanneling,
   UpdateChanneling,
-  FindAllChanneling,
   FindAllChannelingByDocId,
   FindAllChannelingByDocType,
 } from './channeling.service';
@@ -68,8 +67,11 @@ router.delete('/:id', async (req, res) => {
 router.post('/create-channeling', async (req, res) => {
   try {
     const docData = await FindOneEmployee(req.user.id);
+
+    if (!docData) throw new Error('Doctor not found');
+
     const docType = docData.specialization;
-    const docName = docData.name;
+    const docName = docData.displayName;
     const data = await CreateChanneling(
       req.user.id,
       docType,
