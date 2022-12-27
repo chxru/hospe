@@ -23,3 +23,10 @@ export const zDeleteBooking = z.object({
     id: z.string(),
   }),
 });
+
+export const zSpecialization = z.object({
+  body: z.object({
+    label: z.string(),
+    value: z.string(),
+  }),
+});

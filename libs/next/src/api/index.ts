@@ -1,11 +1,13 @@
 import { Auth } from './auth';
+import { Booking } from './booking';
+import { Channeling } from './channeling';
 import { Employee } from './employee';
-import { Doctor } from './doctor';
 import { User } from './user';
 
 export const Api = {
   Auth,
+  Booking,
+  Channeling,
   Employee,
-  Doctor,
   User,
 };

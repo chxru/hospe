@@ -1,11 +1,12 @@
-import { CreateBookingDto } from '@hospe/types';
-import { model } from 'mongoose';
+import {
+  CreateBookingDto,
+  CreateSpecializationDto,
+  GetSpecializationDto,
+} from '@hospe/types';
 
 import { SendEmail } from '../email/email.service';
 import { UserModel } from '../user/user.schema';
-import { BookingSchema } from './booking.schema';
-
-const BookingModel = model('Booking', BookingSchema);
+import { BookingModel, SpecializationModel } from './booking.schema';
 
 export const CreateBooking = async (params: CreateBookingDto) => {
   return await BookingModel.create(params);
@@ -32,4 +33,27 @@ export const ConfirmBooking = async (userId: string, props: confirm) => {
       text: `Your booking has been confirmed. The total cost is ${props.cost}`,
     });
   }
+};
+
+export const FindAllSpecializations = async () => {
+  const res = await SpecializationModel.find();
+  if (!res) {
+    return [];
+  }
+
+  const data: GetSpecializationDto['data'] = [];
+  res.forEach((x) =>
+    data.push({
+      id: x._id.toString(),
+      label: x.label,
+      value: x.value,
+    })
+  );
+
+  return data;
+};
+
+export const CreateSpecialization = async (props: CreateSpecializationDto) => {
+  const specialization = await SpecializationModel.create(props);
+  return specialization;
 };

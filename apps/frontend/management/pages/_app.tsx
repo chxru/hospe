@@ -6,7 +6,7 @@ import { NotificationsProvider } from '@mantine/notifications';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useCallback, useEffect } from 'react';
-import { Adjustments, Gauge, PlaylistAdd } from 'tabler-icons-react';
+import { Adjustments, Gauge, MedicalCross } from 'tabler-icons-react';
 import './styles.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
@@ -31,9 +31,13 @@ function CustomApp({ Component, pageProps }: AppProps) {
     data: [
       { label: 'Dashboard', icon: Gauge, link: '/' },
       {
-        label: 'Add Doctors',
-        icon: PlaylistAdd,
-        link: '/doctorRegistration',
+        label: 'Doctors',
+        icon: MedicalCross,
+        initiallyOpened: true,
+        links: [
+          { label: 'Add new doctor', link: '/doctor/new' },
+          { label: 'Manage Specializations', link: '/doctor/specializes' },
+        ],
       },
       { label: 'Settings', icon: Adjustments },
     ],
