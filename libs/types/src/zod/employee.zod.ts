@@ -7,7 +7,6 @@ export const zCreateEmployee = z.object({
     email: z.string(),
     gender: z.string(),
     phone: z.string(),
-    birthday: z.string(),
     specialization: z.string(),
     qualification: z.string(),
   }),

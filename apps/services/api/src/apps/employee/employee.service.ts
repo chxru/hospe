@@ -8,7 +8,6 @@ export const CreateEmployee = async (params: CreateEmployeeDto) => {
   const password = await nanoid();
 
   const employee = await EmployeeModel.create({
-    birthday: params.birthday,
     email: params.email,
     gender: params.gender,
     displayName: params.firstName + ' ' + params.lastName,

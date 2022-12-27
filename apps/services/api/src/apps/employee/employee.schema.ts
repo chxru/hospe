@@ -5,7 +5,6 @@ const EmployeeSchema = new Schema({
   email: { type: String, required: true, index: true },
   phone: { type: String, required: true },
   gender: { type: String, required: true },
-  birthday: { type: Date },
   specialization: { type: String, required: true },
   qualification: { type: String, required: true },
 });

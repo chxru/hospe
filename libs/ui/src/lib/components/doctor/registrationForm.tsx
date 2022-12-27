@@ -1,4 +1,8 @@
-import { IDoctorCreate } from '@hospe/types';
+import {
+  CreateEmployeeDto,
+  GetSpecializationDto,
+  zCreateEmployee,
+} from '@hospe/types';
 import { useForm, zodResolver } from '@mantine/form';
 import {
   TextInput,
@@ -9,42 +13,23 @@ import {
   Select,
   Center,
 } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
 import { FC } from 'react';
-import { z } from 'zod';
-
-interface SpecializedFieldProps {
-  value: string;
-  label: string;
-}
+import { showNotification } from '@mantine/notifications';
 
 export interface SpecializedFieldDetailsProps {
-  specializedFields: SpecializedFieldProps[];
-  onSubmit: (values: IDoctorCreate) => void;
+  specializedFields: GetSpecializationDto['data'];
+  onSubmit: (values: CreateEmployeeDto) => Promise<void>;
 }
 
-const schema = z.object({
-  firstName: z
-    .string()
-    .min(2, { message: 'Name should have at least 2 letters' }),
-  lastName: z
-    .string()
-    .min(2, { message: 'Name should have at least 2 letters' }),
-  email: z.string().email({ message: 'Invalid email' }),
-  phone: z.string().min(10, { message: 'Invalid mobile number' }),
-  birthday: z.date().max(new Date(), { message: 'Birthday is not valid date' }),
-});
-
 export const RegistrationForm: FC<SpecializedFieldDetailsProps> = (props) => {
-  const form = useForm<IDoctorCreate>({
-    validate: zodResolver(schema),
+  const form = useForm<CreateEmployeeDto>({
+    validate: zodResolver(zCreateEmployee),
     initialValues: {
       firstName: '',
       lastName: '',
       email: '',
       gender: '',
       phone: '',
-      birthday: new Date(),
       specialization: '',
       qualification: '',
     },
@@ -52,9 +37,21 @@ export const RegistrationForm: FC<SpecializedFieldDetailsProps> = (props) => {
   return (
     <Box sx={{ maxWidth: '100vw' }} mx="auto">
       <form
-        onSubmit={(evt) => {
+        onSubmit={async (evt) => {
           evt.preventDefault();
-          props.onSubmit(form.values);
+
+          try {
+            await props.onSubmit(form.values);
+            showNotification({ message: 'Success', color: 'teal' });
+
+            form.reset();
+          } catch (error) {
+            console.error(error);
+            showNotification({
+              message: 'Doctor insertion failed',
+              color: 'red',
+            });
+          }
         }}
       >
         <SimpleGrid
@@ -98,16 +95,6 @@ export const RegistrationForm: FC<SpecializedFieldDetailsProps> = (props) => {
                 { value: 'other', label: 'Other' },
               ]}
               {...form.getInputProps('gender')}
-            />
-          </div>
-
-          {/* Birthday */}
-          <div>
-            <DatePicker
-              placeholder="Select your Birthday"
-              label="Birthday"
-              required
-              {...form.getInputProps('birthday')}
             />
           </div>
 
