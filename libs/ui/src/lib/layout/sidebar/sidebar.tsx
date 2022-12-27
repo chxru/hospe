@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import { useAuthStore } from '@hospe/next';
+import { SidebarProps } from '@hospe/types';
 import {
   Navbar,
   Group,
@@ -11,9 +12,10 @@ import {
   AppShell,
   Header,
 } from '@mantine/core';
-import { LinksGroup, LinksGroupProps } from './linkGroup';
+import { FC, useState } from 'react';
 import { ChevronRight } from 'tabler-icons-react';
-import { useAuthStore } from '@hospe/next';
+
+import { LinksGroup } from './linkGroup';
 
 const Logo = ({ width }: { width: number }) => (
   <Text size="lg" weight="bold" color="gray.500">
@@ -57,12 +59,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface SiderbarProps {
-  data: LinksGroupProps[];
-  children: JSX.Element;
-}
-
-export const Sidebar: FC<SiderbarProps> = ({ data, children }) => {
+export const Sidebar: FC<SidebarProps> = ({ data, children }) => {
   const { isAuthenticated, displayName, email } = useAuthStore();
   const { classes } = useStyles();
   const links = data.map((item) => <LinksGroup {...item} key={item.label} />);
