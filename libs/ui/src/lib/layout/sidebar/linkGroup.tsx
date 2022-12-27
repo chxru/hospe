@@ -9,12 +9,8 @@ import {
   UnstyledButton,
   createStyles,
 } from '@mantine/core';
-import {
-  Icon as TablerIcon,
-  CalendarStats,
-  ChevronLeft,
-  ChevronRight,
-} from 'tabler-icons-react';
+import { CalendarStats, ChevronLeft, ChevronRight } from 'tabler-icons-react';
+import { SidebarSubItemProps } from '@hospe/types';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -64,21 +60,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export interface LinksGroupProps {
-  icon: TablerIcon;
-  label: string;
-  link?: string;
-  initiallyOpened?: boolean;
-  links?: { label: string; link: string }[];
-}
-
 export function LinksGroup({
   icon: Icon,
   label,
   initiallyOpened,
   links,
   link,
-}: LinksGroupProps) {
+}: SidebarSubItemProps) {
   const router = useRouter();
 
   const { classes, theme } = useStyles();
@@ -111,8 +99,8 @@ export function LinksGroup({
           position="apart"
           spacing={0}
           onClick={(evt) => {
-            evt.stopPropagation();
             if (!hasLinks) {
+              evt.stopPropagation();
               link && router.push(link);
             }
           }}

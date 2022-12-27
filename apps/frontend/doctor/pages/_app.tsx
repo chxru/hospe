@@ -1,7 +1,8 @@
+import { Api, useAuthStore } from '@hospe/next';
+import { SidebarProps } from '@hospe/types';
+import { AuthScreen, Sidebar, SplashScreen } from '@hospe/ui';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-import { AuthScreen, Sidebar, SplashScreen } from '@hospe/ui';
-import { Api, useAuthStore } from '@hospe/next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useCallback, useEffect } from 'react';
@@ -32,10 +33,7 @@ export default function App(props: AppProps) {
     }
   }, [isLoading, isAuthenticated, RefreshToken]);
 
-  const mockData = {
-    title: 'Mantine',
-    username: 'John Doe',
-    email: 'john@gmail.com',
+  const sidebarData: SidebarProps = {
     data: [
       { label: 'Dashboard', icon: Gauge, link: '/' },
       {
@@ -77,7 +75,7 @@ export default function App(props: AppProps) {
         }}
       >
         <NotificationsProvider>
-          <Sidebar {...mockData}>
+          <Sidebar {...sidebarData}>
             <Component {...pageProps} />
           </Sidebar>
         </NotificationsProvider>
