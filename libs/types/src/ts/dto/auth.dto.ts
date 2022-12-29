@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { zLogin } from '../../zod';
+import { zLogin, zMagic } from '../../zod';
 
 export type UserLoginReq = z.infer<typeof zLogin>['body'];
+export type VerifyEmployeeMagicReq = z.infer<typeof zMagic>['body'];
 
 interface IToken {
   value: string;

@@ -17,7 +17,12 @@ import { InitiateEmailService } from './apps/email/email.service';
 
 const app = express();
 
-const PUBLIC_URLS = ['/auth/login', '/auth/token', '/user/create'];
+const PUBLIC_URLS = [
+  '/auth/login',
+  '/auth/token',
+  '/auth/magic',
+  '/user/create',
+];
 
 app.use(cors());
 app.use(morgan('dev'));

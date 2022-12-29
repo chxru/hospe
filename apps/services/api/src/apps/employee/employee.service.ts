@@ -1,11 +1,13 @@
 import { CreateEmployeeDto, UpdateEmployeeDto } from '@hospe/types';
 import { nanoid } from 'nanoid/async';
+import { MagicLinkModel } from '../auth/auth.schema';
 import { Register } from '../auth/auth.service';
 import { SendEmail } from '../email/email.service';
 import { EmployeeModel } from './employee.schema';
 
 export const CreateEmployee = async (params: CreateEmployeeDto) => {
   const password = await nanoid();
+  const magicPwd = await nanoid(16);
 
   const employee = await EmployeeModel.create({
     email: params.email,
@@ -14,6 +16,14 @@ export const CreateEmployee = async (params: CreateEmployeeDto) => {
     phone: params.phone,
     qualification: params.qualification,
     specialization: params.specialization,
+  });
+
+  await MagicLinkModel.create({
+    email: params.email,
+    token: magicPwd,
+    expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24), // expires in 24 hours
+    isUsed: false,
+    userId: employee._id.toString(),
   });
 
   try {
@@ -26,10 +36,18 @@ export const CreateEmployee = async (params: CreateEmployeeDto) => {
     await employee.delete();
   }
 
+  const frontend = process.env.DOCTOR_URL || 'http://localhost:4201';
+
+  console.log('Magic Link for user ', params.email, ' is ', magicPwd);
+
   SendEmail({
     to: params.email,
     subject: 'Welcome to Hospe',
-    text: `Your password is ${password}`,
+    html: `
+      <h1>Welcome to Hospe</h1>
+      <p>Click the link below to set your password</p>
+      <a href="${frontend}/auth?${magicPwd}">Set Password</a>
+    `,
   });
 
   return {
