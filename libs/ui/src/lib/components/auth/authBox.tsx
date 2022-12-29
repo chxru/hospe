@@ -17,11 +17,13 @@ import { GoogleButton, FacebookButton } from './icons/';
 import type { IAuthForm } from '@hospe/types';
 interface AuthenticationFormProps {
   enableRegister?: boolean;
+  hideSocialLogin?: boolean;
   onSubmit: (values: IAuthForm) => void;
 }
 
 export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   enableRegister,
+  hideSocialLogin,
   onSubmit,
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -47,12 +49,20 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
         Welcome to Hospe, {isLogin ? 'login' : 'register'} with
       </Text>
 
-      <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
-        <FacebookButton radius="xl">Facebook</FacebookButton>
-      </Group>
+      {!hideSocialLogin && (
+        <>
+          <Group grow mb="md" mt="md">
+            <GoogleButton radius="xl">Google</GoogleButton>
+            <FacebookButton radius="xl">Facebook</FacebookButton>
+          </Group>
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+          <Divider
+            label="Or continue with email"
+            labelPosition="center"
+            my="lg"
+          />
+        </>
+      )}
 
       <form onSubmit={form.onSubmit(onSubmit)}>
         <Group direction="column" grow>

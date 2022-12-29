@@ -15,3 +15,11 @@ export const zToken = z.object({
     refreshToken: z.string(),
   }),
 });
+
+export const zMagic = z.object({
+  body: z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+    token: z.string(),
+  }),
+});

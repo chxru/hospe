@@ -1,12 +1,19 @@
-import type { Roles, TokenRefreshRes, UserLoginReq } from '@hospe/types';
+import type {
+  VerifyEmployeeMagicReq,
+  Roles,
+  TokenRefreshRes,
+  UserLoginReq,
+} from '@hospe/types';
 
-import { AuthModel } from './auth.schema';
+import { AuthModel, MagicLinkModel } from './auth.schema';
 import { ComparePassword, HashPassword } from './helpers/bcrypt';
 
 import { NotFoundError, UnauthorizedException } from '../../errors';
 import {
+  ACCESS_TOKEN_EXPIRATION,
   CreateAccessToken,
   CreateRefreshToken,
+  REFRESH_TOKEN_EXPIRATION,
   ValidateRefreshToken,
 } from './helpers/tokens';
 import { GetUser, GetUserByEmail } from '../user/user.service';
@@ -57,8 +64,16 @@ export const Login = async (param: UserLoginReq) => {
     id: auth._id.toString(),
     email: user.email,
     displayName: user.displayName,
-    accessToken,
-    refreshToken,
+    tokens: {
+      access: {
+        expires: ACCESS_TOKEN_EXPIRATION,
+        value: accessToken,
+      },
+      refresh: {
+        expires: REFRESH_TOKEN_EXPIRATION,
+        value: refreshToken,
+      },
+    },
   };
 };
 
@@ -127,4 +142,39 @@ export const TokenRefresh = async (
     displayName: data.displayName || '',
     accessToken,
   };
+};
+
+export const ValidateMagicLink = async (props: VerifyEmployeeMagicReq) => {
+  const magic = await MagicLinkModel.findOne({
+    email: props.email,
+    token: props.token,
+    used: false,
+  });
+
+  if (!magic) {
+    throw new NotFoundError('No valid email and token combination');
+  }
+
+  // update the user password
+  const auth = await AuthModel.findOne({
+    userId: magic.userId,
+  });
+
+  if (!auth) {
+    throw new NotFoundError('No valid user for token');
+  }
+
+  auth.password = await HashPassword(props.password);
+  await auth.save();
+
+  const res = await Login({
+    email: props.email,
+    password: props.password,
+    role: 'doctor',
+  });
+
+  magic.update({ used: true });
+  await magic.save();
+
+  return res;
 };

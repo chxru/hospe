@@ -5,7 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Gauge,
   CalendarStats,
@@ -16,8 +16,15 @@ import {
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
-  const { isLoading, isAuthenticated, toggleLoading, updateToken } =
-    useAuthStore();
+  const {
+    accessToken,
+    isLoading,
+    isAuthenticated,
+    toggleLoading,
+    updateToken,
+  } = useAuthStore();
+
+  const [skipAuth, setSkipAuth] = useState(false);
 
   const RefreshToken = useCallback(async () => {
     const data = await Api.Auth.RefreshToken();
@@ -26,6 +33,19 @@ export default function App(props: AppProps) {
     }
     toggleLoading();
   }, [updateToken, toggleLoading]);
+
+  useEffect(() => {
+    const href = window.location.href.split('/');
+    const path = href[href.length - 1];
+
+    setSkipAuth(path.startsWith('auth') && path.split('?')[0].length == 4);
+  }, []);
+
+  useEffect(() => {
+    if (accessToken && skipAuth) {
+      setSkipAuth(false);
+    }
+  }, [accessToken, skipAuth]);
 
   useEffect(() => {
     if (isLoading && !isAuthenticated) {
@@ -55,7 +75,7 @@ export default function App(props: AppProps) {
   };
 
   if (isLoading) return <SplashScreen />;
-  if (!isAuthenticated) return <AuthScreen role="doctor" />;
+  if (!isAuthenticated && !skipAuth) return <AuthScreen role="doctor" />;
 
   return (
     <>

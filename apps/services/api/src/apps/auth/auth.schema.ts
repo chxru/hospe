@@ -16,3 +16,13 @@ const RefreshTokenSchema = new Schema({
 });
 
 export const RefreshTokenModel = model('RefreshToken', RefreshTokenSchema);
+
+const MagicLinkSchema = new Schema({
+  email: { type: String, required: true, index: true },
+  token: { type: String, required: true, index: true, unique: true },
+  expiresAt: { type: Date, required: true },
+  isUsed: { type: Boolean, required: true, default: false },
+  userId: { type: String, required: true },
+});
+
+export const MagicLinkModel = model('MagicLink', MagicLinkSchema);
