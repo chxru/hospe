@@ -19,13 +19,15 @@
 
 ## Applications and libraries
 
-- `api` API
-- `firebase-web` Wrapper for firebase web sdk
+- `services-api` API
 - `frontend-user` Next.js user application
+- `frontend-doctor` Next.js doctor application
+- `frontend-management` Next.js management application
+- `next` Common Next.js files library
 - `types` Shared types
 - `ui` UI components library with Storybooks
 
-```
+```shell
 # eg: Open next.js user app
 nx run frontend-user:serve
 ```
