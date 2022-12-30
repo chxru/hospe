@@ -28,14 +28,14 @@ export function Index() {
   const [session, setSession] = useState<Session[]>([]);
 
   useEffect(() => {
-    Api.Doctor.GetAll().then((res) => {
+    Api.Channeling.GetAll().then((res) => {
       setSession(res);
     });
   }, []);
 
   const onSubmit = async (values: Formdata) => {
-    await Api.Doctor.Delete(values._id);
-    Api.Doctor.GetAll().then((res) => {
+    await Api.Channeling.Delete(values._id);
+    Api.Channeling.GetAll().then((res) => {
       setSession(res);
     });
   };
