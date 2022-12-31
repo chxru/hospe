@@ -6,7 +6,7 @@ import { ISessionForm } from '@hospe/types';
 
 const CreateSession = () => {
   const onSubmit = async (values: ISessionForm) => {
-    await Api.Doctor.CreateSession(values);
+    await Api.Channeling.Create(values);
   };
 
   return (
