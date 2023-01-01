@@ -24,15 +24,11 @@ export const zDeleteChanneling = z.object({
   }),
 });
 
-// TODO: docName should not pass as a parameter
 export const zCreateChanneling = z.object({
   body: z.object({
-    docId: z.string(),
-    docType: z.string(),
     date: z.string(),
     time: z.string(),
-    maximumPatients: z.number().positive(),
-    doctorFee: z.number().positive(),
-    docName: z.string(),
+    maxPatient: z.number().positive(),
+    fee: z.number().positive(),
   }),
 });

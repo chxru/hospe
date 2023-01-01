@@ -1,13 +1,36 @@
-import { CreateChannelingDto, UpdateChannelingDto } from '@hospe/types';
+import { CreateChannelingDto, Roles, UpdateChannelingDto } from '@hospe/types';
+import { NotFoundError, UnauthorizedException } from '../../errors';
+import { EmployeeModel } from '../employee/employee.schema';
 import { ChannelingModel } from './channeling.schema';
 
 export const CreateChanneling = async (
-  docId: string,
-  docType: string,
-  docName: string,
+  userId: string,
+  userRole: Roles,
   params: CreateChannelingDto
 ) => {
-  return await ChannelingModel.create({ ...params, docId, docType, docName });
+  if (userRole != 'doctor') {
+    throw new UnauthorizedException('User do not have permission');
+  }
+
+  const doctor = await EmployeeModel.findById(userId);
+
+  if (!doctor) {
+    throw new NotFoundError('User not found');
+  }
+
+  console.log(params);
+
+  const doc = await ChannelingModel.create({
+    docId: userId,
+    docType: doctor.specialization,
+    date: params.date,
+    time: params.time,
+    maxPatient: params.maxPatient,
+    fee: params.fee,
+    docName: doctor.displayName,
+  });
+
+  return doc;
 };
 
 export const FindOneChanneling = async (id: string) => {
