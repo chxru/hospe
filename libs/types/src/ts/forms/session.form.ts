@@ -1,9 +1,7 @@
-export interface ISessionForm {
-  docId: string;
-  docType: string;
-  docName: string;
-  date: string;
-  time: string;
-  maximumPatients: number;
-  doctorFee: number;
+import { CreateChannelingDto } from '../dto';
+
+export interface ICreateSessionForm
+  extends Omit<CreateChannelingDto, 'date' | 'time'> {
+  date: Date;
+  time: Date;
 }

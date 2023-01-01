@@ -8,27 +8,33 @@ import {
   NumberInput,
 } from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { ISessionForm } from '@hospe/types';
+import { ICreateSessionForm } from '@hospe/types';
 
 interface CreateSessionProps {
-  onSubmit: (values: ISessionForm) => void;
+  onSubmit: (values: ICreateSessionForm) => void;
 }
 
 export const CreateSessionForm: React.FC<CreateSessionProps> = ({
   onSubmit,
 }) => {
   const today = new Date();
-  const form = useForm<ISessionForm>({
+  const form = useForm<ICreateSessionForm>({
     initialValues: {
-      date: today.toISOString().split('T')[0],
-      time: today.getTime().toString(),
-      maximumPatients: 1,
-      doctorFee: 1000,
+      date: today,
+      time: today,
+      maxPatient: 1000,
+      fee: 1000,
     },
   });
+
   return (
     <Box sx={{ maxWidth: '100vw' }} mx="auto">
-      <form onSubmit={form.onSubmit(onSubmit)}>
+      <form
+        onSubmit={form.onSubmit((values) => {
+          onSubmit(values);
+          form.reset();
+        })}
+      >
         <SimpleGrid
           cols={1}
           mt={'lg'}
@@ -62,16 +68,15 @@ export const CreateSessionForm: React.FC<CreateSessionProps> = ({
             placeholder="Enter Number of Maximum Patients"
             max={50}
             min={1}
-            {...form.getInputProps('maximumPatients')}
+            {...form.getInputProps('maxPatient')}
           />
 
           {/* Doctor Fee */}
           <NumberInput
             label="Doctor Fee (LKR)"
             placeholder="Enter Doctor Fee"
-            defaultValue={1000}
-            step={100}
-            {...form.getInputProps('doctorFee')}
+            step={1000}
+            {...form.getInputProps('fee')}
           />
         </SimpleGrid>
         <Center>

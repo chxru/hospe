@@ -9,7 +9,6 @@ import {
   FindAllChannelingByDocType,
 } from './channeling.service';
 
-import { FindOneEmployee } from '../employee/employee.service';
 import {
   zCreateChanneling,
   zDeleteChanneling,
@@ -86,18 +85,10 @@ router.post(
   ZValidate(zCreateChanneling),
   async (req, res) => {
     try {
-      const docData = await FindOneEmployee(req.user.id);
+      const id = req.user.id;
+      const role = req.user.role;
 
-      if (!docData) throw new Error('Doctor not found');
-
-      const docType = docData.specialization;
-      const docName = docData.displayName;
-      const data = await CreateChanneling(
-        req.user.id,
-        docType,
-        docName,
-        req.body
-      );
+      const data = await CreateChanneling(id, role, req.body);
       res.status(200).json(data);
     } catch (error) {
       ExpressErrorResponseHandler(res, error);

@@ -1,17 +1,7 @@
+import { CreateChannelingDto } from '@hospe/types';
 import { instance } from './axios';
 
-// TODO: move this
-interface CreateSessionProps {
-  docId: string;
-  docName: string;
-  docType: string;
-  date: string;
-  time: string;
-  maximumPatients: number;
-  doctorFee: number;
-}
-
-const Create = (props: CreateSessionProps) => {
+const Create = (props: CreateChannelingDto) => {
   return instance
     .post('/channeling/create-channeling', props)
     .then((res) => res.data);
