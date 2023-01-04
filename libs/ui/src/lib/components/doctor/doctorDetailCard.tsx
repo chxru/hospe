@@ -3,7 +3,7 @@ import { Text, Table, ScrollArea } from '@mantine/core';
 
 interface RowDetailsProps {
   _id: string;
-  name: string;
+  displayName: string;
   email: string;
   phone: string;
   gender: string;
@@ -21,19 +21,19 @@ export const DoctorDetails: FC<DoctorDetailsProps> = ({ doctordata }) => {
     <tr key={item._id}>
       <td>
         <Text size="sm" weight={500}>
-          Dr. {item.name}
+          Dr. {item.displayName}
         </Text>
       </td>
 
       <td>
         <Text size="sm" weight={500}>
-          {item.gender}
+          {item.gender.toUpperCase()}
         </Text>
       </td>
 
       <td>
         <Text size="sm" weight={500}>
-          {item.specialization}
+          {item.specialization.toUpperCase()}
         </Text>
       </td>
 
