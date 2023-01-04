@@ -34,7 +34,6 @@ router.get(':id', ZValidate(zFindOneChanneling), async (req, res) => {
 /* view all channeling sessions */
 router.get('/', async (req, res) => {
   try {
-    // TODO: changed last moment, should be replaced with FindAllChanneling
     const data = await FindAllChannelingByDocId(req.user.id);
     res.status(200).json(data);
   } catch (error) {

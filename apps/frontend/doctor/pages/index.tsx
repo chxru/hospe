@@ -12,13 +12,15 @@ import { Report } from 'tabler-icons-react';
 import { useEffect, useState } from 'react';
 
 interface Session {
-  __v: string;
-  docId: string;
   _id: string;
+  docId: string;
+  docType: string;
   date: string;
   time: string;
-  maximumPatients: number;
-  doctorFee: number;
+  maximumPatient: number;
+  fee: number;
+  docName: string;
+  count: number;
 }
 
 export interface Formdata {

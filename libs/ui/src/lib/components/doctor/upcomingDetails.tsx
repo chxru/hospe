@@ -3,13 +3,15 @@ import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User } from 'tabler-icons-react';
 import { useForm } from '@mantine/hooks';
 interface RowDetailsProps {
-  __v: string;
   _id: string;
   docId: string;
+  docType: string;
   date: string;
   time: string;
-  maximumPatients: number;
-  doctorFee: number;
+  maximumPatient: number;
+  fee: number;
+  docName: string;
+  count: number;
 }
 
 export interface Formdata {
@@ -50,14 +52,14 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
         {/* Number of active patients */}
         <Center>
           <Text size="xs" weight={500}>
-            Maximum Patients
+            Subscribed Patients
           </Text>
         </Center>
         <Center>
           <Group>
             <User size={18} />
             <Text size="sm" weight={500}>
-              {item.maximumPatients}
+              {item.count || 0}
             </Text>
           </Group>
         </Center>
@@ -70,6 +72,7 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
             type="submit"
             color="red"
             onClick={() => form.setFieldValue('_id', item._id)}
+            disabled={item.count > 0}
           >
             Delete
           </Button>
