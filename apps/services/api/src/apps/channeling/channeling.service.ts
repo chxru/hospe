@@ -62,8 +62,7 @@ export const FindAllChannelingByDocId = async (docId: string) => {
 };
 
 export const FindAllChannelingByDocType = async (docType: string) => {
-  console.log(docType);
-  return await ChannelingModel.find({ docType });
+  return await ChannelingModel.find({ docType, status: 'open' });
 };
 
 export const FindAllChanneling = async () => {
