@@ -12,16 +12,17 @@ import { BrandPaypal } from 'tabler-icons-react';
 import { Api } from '@hospe/next';
 
 export interface PaymentProps {
+  session_id: string;
   fee: number;
 }
 
-export const Payment: FC<PaymentProps> = ({ fee }) => {
+export const Payment: FC<PaymentProps> = ({ session_id, fee }) => {
   const [opened, setOpened] = useState(false);
 
   const onClick = () => {
     setOpened(false);
 
-    Api.Booking.Confirm(fee);
+    Api.Booking.Confirm({ session_id });
   };
 
   return (

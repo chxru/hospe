@@ -1,5 +1,6 @@
 import {
   GetSpecializationDto,
+  zConfirmBooking,
   zCreateBooking,
   zDeleteBooking,
   zFindOneBooking,
@@ -70,8 +71,7 @@ router.post('/specialization', ZValidate(zSpecialization), async (req, res) => {
   }
 });
 
-// TODO: this endpoint made at the last moment to showcase the emailing feature, remove later
-router.post('/confirm', async (req, res) => {
+router.post('/confirm', ZValidate(zConfirmBooking), async (req, res) => {
   try {
     const data = await ConfirmBooking(req.user.id, req.body);
     res.status(200).json(data);

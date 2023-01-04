@@ -1,8 +1,12 @@
-import { CreateSpecializationDto, GetSpecializationDto } from '@hospe/types';
+import {
+  ConfirmBookingDto,
+  CreateSpecializationDto,
+  GetSpecializationDto,
+} from '@hospe/types';
 import { instance } from './axios';
 
-const Confirm = (cost: number) => {
-  return instance.post('/booking/confirm', { cost }).then((res) => res.data);
+const Confirm = (props: ConfirmBookingDto) => {
+  return instance.post('/booking/confirm', props).then((res) => res.data);
 };
 
 const GetSpecializations = (): Promise<GetSpecializationDto> => {
