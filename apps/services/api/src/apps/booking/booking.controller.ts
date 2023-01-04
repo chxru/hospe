@@ -18,6 +18,7 @@ import {
   DeleteBooking,
   FindAllSpecializations,
   FindOneBooking,
+  GetMyBookings,
 } from './booking.service';
 
 export const router = Router();
@@ -85,6 +86,15 @@ router.post('/confirm', ZValidate(zConfirmBooking), async (req, res) => {
 router.post('/available', ZValidate(zCheckAvailability), async (req, res) => {
   try {
     const data = await CheckAvailability(req.user.id, req.body.id);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+
+router.get('/my', async (req, res) => {
+  try {
+    const data = await GetMyBookings(req.user.id);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);

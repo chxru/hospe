@@ -46,7 +46,7 @@ export const ConfirmBooking = async (
 
   const booking = await BookingModel.create({
     channelingId: props.session_id,
-    userId: userId,
+    userId: user._id.toString(),
     fee: channeling.fee,
     docName: channeling.docName,
     docId: channeling.docId,
@@ -100,4 +100,9 @@ export const CheckAvailability = async (userId: string, session_id: string) => {
 export const CreateSpecialization = async (props: CreateSpecializationDto) => {
   const specialization = await SpecializationModel.create(props);
   return specialization;
+};
+
+export const GetMyBookings = async (userId: string) => {
+  const result = await BookingModel.find({ userId });
+  return result;
 };
