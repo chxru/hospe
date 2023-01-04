@@ -8,6 +8,7 @@ const BookingSchema = new Schema({
   bookingTime: { type: String, required: true, index: -1 },
   bookingFee: { type: Number, required: true },
   status: { type: String, default: 'pending' },
+  userId: { type: String, required: true, index: true },
 });
 
 export const BookingModel = model('Booking', BookingSchema);

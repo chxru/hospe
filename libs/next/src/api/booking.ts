@@ -25,9 +25,14 @@ const CheckAvailability = (session_id: string) => {
     .then((res) => res.data);
 };
 
+const GetMy = () => {
+  return instance.get('/booking/my').then((res) => res.data);
+};
+
 export const Booking = {
   Confirm,
   GetSpecializations,
   CreateSpecialization,
   CheckAvailability,
+  GetMy,
 };
