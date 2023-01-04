@@ -21,9 +21,14 @@ const GetTypes = (type: string) => {
     .then((res) => res.data as GetChannelsByTypeDto[]);
 };
 
+const Close = (id: string) => {
+  return instance.post('/channeling/close', { id }).then((res) => res.data);
+};
+
 export const Channeling = {
   Create,
   GetAll,
   Delete,
   GetTypes,
+  Close,
 };

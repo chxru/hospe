@@ -39,7 +39,7 @@ export const FindOneChanneling = async (id: string) => {
 };
 
 export const FindAllChannelingByDocId = async (docId: string) => {
-  const data = await ChannelingModel.find({ docId });
+  const data = await ChannelingModel.find({ docId, status: 'open' });
 
   const res = [];
 
@@ -79,4 +79,20 @@ export const UpdateChanneling = async (
 
 export const DeleteChanneling = async (id: string) => {
   return await ChannelingModel.findByIdAndRemove(id);
+};
+
+export const CloseChanneling = async (id: string) => {
+  const channeling = await ChannelingModel.findOneAndUpdate(
+    { _id: id },
+    { status: 'closed' },
+    { new: true }
+  );
+
+  if (!channeling) {
+    throw new NotFoundError('Channeling session not found');
+  }
+
+  await BookingModel.updateMany({ channelingId: id }, { status: 'closed' });
+
+  return channeling;
 };

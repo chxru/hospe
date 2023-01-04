@@ -7,6 +7,7 @@ import {
   UpdateChanneling,
   FindAllChannelingByDocId,
   FindAllChannelingByDocType,
+  CloseChanneling,
 } from './channeling.service';
 
 import {
@@ -109,3 +110,16 @@ router.put(
     }
   }
 );
+
+router.post('/close', async (req, res) => {
+  if (req.body?.id == undefined) {
+    res.status(400).json({ message: 'Bad request' });
+  }
+
+  try {
+    const data = await CloseChanneling(req.body.id);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});

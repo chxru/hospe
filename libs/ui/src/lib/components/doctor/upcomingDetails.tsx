@@ -1,7 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User } from 'tabler-icons-react';
 import { useForm } from '@mantine/hooks';
+import { Api } from '@hospe/next';
+import { showNotification } from '@mantine/notifications';
 interface RowDetailsProps {
   _id: string;
   docId: string;
@@ -32,6 +34,20 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       _id: '',
     },
   });
+
+  const [disabledIds, setDisabledIds] = useState<string[]>([]);
+
+  const CloseChanneling = async (id: string) => {
+    await Api.Channeling.Close(id);
+
+    showNotification({
+      title: 'Channeling Closed',
+      message: 'Channeling Closed Successfully',
+      color: 'teal',
+    });
+
+    setDisabledIds((x) => [...x, id]);
+  };
 
   const newRows = upcomingDetailsdata.map((item) => (
     <tr key={item.time}>
@@ -66,17 +82,27 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
       </td>
 
       <td>
-        {/* Button */}
-        <form onSubmit={form.onSubmit(onSubmit)}>
+        <span style={{ display: 'flex' }}>
+          {/* Button */}
+          <form onSubmit={form.onSubmit(onSubmit)}>
+            <Button
+              type="submit"
+              color="red"
+              onClick={() => form.setFieldValue('_id', item._id)}
+              disabled={item.count > 0}
+            >
+              Delete
+            </Button>
+          </form>
+
           <Button
-            type="submit"
-            color="red"
-            onClick={() => form.setFieldValue('_id', item._id)}
-            disabled={item.count > 0}
+            ml="15px"
+            disabled={disabledIds.indexOf(item._id) !== -1}
+            onClick={() => CloseChanneling(item._id)}
           >
-            Delete
+            Finished
           </Button>
-        </form>
+        </span>
       </td>
     </tr>
   ));
