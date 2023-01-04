@@ -1,5 +1,6 @@
 import { CreateChannelingDto, Roles, UpdateChannelingDto } from '@hospe/types';
 import { NotFoundError, UnauthorizedException } from '../../errors';
+import { BookingModel } from '../booking/booking.schema';
 import { EmployeeModel } from '../employee/employee.schema';
 import { ChannelingModel } from './channeling.schema';
 
@@ -38,7 +39,26 @@ export const FindOneChanneling = async (id: string) => {
 };
 
 export const FindAllChannelingByDocId = async (docId: string) => {
-  return await ChannelingModel.find({ docId });
+  const data = await ChannelingModel.find({ docId });
+
+  const res = [];
+
+  for (const item of data) {
+    const bookings = await BookingModel.find({ channelingId: item._id });
+    res.push({
+      _id: item._id.toString(),
+      docId: item.docId,
+      docType: item.docType,
+      date: item.date,
+      time: item.time,
+      maxPatient: item.maxPatient,
+      fee: item.fee,
+      docName: item.docName,
+      count: bookings.length,
+    });
+  }
+
+  return res;
 };
 
 export const FindAllChannelingByDocType = async (docType: string) => {
