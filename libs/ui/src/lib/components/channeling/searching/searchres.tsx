@@ -59,7 +59,7 @@ export const SearchRes: FC<SearchResProps> = ({ data }) => {
         {/* View button */}
         <Center>
           <Group>
-            <Payment fee={1000} />
+            <Payment session_id={item._id} fee={1000} />
           </Group>
         </Center>
       </td>

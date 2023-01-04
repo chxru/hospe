@@ -30,3 +30,9 @@ export const zSpecialization = z.object({
     value: z.string(),
   }),
 });
+
+export const zConfirmBooking = z.object({
+  body: z.object({
+    session_id: z.string(),
+  }),
+});
