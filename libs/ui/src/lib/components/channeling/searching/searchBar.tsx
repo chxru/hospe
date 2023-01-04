@@ -1,40 +1,41 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
-  TextInput,
   Button,
   Box,
   Grid,
   Container,
-  NativeSelect,
   Select,
   Center,
   Paper,
-  Group,
 } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/hooks';
+import { Api } from '@hospe/next';
+import { GetSpecialization } from '@hospe/types';
 
-interface SearchBarProps {
-  specializations: string[];
-  time: string[];
-  gender: string[];
-}
-
-export interface Formdata {
-  Doctype: string;
+export interface ISearchDoctor {
+  type: string;
 }
 
 export interface SearchDetailsProps {
-  searchData: SearchBarProps[];
-  onSubmit: (values: Formdata) => void;
+  onSubmit: (values: ISearchDoctor) => void;
 }
 
 export const SearchBar: FC<SearchDetailsProps> = (props) => {
-  const form = useForm<Formdata>({
+  const [specialization, setSpecialization] = useState<GetSpecialization[]>([]);
+
+  const form = useForm<ISearchDoctor>({
     initialValues: {
-      Doctype: '',
+      type: '',
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await Api.Booking.GetSpecializations();
+      setSpecialization(data);
+    })();
+  }, []);
+
   return (
     <Container>
       <Box>
@@ -61,12 +62,12 @@ export const SearchBar: FC<SearchDetailsProps> = (props) => {
             <Center>
               <Grid>
                 <Select
-                  data={props.searchData[0].specializations}
+                  data={specialization}
                   placeholder="Select Specialization"
                   label="Specialization"
                   radius="md"
                   size="md"
-                  {...form.getInputProps('Doctype')}
+                  {...form.getInputProps('type')}
                 />
               </Grid>
             </Center>

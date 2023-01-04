@@ -1,4 +1,4 @@
-import { CreateChannelingDto } from '@hospe/types';
+import { CreateChannelingDto, GetChannelsByTypeDto } from '@hospe/types';
 import { instance } from './axios';
 
 const Create = (props: CreateChannelingDto) => {
@@ -16,7 +16,9 @@ const Delete = (props: string) => {
 };
 
 const GetTypes = (type: string) => {
-  return instance.get(`/channeling/type/${type}`).then((res) => res.data);
+  return instance
+    .get(`/channeling/type/${type}`)
+    .then((res) => res.data as GetChannelsByTypeDto[]);
 };
 
 export const Channeling = {
