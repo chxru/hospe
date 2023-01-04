@@ -37,12 +37,9 @@ export default function App(props: AppProps) {
     data: [
       { label: 'Dashboard', icon: Gauge, link: '/' },
       {
-        label: 'Appointments',
+        label: 'Upcomming Appointments',
         icon: CalendarStats,
-        links: [
-          { label: 'Upcoming Appointments', link: '/' },
-          { label: 'Previous Appointments', link: '/' },
-        ],
+        link: '/upcomingAppointments',
       },
       {
         label: 'Reports',

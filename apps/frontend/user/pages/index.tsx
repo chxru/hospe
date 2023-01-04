@@ -9,11 +9,6 @@ const IndexPage = () => {
 
   useEffect(() => {
     setSession([]);
-
-    (async () => {
-      const data = await Api.Booking.GetMy();
-      console.log('My bookings', data);
-    })();
   }, []);
 
   const onSubmit = async (values: ISearchDoctor) => {
