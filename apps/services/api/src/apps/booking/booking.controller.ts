@@ -1,5 +1,6 @@
 import {
   GetSpecializationDto,
+  zCheckAvailability,
   zConfirmBooking,
   zCreateBooking,
   zDeleteBooking,
@@ -10,6 +11,7 @@ import {
 import { Router } from 'express';
 import { ExpressErrorResponseHandler } from '../../errors';
 import {
+  CheckAvailability,
   ConfirmBooking,
   CreateBooking,
   CreateSpecialization,
@@ -74,6 +76,15 @@ router.post('/specialization', ZValidate(zSpecialization), async (req, res) => {
 router.post('/confirm', ZValidate(zConfirmBooking), async (req, res) => {
   try {
     const data = await ConfirmBooking(req.user.id, req.body);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
+
+router.post('/available', ZValidate(zCheckAvailability), async (req, res) => {
+  try {
+    const data = await CheckAvailability(req.user.id, req.body.id);
     res.status(200).json(data);
   } catch (error) {
     ExpressErrorResponseHandler(res, error);

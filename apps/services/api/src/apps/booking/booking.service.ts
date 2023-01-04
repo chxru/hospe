@@ -84,6 +84,19 @@ export const FindAllSpecializations = async () => {
   return data;
 };
 
+export const CheckAvailability = async (userId: string, session_id: string) => {
+  const booking = await BookingModel.find({
+    channelingId: session_id,
+    userId: userId,
+  });
+
+  if (booking.length > 0) {
+    return false;
+  }
+
+  return true;
+};
+
 export const CreateSpecialization = async (props: CreateSpecializationDto) => {
   const specialization = await SpecializationModel.create(props);
   return specialization;

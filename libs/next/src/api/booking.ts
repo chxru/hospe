@@ -19,8 +19,15 @@ const CreateSpecialization = (props: CreateSpecializationDto) => {
     .then((res) => res.data);
 };
 
+const CheckAvailability = (session_id: string) => {
+  return instance
+    .post('/booking/available', { id: session_id })
+    .then((res) => res.data);
+};
+
 export const Booking = {
   Confirm,
   GetSpecializations,
   CreateSpecialization,
+  CheckAvailability,
 };
