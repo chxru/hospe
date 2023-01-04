@@ -7,26 +7,21 @@ import {
   SimpleGrid,
   Center,
   TextInput,
-  Image,
 } from '@mantine/core';
 import { BrandPaypal } from 'tabler-icons-react';
 import { Api } from '@hospe/next';
 
-interface RowDetailsProps {
-  amount: number;
-}
-
 export interface PaymentProps {
-  paymentData: RowDetailsProps;
+  fee: number;
 }
 
-export const Payment: FC<PaymentProps> = ({ paymentData }) => {
+export const Payment: FC<PaymentProps> = ({ fee }) => {
   const [opened, setOpened] = useState(false);
 
   const onClick = () => {
     setOpened(false);
 
-    Api.Doctor.Confirm(1000);
+    Api.Booking.Confirm(fee);
   };
 
   return (
@@ -76,7 +71,7 @@ export const Payment: FC<PaymentProps> = ({ paymentData }) => {
 
           <Center>
             <Group position="right" mt="md">
-              <Button onClick={onClick}>Pay LKR 1000 </Button>
+              <Button onClick={onClick}>Pay LKR {fee} </Button>
             </Group>
           </Center>
         </form>

@@ -1,54 +1,25 @@
-import { SearchBar, SearchRes } from '@hospe/ui';
-import { Center, SimpleGrid } from '@mantine/core';
 import { Api } from '@hospe/next';
+import { GetChannelsByTypeDto } from '@hospe/types';
+import { ISearchDoctor, SearchBar, SearchRes } from '@hospe/ui';
+import { Center, SimpleGrid } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
-export interface Formdata {
-  Doctype: string;
-}
-
-interface SearchData {
-  _id: string;
-  docType: string;
-  docFee: number;
-  time: string;
-  maximumPatients: number;
-  date: string;
-  docName: string;
-}
-
-interface docFee {
-  docFee: number;
-}
-
 const IndexPage = () => {
-  const [session, setSession] = useState<SearchData[]>([]);
-  const [fee, setFee] = useState<docFee[]>([]);
+  const [session, setSession] = useState<GetChannelsByTypeDto[]>([]);
 
   useEffect(() => {
     setSession([]);
   }, []);
 
-  const onSubmit = async (values: Formdata) => {
-    const data = await Api.Doctor.GetTypes(values.Doctype);
+  const onSubmit = async (values: ISearchDoctor) => {
+    const data = await Api.Channeling.GetTypes(values.type);
     setSession(data);
-    setFee(data.docFee);
-  };
-
-  const mockDataSearch = {
-    searchData: [
-      {
-        specializations: ['Surgeon', 'ENT', 'VOG'],
-        time: ['Any', 'Morning', 'Afternoon', 'Evening'],
-        gender: ['Any', 'Male', 'Female'],
-      },
-    ],
   };
 
   return (
     <>
       <div>
-        <SearchBar {...mockDataSearch} onSubmit={onSubmit}></SearchBar>
+        <SearchBar onSubmit={onSubmit}></SearchBar>
         <Center>
           <SimpleGrid
             cols={3}
@@ -62,7 +33,7 @@ const IndexPage = () => {
             {/* {items} */}
           </SimpleGrid>
         </Center>
-        <SearchRes searchData={session}></SearchRes>
+        <SearchRes data={session}></SearchRes>
       </div>
     </>
   );
