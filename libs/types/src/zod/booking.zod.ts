@@ -36,3 +36,9 @@ export const zConfirmBooking = z.object({
     session_id: z.string(),
   }),
 });
+
+export const zCheckAvailability = z.object({
+  body: z.object({
+    id: z.string(),
+  }),
+});

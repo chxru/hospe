@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Text,
   Modal,
@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 import { BrandPaypal } from 'tabler-icons-react';
 import { Api } from '@hospe/next';
+import { showNotification } from '@mantine/notifications';
 
 export interface PaymentProps {
   session_id: string;
@@ -18,6 +19,28 @@ export interface PaymentProps {
 
 export const Payment: FC<PaymentProps> = ({ session_id, fee }) => {
   const [opened, setOpened] = useState(false);
+  const [disable, setDisable] = useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      if (!opened) return;
+
+      const status = await Api.Booking.CheckAvailability(session_id);
+      setDisable(!status);
+
+      if (!status) {
+        showNotification({
+          title: 'Booking Unavailable',
+          message: 'You are already subscribed to this session',
+          color: 'red',
+        });
+      }
+    })();
+  }, [opened, session_id]);
+
+  useEffect(() => {
+    console.log('disable', disable);
+  }, [disable]);
 
   const onClick = () => {
     setOpened(false);
@@ -72,7 +95,9 @@ export const Payment: FC<PaymentProps> = ({ session_id, fee }) => {
 
           <Center>
             <Group position="right" mt="md">
-              <Button onClick={onClick}>Pay LKR {fee} </Button>
+              <Button disabled={disable} onClick={onClick}>
+                Pay LKR {fee}
+              </Button>
             </Group>
           </Center>
         </form>
