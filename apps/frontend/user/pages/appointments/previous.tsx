@@ -18,12 +18,12 @@ interface ModifiedData extends Omit<GetChannelsByTypeDto, 'time' | 'date'> {
   time: string;
 }
 
-const UpcomingAppoinmentsPage = () => {
+const UpcomingAppointmentsPage = () => {
   const [session, setSession] = useState<ModifiedData[]>([]);
 
   useEffect(() => {
     (async () => {
-      const data = await Api.Booking.GetMy();
+      const data = await Api.Booking.GetMyPrevious();
 
       const MakeTwoDigits = (num: number) => {
         return num < 10 ? `0${num}` : num;
@@ -121,4 +121,4 @@ const UpcomingAppoinmentsPage = () => {
   );
 };
 
-export default UpcomingAppoinmentsPage;
+export default UpcomingAppointmentsPage;

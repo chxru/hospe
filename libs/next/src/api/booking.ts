@@ -29,10 +29,15 @@ const GetMy = () => {
   return instance.get('/booking/my').then((res) => res.data);
 };
 
+const GetMyPrevious = () => {
+  return instance.get('booking/my/previous').then((res) => res.data);
+};
+
 export const Booking = {
   Confirm,
   GetSpecializations,
   CreateSpecialization,
   CheckAvailability,
   GetMy,
+  GetMyPrevious,
 };

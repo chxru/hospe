@@ -100,3 +100,12 @@ router.get('/my', async (req, res) => {
     ExpressErrorResponseHandler(res, error);
   }
 });
+
+router.get('/my/previous', async (req, res) => {
+  try {
+    const data = await GetMyBookings(req.user.id, true);
+    res.status(200).json(data);
+  } catch (error) {
+    ExpressErrorResponseHandler(res, error);
+  }
+});
