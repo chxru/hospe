@@ -40,6 +40,7 @@ const IndexPage = () => {
               time={item.time}
               name={item.docName}
               key={item._id}
+              fee={item.fee}
             />
           ))}
         </div>

@@ -1,7 +1,18 @@
 import { Api } from '@hospe/next';
-import { Badge, Card, Group, Button, Image, Text, Modal } from '@mantine/core';
+import {
+  Badge,
+  Card,
+  Group,
+  Button,
+  Image,
+  Text,
+  Modal,
+  Center,
+  SimpleGrid,
+  TextInput,
+} from '@mantine/core';
 import { FC, useEffect, useState } from 'react';
-import { Clock, Calendar } from 'tabler-icons-react';
+import { Clock, Calendar, BrandPaypal } from 'tabler-icons-react';
 
 interface SearchCardProps {
   id: string;
@@ -9,6 +20,7 @@ interface SearchCardProps {
   specialization: string;
   time: string;
   date: string;
+  fee: number;
 }
 
 const MakeTwoDigits = (num: number) => {
@@ -81,7 +93,58 @@ const SearchCard: FC<SearchCardProps> = (props) => {
       </div>
 
       <Modal opened={checkout} onClose={() => setCheckout(false)}>
-        <Text>modal</Text>
+        <>
+          <Center>
+            <Group>
+              <BrandPaypal size={30} strokeWidth={2} color={'black'} />
+              <Text size="xl" weight={500}>
+                Checkout
+              </Text>
+            </Group>
+          </Center>
+
+          <form
+            onSubmit={(evt) => {
+              evt.preventDefault();
+            }}
+          >
+            <SimpleGrid
+              cols={1}
+              spacing="lg"
+              breakpoints={[
+                { maxWidth: 'md', cols: 2, spacing: 'sm' },
+                { maxWidth: 'sm', cols: 1, spacing: 'sm' },
+              ]}
+            >
+              {/* First Name */}
+              <div>
+                <TextInput required label="Name" placeholder="John Doe" />
+              </div>
+
+              {/* Last Name */}
+              <div>
+                <TextInput required label="Card number" placeholder="" />
+              </div>
+
+              <SimpleGrid cols={2} spacing="lg">
+                <TextInput required label="Expire Month" placeholder="" />
+                <TextInput required label="Expire Year" placeholder="" />
+              </SimpleGrid>
+            </SimpleGrid>
+
+            <div>
+              <TextInput required label="CSV" placeholder="" />
+            </div>
+
+            <Center>
+              <Group position="right" mt="md">
+                <Button>
+                  <Text>Pay fee {props.fee} LKR</Text>
+                </Button>
+              </Group>
+            </Center>
+          </form>
+        </>
       </Modal>
     </>
   );
