@@ -52,8 +52,12 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
       {!hideSocialLogin && (
         <>
           <Group grow mb="md" mt="md">
-            <GoogleButton radius="xl">Google</GoogleButton>
-            <FacebookButton radius="xl">Facebook</FacebookButton>
+            <GoogleButton radius="xl" disabled>
+              Google
+            </GoogleButton>
+            <FacebookButton radius="xl" disabled>
+              Facebook
+            </FacebookButton>
           </Group>
 
           <Divider
@@ -68,6 +72,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
         <Group direction="column" grow>
           {!isLogin && (
             <TextInput
+              required
               label="Name"
               placeholder="Your name"
               value={form.values.name}
@@ -104,6 +109,7 @@ export const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
 
           {!isLogin && (
             <Checkbox
+              required
               label="I accept terms and conditions"
               checked={form.values.terms}
               onChange={(event) =>
