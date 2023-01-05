@@ -40,8 +40,8 @@ export default function App(props: AppProps) {
         label: 'Appointments',
         icon: CalendarStats,
         links: [
-          { label: 'Upcoming Appointments', link: '/' },
-          { label: 'Previous Appointments', link: '/' },
+          { label: 'Active Appointments', link: '/appointments/active' },
+          { label: 'Previous Appointments', link: '/appointments/previous' },
         ],
       },
       {

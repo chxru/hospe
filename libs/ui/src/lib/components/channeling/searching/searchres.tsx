@@ -17,15 +17,20 @@ const MakeTwoDigits = (num: number) => {
 };
 
 export const SearchRes: FC<SearchResProps> = ({ data }) => {
+  const MakeTwoDigits = (num: number) => {
+    return num < 10 ? `0${num}` : num;
+  };
+
   const items: ModifiedData[] = data.map((item) => {
     const date = new Date(item.date);
     const time = new Date(item.time);
-
     return {
       ...item,
-      time: `${MakeTwoDigits(time.getHours())}:${MakeTwoDigits(
-        time.getMinutes()
-      )} ${time.getHours() > 12 ? 'PM' : 'AM'}`,
+      time: `${MakeTwoDigits(
+        time.getHours() > 12 ? time.getHours() - 12 : time.getHours()
+      )}:${MakeTwoDigits(time.getMinutes())} ${
+        time.getHours() > 12 ? 'PM' : 'AM'
+      }`,
       date: date.toLocaleDateString(),
     };
   });
@@ -50,13 +55,13 @@ export const SearchRes: FC<SearchResProps> = ({ data }) => {
         {/* Doctor's name */}
         <Center>
           <Text size="sm" weight={500}>
-            {item.docName}
+            Dr.{item.docName}
           </Text>
         </Center>
         <Center>
           <User size={18} />
           <Text size="sm" weight={500}>
-            {item.docType}
+            {item.docType.toUpperCase()}
           </Text>
         </Center>
       </td>

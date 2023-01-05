@@ -102,7 +102,10 @@ export const CreateSpecialization = async (props: CreateSpecializationDto) => {
   return specialization;
 };
 
-export const GetMyBookings = async (userId: string) => {
-  const result = await BookingModel.find({ userId });
+export const GetMyBookings = async (userId: string, isPrevious?: boolean) => {
+  const result = await BookingModel.find({
+    userId,
+    status: isPrevious ? 'closed' : 'pending',
+  });
   return result;
 };
