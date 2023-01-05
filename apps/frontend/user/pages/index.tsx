@@ -1,7 +1,7 @@
 import { Api } from '@hospe/next';
 import { GetChannelsByTypeDto } from '@hospe/types';
-import { ISearchDoctor, SearchBar, SearchRes } from '@hospe/ui';
-import { Center, SimpleGrid } from '@mantine/core';
+import { ISearchDoctor, SearchBar, SearchCard } from '@hospe/ui';
+import { Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 const IndexPage = () => {
@@ -18,22 +18,31 @@ const IndexPage = () => {
 
   return (
     <>
-      <div>
+      <div style={{ paddingLeft: '15px' }}>
+        <Title mb="lg">Search For Appointments</Title>
+
         <SearchBar onSubmit={onSubmit}></SearchBar>
-        <Center>
-          <SimpleGrid
-            cols={3}
-            spacing="lg"
-            mt={40}
-            breakpoints={[
-              { maxWidth: 1000, cols: 2, spacing: 'md' },
-              { maxWidth: 755, cols: 1, spacing: 'sm' },
-            ]}
-          >
-            {/* {items} */}
-          </SimpleGrid>
-        </Center>
-        <SearchRes data={session}></SearchRes>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexFlow: 'row',
+            flexWrap: 'wrap',
+          }}
+        >
+          {session.map((item) => (
+            <SearchCard
+              id={item._id}
+              specialization={item.docType}
+              date={item.date}
+              time={item.time}
+              name={item.docName}
+              key={item._id}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

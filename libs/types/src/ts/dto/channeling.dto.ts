@@ -5,7 +5,7 @@ export type CreateChannelingDto = z.infer<typeof zCreateChanneling>['body'];
 export type UpdateChannelingDto = Partial<CreateChannelingDto>;
 export type GetChannelsByTypeDto = {
   _id: string;
-  date: Date;
+  date: string;
   time: string;
   maxPatient: number;
   fee: number;

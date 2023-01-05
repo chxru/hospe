@@ -73,7 +73,9 @@ export const SearchBar: FC<SearchDetailsProps> = (props) => {
             </Center>
             <Center>
               <Grid mt={'sm'}>
-                <Button type="submit">Search</Button>
+                <Button style={{ marginTop: '10px' }} type="submit">
+                  Search
+                </Button>
               </Grid>
             </Center>
           </Paper>
