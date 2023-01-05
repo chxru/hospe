@@ -12,6 +12,10 @@ interface ModifiedData extends Omit<GetChannelsByTypeDto, 'time' | 'date'> {
   date: string;
 }
 
+const MakeTwoDigits = (num: number) => {
+  return num < 10 ? `0${num}` : num;
+};
+
 export const SearchRes: FC<SearchResProps> = ({ data }) => {
   const MakeTwoDigits = (num: number) => {
     return num < 10 ? `0${num}` : num;

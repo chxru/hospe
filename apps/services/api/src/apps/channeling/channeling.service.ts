@@ -1,5 +1,6 @@
 import { CreateChannelingDto, Roles, UpdateChannelingDto } from '@hospe/types';
 import { NotFoundError, UnauthorizedException } from '../../errors';
+import { BookingModel } from '../booking/booking.schema';
 import { EmployeeModel } from '../employee/employee.schema';
 import { ChannelingModel } from './channeling.schema';
 
@@ -38,12 +39,30 @@ export const FindOneChanneling = async (id: string) => {
 };
 
 export const FindAllChannelingByDocId = async (docId: string) => {
-  return await ChannelingModel.find({ docId });
+  const data = await ChannelingModel.find({ docId, status: 'open' });
+
+  const res = [];
+
+  for (const item of data) {
+    const bookings = await BookingModel.find({ channelingId: item._id });
+    res.push({
+      _id: item._id.toString(),
+      docId: item.docId,
+      docType: item.docType,
+      date: item.date,
+      time: item.time,
+      maxPatient: item.maxPatient,
+      fee: item.fee,
+      docName: item.docName,
+      count: bookings.length,
+    });
+  }
+
+  return res;
 };
 
 export const FindAllChannelingByDocType = async (docType: string) => {
-  console.log(docType);
-  return await ChannelingModel.find({ docType });
+  return await ChannelingModel.find({ docType, status: 'open' });
 };
 
 export const FindAllChanneling = async () => {
@@ -59,4 +78,20 @@ export const UpdateChanneling = async (
 
 export const DeleteChanneling = async (id: string) => {
   return await ChannelingModel.findByIdAndRemove(id);
+};
+
+export const CloseChanneling = async (id: string) => {
+  const channeling = await ChannelingModel.findOneAndUpdate(
+    { _id: id },
+    { status: 'closed' },
+    { new: true }
+  );
+
+  if (!channeling) {
+    throw new NotFoundError('Channeling session not found');
+  }
+
+  await BookingModel.updateMany({ channelingId: id }, { status: 'closed' });
+
+  return channeling;
 };

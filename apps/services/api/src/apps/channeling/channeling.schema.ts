@@ -8,6 +8,7 @@ const ChannelingSchema = new Schema({
   maxPatient: { type: Number, required: true },
   fee: { type: Number, required: true },
   docName: { type: String, required: true },
+  status: { type: String, required: true, default: 'open' },
 });
 
 export const ChannelingModel = model('Channeling', ChannelingSchema);

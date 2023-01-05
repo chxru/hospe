@@ -1,15 +1,19 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Text, Table, ScrollArea, Group, Center, Button } from '@mantine/core';
 import { Clock, Calendar, User } from 'tabler-icons-react';
 import { useForm } from '@mantine/hooks';
+import { Api } from '@hospe/next';
+import { showNotification } from '@mantine/notifications';
 interface RowDetailsProps {
-  __v: string;
   _id: string;
   docId: string;
+  docType: string;
   date: string;
   time: string;
-  maximumPatients: number;
-  doctorFee: number;
+  maximumPatient: number;
+  fee: number;
+  docName: string;
+  count: number;
 }
 
 export interface Formdata {
@@ -31,6 +35,20 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
     },
   });
 
+  const [disabledIds, setDisabledIds] = useState<string[]>([]);
+
+  const CloseChanneling = async (id: string) => {
+    await Api.Channeling.Close(id);
+
+    showNotification({
+      title: 'Channeling Closed',
+      message: 'Channeling Closed Successfully',
+      color: 'teal',
+    });
+
+    setDisabledIds((x) => [...x, id]);
+  };
+
   const newRows = upcomingDetailsdata.map((item) => (
     <tr key={item.time}>
       {/* Appointment Date and time */}
@@ -50,30 +68,41 @@ export const UpcomingDetails: FC<UpcomingDetailsProps> = ({
         {/* Number of active patients */}
         <Center>
           <Text size="xs" weight={500}>
-            Maximum Patients
+            Subscribed Patients
           </Text>
         </Center>
         <Center>
           <Group>
             <User size={18} />
             <Text size="sm" weight={500}>
-              {item.maximumPatients}
+              {item.count || 0}
             </Text>
           </Group>
         </Center>
       </td>
 
       <td>
-        {/* Button */}
-        <form onSubmit={form.onSubmit(onSubmit)}>
+        <span style={{ display: 'flex' }}>
+          {/* Button */}
+          <form onSubmit={form.onSubmit(onSubmit)}>
+            <Button
+              type="submit"
+              color="red"
+              onClick={() => form.setFieldValue('_id', item._id)}
+              disabled={item.count > 0}
+            >
+              Delete
+            </Button>
+          </form>
+
           <Button
-            type="submit"
-            color="red"
-            onClick={() => form.setFieldValue('_id', item._id)}
+            ml="15px"
+            disabled={disabledIds.indexOf(item._id) !== -1}
+            onClick={() => CloseChanneling(item._id)}
           >
-            Delete
+            Finished
           </Button>
-        </form>
+        </span>
       </td>
     </tr>
   ));
