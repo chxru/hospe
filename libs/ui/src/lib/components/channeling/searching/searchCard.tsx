@@ -11,8 +11,10 @@ import {
   SimpleGrid,
   TextInput,
 } from '@mantine/core';
+import { useForm, zodResolver } from '@mantine/form';
 import { FC, useEffect, useState } from 'react';
 import { Clock, Calendar, BrandPaypal } from 'tabler-icons-react';
+import { z } from 'zod';
 
 interface SearchCardProps {
   id: string;
@@ -22,6 +24,20 @@ interface SearchCardProps {
   date: string;
   fee: number;
 }
+
+const schema = z.object({
+  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+  card: z
+    .string()
+    .min(16, { message: 'Card number should have at least 16 numbers' }),
+  expireMonth: z
+    .string()
+    .min(2, { message: 'Expire month should have at least 2 numbers' }),
+  expireYear: z
+    .string()
+    .min(2, { message: 'Expire year should have at least 2 numbers' }),
+  cvv: z.string().min(3, { message: 'CVV should have at least 3 numbers' }),
+});
 
 const MakeTwoDigits = (num: number) => {
   return num < 10 ? `0${num}` : num;
@@ -49,6 +65,22 @@ const SearchCard: FC<SearchCardProps> = (props) => {
       setAvailable(status);
     })();
   }, [props.id]);
+
+  const form = useForm({
+    schema: zodResolver(schema),
+    initialValues: {
+      name: '',
+      card: '',
+      expireMonth: '',
+      expireYear: '',
+      cvv: '',
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof schema>) => {
+    await Api.Booking.Confirm({ session_id: props.id });
+    setCheckout(false);
+  };
 
   return (
     <>
@@ -104,9 +136,9 @@ const SearchCard: FC<SearchCardProps> = (props) => {
           </Center>
 
           <form
-            onSubmit={(evt) => {
-              evt.preventDefault();
-            }}
+            onSubmit={form.onSubmit((values) => {
+              onSubmit(values);
+            })}
           >
             <SimpleGrid
               cols={1}
@@ -118,27 +150,52 @@ const SearchCard: FC<SearchCardProps> = (props) => {
             >
               {/* First Name */}
               <div>
-                <TextInput required label="Name" placeholder="John Doe" />
+                <TextInput
+                  required
+                  label="Name"
+                  placeholder="John Doe"
+                  {...form.getInputProps('name')}
+                />
               </div>
 
               {/* Last Name */}
               <div>
-                <TextInput required label="Card number" placeholder="" />
+                <TextInput
+                  required
+                  label="Card number"
+                  placeholder=""
+                  {...form.getInputProps('card')}
+                />
               </div>
 
               <SimpleGrid cols={2} spacing="lg">
-                <TextInput required label="Expire Month" placeholder="" />
-                <TextInput required label="Expire Year" placeholder="" />
+                <TextInput
+                  required
+                  label="Expire Month"
+                  placeholder="MM"
+                  {...form.getInputProps('expireMonth')}
+                />
+                <TextInput
+                  required
+                  label="Expire Year"
+                  placeholder="DD"
+                  {...form.getInputProps('expireYear')}
+                />
               </SimpleGrid>
             </SimpleGrid>
 
             <div>
-              <TextInput required label="CSV" placeholder="" />
+              <TextInput
+                required
+                label="CVV"
+                placeholder="CVV"
+                {...form.getInputProps('cvv')}
+              />
             </div>
 
             <Center>
               <Group position="right" mt="md">
-                <Button>
+                <Button type="submit">
                   <Text>Pay fee {props.fee} LKR</Text>
                 </Button>
               </Group>
