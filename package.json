@@ -46,7 +46,7 @@
     "@babel/preset-typescript": "7.12.13",
     "@emotion/babel-plugin": "11.9.2",
     "@nrwl/cli": "14.3.6",
-    "@nrwl/cypress": "14.3.6",
+    "@nrwl/cypress": "15.4.4",
     "@nrwl/eslint-plugin-nx": "14.3.6",
     "@nrwl/jest": "14.4.2",
     "@nrwl/linter": "14.3.6",
